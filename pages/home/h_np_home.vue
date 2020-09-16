@@ -1,0 +1,379 @@
+<template>
+	<view>
+		<!-- 轮播区 -->
+		<u-swiper :list="rotationChart" :height="422" indicator-pos="bottomRight"></u-swiper>
+
+		<!-- 金刚区 -->
+		<swiper class="h_vajraDistrict">
+			<swiper-item class="vd_item" v-for="(item,index) in functionArray" :key="index">
+				<view class="item_view" v-for="(item2,index2) in item.array" :key="index2" v-if="item2.display == true">
+					<image class="view_image" :src="item2.image" mode="aspectFit"></image>
+					<text class="view_text">{{item2.name}}</text>
+				</view>
+			</swiper-item>
+		</swiper>
+		
+		<!-- 资讯区 -->
+		<u-notice-bar  :list="information" :volume-icon="false" type="warning" font-size="26"></u-notice-bar>
+		<view class="h_information">
+			<image class="inf_image" src="../../static/home/information/dongtai.png"></image>
+			<view  class="inf_view">
+				<swiper class="inf_view_swiper" vertical autoplay circular>
+					<swiper-item v-for="(item,index) in information2" :key="index">
+						<view class="inf_view_swiper_view">{{item}}</view>
+					</swiper-item>
+				</swiper>
+				<view class="inf_view_view">点击查看资讯动态</view>
+			</view>
+		</view>
+		
+		<!-- 小功能引导区 -->
+		<view class="h_guidanceArea">
+			<u-row gutter="32">
+				<u-col span="4">
+					<view class="gui_view">
+						<text class="gui_view_title">健康码</text>
+						<text class="gui_view_text">快捷八闽健康码</text>
+					</view>
+				</u-col>
+				<u-col span="4">
+					<view class="gui_view">
+						<text class="gui_view_title">出行助手</text>
+						<text class="gui_view_text">车站导航/找车车</text>
+					</view>
+				</u-col>
+				<u-col span="4">
+					<view class="gui_view">
+						<text class="gui_view_title">每日南平</text>
+						<text class="gui_view_text">南平那些新鲜事</text>
+					</view>
+				</u-col>
+			</u-row>
+		</view>
+		
+		<!-- 广告区 -->
+		<u-swiper style="margin-top: 32upx;" :list="advertisingMap"  :effect3d="true" :title="true" ></u-swiper>
+		
+		<!-- 快捷入口 -->
+		<view class="h_quickEntry">
+			<view class="qui_titleView">快捷车票</view>
+			<view class="qui_imageview">
+				<view class="qui_imageview_view" v-for="(item,index) in quickEntryData" :key="index">
+					<image class="qui_imageview_view_image" :src="item.image" mode="aspectFill"></image>
+					<text class="qui_imageview_view_text">{{item.start}} → {{item.end}}</text>
+				</view>
+			</view>
+		</view>
+		
+		<!-- 隐藏协议弹出 -->
+		<u-modal v-model="protocolStatus" :show-cancel-button="true"  confirm-text="同意" title="服务协议和隐私政策" @confirm="agreeProtocol">
+			<view class="h_popupText">
+				<text>请你务必审慎阅读，充分理解“软件许可及服务协议”和“隐私政策”各条款。</br>你可阅读</text>
+				<text style="color: #2F9BFE;" @click="agreementClick">《软件许可及服务协议》</text>
+				<text>和</text>
+				<text style="color: #2F9BFE;" @click="privacyClick">《隐私政策》</text>
+				<text>了解详细信息。</br>如你同意，请点击“同意”开始接受我们的服务。</text>
+				
+			</view>
+		</u-modal>
+		
+		<!-- 发现新版本弹出 -->
+		<u-modal v-model="upgradeStatus" :show-cancel-button="true"  confirm-text="升级" title="发现新版本" @confirm="agreeProtocol">
+			<view class="h_popupText">
+				<rich-text :nodes="upgradeContent"></rich-text>
+			</view>
+		</u-modal>
+		
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				rotationChart: ['https://cdn.uviewui.com/uview/swiper/1.jpg', '../../static/home/h_banner1.jpg'], //轮播图
+				advertisingMap: [{
+					image : 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2674493023,3251836362&fm=26&gp=0.jpg',
+					title : '南平山水景观'
+				},{
+					image : 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600252567209&di=a9fc81b9c64096cb259da595b22b9ec6&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180815%2F2f156706827e4ae8803ab0908d9f51d7.jpeg',
+					title : '南平水上景观',
+				},{
+					image : 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600252420006&di=8ca7b10f5673dbd80740c50a6ea8e51e&imgtype=0&src=http%3A%2F%2Fphoto.tuchong.com%2F1315411%2Ff%2F21900506.jpg',
+					title : '茫荡镇三楼古村'
+				}], //广告图
+				information : ['南平综合出行来啦！9月25日试运行！快来体验吧！'], //新闻列表
+				information2 : ['南平综合出行来啦！9月25日试运行！快来体验吧！','点击通告栏的文字时，会触发click事件'], //新闻列表
+				protocolStatus : false, //隐藏弹出层，f为不弹，t为弹
+				upgradeStatus : false, //升级弹出层，f为不弹，t为弹
+				upgradeContent : `
+								1. 修复badge组件的size参数无效问题<br>
+								2. 新增Modal模态框组件<br>
+								3. 新增压窗屏组件，可以在APP上以弹窗的形式遮盖导航栏和底部tabbar<br>
+								4. 修复键盘组件在微信小程序上遮罩无效的问题
+								`,
+				quickEntryData : [{
+					start : '建阳',
+					end : '新区',
+					image : '../../static/home/temporary/xianlu.png'
+				},{
+					start : '邵武',
+					end : '泰宁',
+					image : '../../static/home/temporary/xianlu.png'
+				},{
+					start : '南平',
+					end : '三明',
+					image : '../../static/home/temporary/xianlu.png'
+				},{
+					start : '建阳',
+					end : '新区',
+					image : '../../static/home/temporary/xianlu.png'
+				},{
+					start : '建阳',
+					end : '新区',
+					image : '../../static/home/temporary/xianlu.png'
+				},{
+					start : '建阳',
+					end : '新区',
+					image : '../../static/home/temporary/xianlu.png'
+				}], //快捷入口数据
+				functionArray: [
+					{
+					array: [{
+						name: '车票订购', //功能名称
+						image: '../../static/home/vajra/chepiao.png', //功能图标
+						display: true, //是否显示
+						entrance: '', //跳转路径
+					}, {
+						name: '新区直达',
+						image: '../../static/home/vajra/xinqu.png',
+						display: true,
+						entrance: '',
+					}, {
+						name: '客运查询',
+						image: '../../static/home/vajra/keyun.png',
+						display: true,
+						entrance: '',
+					}, {
+						name: '公交查询',
+						image: '../../static/home/vajra/gongjiao.png',
+						display: true,
+						entrance: '',
+					}, {
+						name: '景区售票',
+						image: '../../static/home/vajra/jingqu.png',
+						display: true,
+						entrance: '',
+					}],
+					},{
+					array: [{
+						name: '定位点一',
+						image: '../../static/home/vajra/dingwei.png',
+						display: true,
+						entrance: '',
+					}, {
+						name: '定位点二',
+						image: '../../static/home/vajra/dingwei.png',
+						display: true,
+						entrance: '',
+					}, {
+						name: '定位点三',
+						image: '../../static/home/vajra/dingwei.png',
+						display: false,
+						entrance: '',
+					}, {
+						name: '定位点四',
+						image: '../../static/home/vajra/dingwei.png',
+						display: false,
+						entrance: '',
+					}, {
+						name: '定位点五',
+						image: '../../static/home/vajra/dingwei.png',
+						display: true,
+						entrance: '',
+					}],
+					}
+				], //功能数组
+			}
+		},
+		onLoad:function(){
+			// uni.clearStorage()
+			let pro = uni.getStorageSync('protocol')
+			if(pro !== true){
+				this.protocolStatus = true;
+			}
+			
+		},
+		methods: {
+			//同意添弹框缓存 - 隐私服务
+			agreeProtocol:function(){
+				uni.setStorage({
+					key:'protocol',
+					data: true,
+				})
+			},
+			//查看服务协议
+			agreementClick() {
+				uni.navigateTo({
+					url: this.$GrzxInter.Route.privacyService.url + '?title=软件许可及服务协议',
+				})
+			},
+			//查看隐私政策
+			privacyClick() {
+				uni.navigateTo({
+					url: this.$GrzxInter.Route.privacyService.url + '?title=隐私政策',
+				})
+			},
+		}
+	}
+</script>
+
+<style lang="scss">
+	//页面全局样式
+	page {
+		background-color: #f9f9f9;
+	}
+
+	//轮播区样式
+	.h_swiper {
+		height: 422upx;
+
+		.sw_item {
+			width: 100%;
+			height: 100%;
+
+			.item_image {
+				width: 100%;
+				height: 422upx;
+			}
+		}
+	}
+
+	//金刚区样式
+	.h_vajraDistrict {
+		background: #FFFFFF;
+		height: 204upx;
+		padding: 0 16upx;
+
+		.vd_item {
+			display: flex;
+
+			.item_view {
+				width: 20%;
+				text-align: center;
+				padding: 28rpx 0rpx;
+
+				.view_image {
+					width: 104upx;
+					height: 104upx;
+				}
+
+				.view_text {
+					font-size: 28upx;
+					color: #333333;
+					display: block;
+				}
+			}
+		}
+	}
+	
+	//资讯区样式
+	.h_information{
+		background: #FFFFFF; 
+		padding: 36upx; 
+		display: flex;
+		.inf_image{
+			width: 146upx; 
+			height: 82upx;
+		}
+		.inf_view{
+			margin-left: 20upx; 
+			width: 75%;
+			.inf_view_swiper{
+				width: 100%; 
+				height: 36upx;
+				.inf_view_swiper_view{
+					font-size: 26upx; 
+					height: 48upx; 
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+				}
+			}
+			.inf_view_view{
+				margin-top: 12upx; 
+				font-size: 26upx; 
+				color: #aaa;
+			}
+		}
+		
+	}
+	
+	//小功能引导区
+	.h_guidanceArea{
+		margin: 40upx 0;
+		.gui_view{
+			border-radius: 8upx; 
+			background: #FFFFFF; 
+			padding: 24upx 20upx;
+			.gui_view_title{
+				font-weight: bold;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+			.gui_view_text{
+				font-size: 24upx;
+				color: #aaa; 
+				display: block;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+		}
+	}
+	
+	//快捷入口样式
+	.h_quickEntry{
+		padding: 48upx 0upx;
+		.qui_titleView{
+			font-size: 36upx; 
+			font-weight: bold; 
+			margin-left: 28upx;
+		}
+		.qui_imageview{
+			margin-top: 24upx;
+			display: flex;
+			flex-wrap: wrap; //循环换行
+			.qui_imageview_view{
+				position: relative;
+				margin-left: 26upx; 
+				margin-top: 16upx;
+				.qui_imageview_view_image{
+					width: 216upx; 
+					height: 160upx; 
+					border-radius: 12upx;
+					
+				}
+				.qui_imageview_view_text{
+					position: absolute; 
+					left: 16upx; 
+					line-height: 160upx; 
+					font-size: 34upx; 
+					font-weight: bold; 
+					color: #FFFFFF;
+				}
+			}
+			
+		}
+	}
+	
+	//弹出层-通用字体样式
+	.h_popupText{
+		font-size: 26rpx;
+		color: $u-content-color;
+		line-height: 1.7; 
+		padding: 30rpx;
+	}
+	
+</style>

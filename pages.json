@@ -1,5 +1,22 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	//-------------------定义组件引入规则，一个pages只能一个easycom，引入uview框架---------------------
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [
+		//-------------------南平综合出行首页---------------------
+		{
+			"path": "pages/home/h_np_home",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"animationType": "fade-in", // 设置fade-in淡入动画，为最合理的动画类型
+					"background": "transparent", // 背景透明
+					"backgroundColor": "rgba(0,0,0,0)", // 背景透明
+					"popGesture": "none" // 关闭IOS屏幕左边滑动关闭当前页面的功能
+				}
+			}
+		},
 		{
 			"path": "pages/index/index",
 			"style": {
@@ -7,10 +24,52 @@
 			}
 		}
 	],
+
+
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#333333",
+		"selectedColor": "#ff9012",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		//#ifdef APP-PLUS
+		"fontSize": "16px",
+		//#endif
+		"list": [{
+				"pagePath": "pages/home/h_np_home",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/home/h_np_home",
+				"text": "通知"
+			},
+			{
+				"pagePath": "pages/home/h_np_home",
+				"text": "服务"
+			},
+			{
+				"pagePath": "pages/home/h_np_home",
+				"text": "订单"
+			},
+
+			{
+				"pagePath": "pages/home/h_np_home",
+				"text": "我的"
+			}
+		]
+	},
+
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
 	}
 }
