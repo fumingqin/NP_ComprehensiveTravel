@@ -36,10 +36,6 @@
 </template>
 
 <script>
-	// #ifdef APP-PLUS
-	//const jyJPush = uni.requireNativePlugin('JY-JPush');
-	// #endif
-	import $DDTInterface from '@/common/DDT.js'
 	export default {
 		data() {
 			return {

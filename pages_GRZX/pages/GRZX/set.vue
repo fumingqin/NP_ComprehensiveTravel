@@ -1,30 +1,15 @@
 <template>
 	<view class="container">
-		
-		<!-- <view class="list-cell m-t b-b">
-			<text class="cell-tit">推送设置</text>
-			<switch :checked="statu.check1" color="#fa436a" @change="switchChange" />
-		</view>
-		<view class="list-cell b-b b-l">
-			<text class="cell-tit">视频自动播放</text>
-			<switch :checked="statu.check2"  color="#fa436a" @change="playChange" />
-		</view> -->
-		
-		<view class="list-cell m-t b-b" @click="clearStorage" hover-class="cell-hover" :hover-stay-time="50">
-			<text class="cell-tit">清除缓存</text>
-			<text style="font-size: 28upx;">{{currentSize}}</text>
-			<text class="cell-more jdticon icon-you"></text>
+		<view class="itemClass" @click="clearStorage" hover-class="btnClass">
+			<text class="">清除缓存</text>
+			<text class="sizeClass">{{currentSize}}</text>
+			<image src="../../static/GRZX/icon-right.png" class="rightClass"></image>
 		</view>
 		<!-- #ifdef APP-PLUS -->
-		<!-- <view class="list-cell b-b b-l" @click="navTo('aboutApp')">
-			<text class="cell-tit">关于APP</text>
-			<text class="cell-more jdticon icon-you"></text>
-		</view> -->
-		<view class="list-cell log-out-btn" @click="toLogout">
-			<text class="cell-tit">退出登录</text>
+		<view class="itemClass" @click="toLogout">
+			<text class="loginClass">退出登录</text>
 		</view>
 		<!-- #endif -->
-
 	</view>
 </template>
 
@@ -32,10 +17,6 @@
 	export default {
 		data() {
 			return {
-				statu:{
-					check1:true,
-					check2:true,
-				},
 				currentSize:'',
 			};
 		},
@@ -170,54 +151,37 @@
 
 <style lang='scss'>
 	page{
-		background: $page-color-base;
+		background: #e6e6e6;
 	}
-	.list-cell{
-		display:flex;
-		align-items:baseline;
-		padding: 20upx $page-row-spacing;
-		line-height:60upx;
-		position:relative;
-		background: #fff;
-		justify-content: center;
-		&.log-out-btn{
-			margin-top: 40upx;
-			.cell-tit{
-				color: $uni-color-primary;
-				text-align: center;
-				margin-right: 0;
-			}
-		}
-		&.cell-hover{
-			background:#fafafa;
-		}
-		&.b-b:after{
-			left: 30upx;
-		}
-		&.m-t{
-			margin-top: 16upx; 
-		}
-		&.b-l{
-			border-top: 1upx solid #EAEAEA;
-		}
-		.cell-more{
-			align-self: baseline;
-			font-size:$font-lg;
-			color:$font-color-light;
-			margin-left:10upx;
-		}
-		.cell-tit{
-			flex: 1;
-			font-size: $font-base + 2upx;
-			color: $font-color-dark;
-			margin-right:10upx;
-		}
-		.cell-tip{
-			font-size: $font-base;
-			color: $font-color-light;
-		}
-		switch{
-			transform: translateX(16upx) scale(.84);
-		}
+	.itemClass{
+		display: flex;
+		flex-direction: row;
+		padding: 30upx 0upx 30upx 30upx;
+		font-size: 28upx;
+		background-color: #ffffff;
+		margin-top: 20upx;
+	}
+	.rightClass{
+		width: 30upx;
+		height: 30upx;
+		margin-top: 5upx;
+		margin-left: 1%;
+	}
+	.sizeClass{
+		width: 50%;
+		text-align: right;
+		margin-left: 25%;
+	}
+	.loginClass{
+		width: 100%;
+		text-align: center;
+		color: #007AFF;
+	}
+	
+	//按钮点击的效果
+	.btnClass{
+		transition: all .3s; /*过渡 */ 
+		opacity: 0.9;
+		background-color:#c1c4c8;
 	}
 </style>

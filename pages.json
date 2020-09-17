@@ -19,6 +19,15 @@
 		},
 		
 		//----------------------------个人中心模块开始----------------------------
+		//--------------------微信授权登录--------------------
+		//#ifdef MP-WEIXIN
+		{
+			"path": "pages/GRZX/wxAuthorize",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		//#endif
 		{
 			"path": "pages/GRZX/user",
 			"style": {
@@ -63,25 +72,7 @@
 					"scrollIndicator": "none"
 				}
 			}
-		},
-		{
-			"path": "pages/GRZX/notice", //推文通知
-			"style": {
-				// #ifdef H5
-				"navigationStyle": "custom",
-				// #endif
-				"navigationBarTitleText": "通知"
-			}
-		},
-		//--------------------微信授权登录--------------------
-		//#ifdef MP-WEIXIN
-		{
-			"path": "pages/GRZX/wxAuthorize",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-		//#endif
+		}
 		//----------------------------个人中心模块结束----------------------------
 		
 	],
@@ -91,7 +82,6 @@
 		{
 			"root": "pages_GRZX/",
 			"pages": [
-		
 				{
 					"path": "pages/GRZX/personal",
 					"style": {}
@@ -144,7 +134,7 @@
 				}
 				
 			]
-		},
+		}
 	],
 
 
