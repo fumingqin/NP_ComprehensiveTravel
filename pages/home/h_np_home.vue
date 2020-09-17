@@ -203,6 +203,11 @@
 				this.protocolStatus = true;
 			}
 			
+			// #ifdef MP-WEIXIN
+			// 校验小程序登录
+			this.getLoginState();
+			//#endif
+			
 		},
 		methods: {
 			//同意添弹框缓存 - 隐私服务
@@ -224,6 +229,33 @@
 					url: this.$GrzxInter.Route.privacyService.url + '?title=隐私政策',
 				})
 			},
+			
+			// #ifdef MP-WEIXIN
+			getLoginState() {
+				uni.getStorage({
+					key: 'isCanUse',
+					success(res) {},
+					fail(err) {
+						uni.showModal({
+							content: '您暂未登录，是否登录',
+							confirmText: '去登录',
+							cancelText: '暂不登录',
+							success(res) {
+								if (res.confirm) {
+									uni.navigateTo({
+										url: '/pages/Home/wxAuthorize?type=index'
+									})
+								} else if (res.cancel) {
+									// console.log('用户点击取消');
+								}
+							}
+						})
+					}
+				})
+			},
+			//#endif
+			
+			
 		}
 	}
 </script>

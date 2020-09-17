@@ -351,6 +351,11 @@ var _default =
       this.protocolStatus = true;
     }
 
+
+    // 校验小程序登录
+    this.getLoginState();
+
+
   },
   methods: {
     //同意添弹框缓存 - 隐私服务
@@ -370,6 +375,30 @@ var _default =
     privacyClick: function privacyClick() {
       uni.navigateTo({
         url: this.$GrzxInter.Route.privacyService.url + '?title=隐私政策' });
+
+    },
+
+
+    getLoginState: function getLoginState() {
+      uni.getStorage({
+        key: 'isCanUse',
+        success: function success(res) {},
+        fail: function fail(err) {
+          uni.showModal({
+            content: '您暂未登录，是否登录',
+            confirmText: '去登录',
+            cancelText: '暂不登录',
+            success: function success(res) {
+              if (res.confirm) {
+                uni.navigateTo({
+                  url: '/pages/Home/wxAuthorize?type=index' });
+
+              } else if (res.cancel) {
+                // console.log('用户点击取消');
+              }
+            } });
+
+        } });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
