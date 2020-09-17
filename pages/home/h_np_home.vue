@@ -243,7 +243,7 @@
 							success(res) {
 								if (res.confirm) {
 									uni.navigateTo({
-										url: '/pages/Home/wxAuthorize?type=index'
+										url: '/pages/GRZX/wxAuthorize?type=index'
 									})
 								} else if (res.cancel) {
 									// console.log('用户点击取消');
