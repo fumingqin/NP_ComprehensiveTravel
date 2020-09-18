@@ -267,7 +267,7 @@ const Route={
 		name:'我的收藏页面',
 	},
 	complaint:{
-		url:SubPackage+'/TSXT/complaintList',
+		url:SubPackage+'/complaintList',
 		name:'我的投诉页面',
 	},
 	coupon:{
@@ -279,7 +279,7 @@ const Route={
 		name:'推文详情页面',
 	},
 	feedback:{
-		url:SubPackage+'/TSXT/FeedbackView',
+		url:SubPackage+'/FeedbackView',
 		name:'意见反馈列表',
 	},
 	history:{

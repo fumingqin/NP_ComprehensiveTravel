@@ -182,7 +182,7 @@
 				color: #333333;
 				position: relative;
 				&.current {
-					color: #4CD964;
+					color: #FFAF2A;
 					&:after {
 						content: '';
 						position: absolute;
@@ -191,7 +191,7 @@
 						transform: translateX(-50%);
 						width: 77upx;
 						height: 0;
-						border-bottom: 4upx solid #4CD964;
+						border-bottom: 4upx solid #FFAF2A;
 					}
 				}
 			}
