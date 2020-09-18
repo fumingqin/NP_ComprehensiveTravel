@@ -67,7 +67,7 @@
                 "payment" : {
                     "weixin" : {
                         "__platform__" : [ "ios", "android" ],
-                        "appid" : "wxb6e7a1abe313216a",
+                        "appid" : "wx4394e02214803063",
                         "UniversalLinks" : "https://zntc.145u.net/ulink/"
                     }
                 },
@@ -79,7 +79,7 @@
                 },
                 "share" : {
                     "weixin" : {
-                        "appid" : "wxb6e7a1abe313216a",
+                        "appid" : "wx4394e02214803063",
                         "UniversalLinks" : "https://zntc.145u.net/ulink/"
                     }
                 }
@@ -123,7 +123,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wxf64bf945b37a9939",
         "setting" : {
             "urlCheck" : false,
             "postcss" : true,
