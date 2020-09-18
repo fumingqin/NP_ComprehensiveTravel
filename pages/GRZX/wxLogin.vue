@@ -187,12 +187,8 @@
 								phoneNumber:phone,
 								nickname:userInfo.nickName,//微信昵称
 								address:userInfo.province+userInfo.city,//微信地址
-								openId_wx:data.OpenId_wx,
 								gender:userInfo.gender,//微信性别
-								openId_qq:data.OpenId_qq,
-								openId_xcx:data.OpenId_xcx,
-								openId_ios:data.OpenId_ios,
-								openId_app:userInfo.openId, //微信 oenid
+								openId:userInfo.openId, //微信 oenid
 								birthday:data.Birthday,
 								autograph:data.Autograph,
 								portrait:userInfo.avatarUrl,//微信头像
@@ -209,12 +205,8 @@
 								phoneNumber:phone,
 								nickname:userInfo.nickName,//qq昵称
 								address:userInfo.province+userInfo.city,//qq地址
-								openId_wx:data.OpenId_wx,
 								gender:gender,//qq性别
-								openId_qq:userInfo.openId, //qq openid
-								openId_xcx:data.OpenId_xcx,
-								openId_ios:data.OpenId_ios,
-								openId_app:data.OpenId_app, 
+								openId:userInfo.openId, //qq openid
 								birthday:data.Birthday,
 								autograph:data.Autograph,
 								portrait:userInfo.figureurl_2,//微信头像
@@ -225,12 +217,8 @@
 								phoneNumber:phone,
 								nickname:userInfo.nickname,
 								address:userInfo.province+userInfo.city,
-								openId_wx:userInfo.openid,//H5 openid
+								openId:userInfo.openid,//H5 openid
 								gender:data.Gender,
-								openId_qq:data.OpenId_qq,
-								openId_xcx:data.OpenId_xcx,
-								openId_ios:data.OpenId_ios,
-								openId_app:data.OpenId_app, 
 								birthday:data.Birthday,
 								autograph:data.Autograph,
 								portrait:userInfo.headimgurl,//微信头像
@@ -255,12 +243,8 @@
 						phoneNumber:userInfo.phoneNumber,
 						nickname:userInfo.nickname,//微信昵称
 						address:userInfo.address,//微信地址
-						openId_wx:userInfo.openId_wx,
 						gender:userInfo.gender,//微信性别
-						openId_qq:userInfo.openId_qq,
-						openId_xcx:userInfo.openId_xcx,
-						openId_ios:userInfo.openId_ios,
-						openId_app:userInfo.openId_app, //微信oenid
+						openId:userInfo.openId, //微信oenid
 						birthday:userInfo.birthday,
 						autograph:userInfo.autograph,
 						systemname:that.$GrzxInter.systemConfig.appName,//应用名称
