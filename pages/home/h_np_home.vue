@@ -34,6 +34,9 @@
 					<view class="gui_view">
 						<text class="gui_view_title">健康码</text>
 						<text class="gui_view_text">快捷八闽健康码</text>
+						<image class="gui_view_iamge" src="../../static/home/guidance/tuceng.png" ></image>
+						
+						<!-- <image src="../../static/home/guidance/jiangkangma.png" style=""></image> -->
 					</view>
 				</u-col>
 				<u-col span="4">
@@ -205,7 +208,7 @@
 			
 			// #ifdef MP-WEIXIN
 			// 校验小程序登录
-			this.getLoginState();       
+			// this.getLoginState();       
 			//#endif
 			
 		},
@@ -243,7 +246,7 @@
 							success(res) {
 								if (res.confirm) {
 									uni.navigateTo({
-										url: '/pages/Home/wxAuthorize?type=index'
+										url: '/pages/GRZX/wxAuthorize?type=index'
 									})
 								} else if (res.cancel) {
 									// console.log('用户点击取消');
@@ -284,7 +287,7 @@
 	//金刚区样式
 	.h_vajraDistrict {
 		background: #FFFFFF;
-		height: 204upx;
+		height: 220upx;
 		padding: 0 16upx;
 
 		.vd_item {
@@ -293,7 +296,7 @@
 			.item_view {
 				width: 20%;
 				text-align: center;
-				padding: 28rpx 0rpx;
+				padding: 32upx 0upx;
 
 				.view_image {
 					width: 104upx;
@@ -345,16 +348,29 @@
 	.h_guidanceArea{
 		margin: 40upx 0;
 		.gui_view{
-			border-radius: 8upx; 
-			background: #FFFFFF; 
+			// border-radius: 8upx; 
+			// background: #FFFFFF; 
 			padding: 24upx 20upx;
+			position: relative;
+			.gui_view_iamge{
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 218upx;
+				height: 118upx;
+				z-index: 1;
+			}
 			.gui_view_title{
+				position: relative;
+				z-index: 3;
 				font-weight: bold;
 				text-overflow: ellipsis;
 				white-space: nowrap;
 				overflow: hidden;
 			}
 			.gui_view_text{
+				position: relative;
+				z-index: 2;
 				font-size: 24upx;
 				color: #aaa; 
 				display: block;
