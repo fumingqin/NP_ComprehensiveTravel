@@ -18,6 +18,146 @@
 			}
 		}
 	],
+	
+	"subPackages":[
+		//---------------------------------------------第一个包：专线购票------------------------------------------
+		
+		{
+			"root": "pages_ZXGP/",
+			"pages": [
+				//----------------------------------定制巴士--------------------------------------------
+				{
+					"path": "pages/ZXGP/SpecialBus/Home/specialBusHome",
+					"style": {}
+				}, {
+					"path": "pages/ZXGP/SpecialBus/Home/specialLinePicker",
+					"style": {}
+				}, {
+					"path": "pages/ZXGP/SpecialBus/Home/specialReserve",
+					"style": {}
+				},
+				{
+					"path": "pages/ZXGP/SpecialBus/Home/zxgpHomePage",
+					"style": {
+						"navigationBarTitleText": "专线订购",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "pages/ZXGP/SpecialBus/ScheduleLineList/specialBusLineList",
+					"style": {
+						"navigationBarTitleText": "班次列表"
+					}
+				},
+				{
+					"path": "pages/ZXGP/SpecialBus/ScheduleLineList/specialBusTakeOrder",
+					"style": {}
+				},
+				{
+					"path": "pages/ZXGP/SpecialBus/stationPicker/specialBusStationPicker",
+					"style": {}
+				},
+				{
+					"path": "pages/ZXGP/SpecialBus/specialBusOrderPayment/specialBusOrderPayment",
+					"style": {}
+				},
+				//----------------------------------传统班车/定制班车-----------------------------------
+				{
+					"path": "pages/ZXGP/TraditionSpecial/Home/ctkyIndex",
+					"style": {
+						"navigationBarTitleText": "客运"
+					}
+				}
+				, {
+					"path": "pages/ZXGP/TraditionSpecial/stationPicker/homeSattionPick",
+					"style": {
+						"navigationBarTitleText": "选择站点"
+					}
+				}, {
+					"path": "pages/ZXGP/TraditionSpecial/Order/selectTickets",
+					"style": {
+						"navigationBarTitleText": "班次列表"
+					}
+				}, {
+					"path": "pages/ZXGP/TraditionSpecial/Order/scheduleDetails",
+					"style": {
+						"backgroundColor": "#F1F1F1",
+						"navigationBarBackgroundColor": "#FC4646",
+						"navigationBarTextStyle": "white",
+						"navigationBarTitleText": "班次详情"
+					}
+				},
+				{
+					"path": "pages/ZXGP/TraditionSpecial/seatSelection",
+					"style": {
+						"backgroundColor": "#F1F1F1",
+						"navigationBarBackgroundColor": "#FC4646",
+						"navigationBarTextStyle": "white",
+						"navigationBarTitleText": "选择座位"
+					}
+				}, {
+					"path": "pages/ZXGP/TraditionSpecial/Order/oederList",
+					"style": {
+						"navigationBarTitleText": "订单列表"
+					}
+				},
+				{
+					"path": "pages/ZXGP/TraditionSpecial/Order/orderDetail",
+					"style": {
+						"navigationBarTitleText": "订单详情"
+					}
+				},
+				{
+					"path": "pages/ZXGP/TraditionSpecial/issueView",
+					"style": {
+						"navigationBarTitleText": "订单评价"
+					}
+				},
+				{
+					"path": "pages/ZXGP/TraditionSpecial/MapMark/traditionCarMark",
+					"style": {
+						"navigationBarTitleText": "传统地图标识"
+					}
+				},
+				{
+					"path": "pages/ZXGP/TraditionSpecial/MapMark/specialMark",
+					"style": {
+						"navigationBarTitleText": "定制标识"
+					}
+				}, {
+					"path": "pages/ZXGP/TraditionSpecial/MapMark/checkBusLocation",
+					"style": {
+						"navigationBarTitleText": "查看班车位置"
+					}
+				}, {
+					"path": "pages/ZXGP/TraditionSpecial/PayMent/orderPayment",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				}, {
+					"path": "pages/ZXGP/TraditionSpecial/stationPicker/selectStation", //上下车点选择
+					// #ifdef APP-PLUS
+					"navigationStyle": "custom",
+					// #endif
+					"style": {
+						"navigationBarTitleText": "上下车点选择",
+						"navigationBarBackgroundColor": "#FE6C66"
+					}
+				},
+				{
+					"path": "pages/ZXGP/TraditionSpecial/PayMent/CTKYPaySuccess",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				}, {
+					"path": "pages/ZXGP/TraditionSpecial/PayMent/CTKYPayFail",
+					"style": {
+			
+					}
+				}
+			]
+		}
+	],
 
 
 	"globalStyle": {
