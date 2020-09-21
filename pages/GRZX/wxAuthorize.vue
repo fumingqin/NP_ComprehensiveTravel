@@ -198,10 +198,7 @@ export default{
 								address:that.userInfo.province+that.userInfo.city,
 								openId_wx:res1.data.data.OpenId_wx,
 								gender:that.userInfo.gender,
-								openId_qq:res1.data.data.OpenId_qq,
-								openId_ios:res1.data.data.OpenId_ios,
-								openId_app:res1.data.data.OpenId_app,
-								openId_xcx:that.openId_xcx,
+								openId:that.openId_xcx,
 								birthday:res1.data.data.Birthday,
 								autograph:res1.data.data.Autograph,
 								systemname:that.$GrzxInter.systemConfig.appName,//应用名称
