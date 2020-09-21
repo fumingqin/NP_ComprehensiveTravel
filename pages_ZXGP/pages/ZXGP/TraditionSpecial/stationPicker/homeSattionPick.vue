@@ -32,7 +32,7 @@
 							<view class="item">
 								<view class="goods" v-for="(item2,index2) in mainArray" :key="index2" @tap="detailStationTap(item2)">
 									<view>
-										<view>{{item2.LineName}}</view>
+										<view>{{item2.StartSiteName}}</view>
 										<!-- <view v-if="type==0">{{item2.StartSiteName}}</view>
 										<view v-if="type==1">{{item2.EndSiteName}}</view> -->
 									</view>
@@ -47,31 +47,28 @@
 </template>
 
 <script>
+	// import $Zxgp from "@/common/zxgp.js"
 	import $KyInterface from "@/common/Ctky.js"
 	export default {
 		data() {
 			return {
-				scrollHeight: '500px',
-				stationArray: [],
-				leftArray: [],
-				mainArray: [],
-				leftIndex: 0,
+				scrollHeight:'500px',
+				stationArray:[],
+				leftArray:[],
+				mainArray:[],
+				leftIndex:0,
 				keywordList: [],
-				isShowAllList: true, //是否显示联动列表
-				isShowList: false, //是否显示站点列表
-				stationType: '', //判断上个页面点击的是上车点还是下车点
-				applyName: '',
-				type: '',
+				isShowAllList:true,//是否显示联动列表
+				isShowList:false,//是否显示站点列表
+				stationType:'',//判断上个页面点击的是上车点还是下车点
 			}
 		},
-		onLoad(param) {
+		onLoad(param){
 			var that = this;
-			// console.log(param);
 			that.stationType = param.station;
-			that.type = param.type;
-			console.log(that.type)
-			that.applyName = that.$oSit.Interface.system.applyName;
-			// console.log(that.applyName);
+			that.applyName = that.$oSit.Interface.system.appName;
+			that.applyName2 = that.$oSit.Interface.system.applyName2;
+			console.log(that.applyName2);
 			//获取站点列表
 			that.getBusStationList();
 			/* 设置当前滚动容器的高，若非窗口的高度，请自行修改 */
@@ -85,43 +82,58 @@
 			//-------------------------获取车站列表数据-------------------------
 			getBusStationList() {
 				uni.showLoading();
-				console.log($KyInterface.KyInterface.Cs_GetInsuranceCheckState.Url)
+				// console.log($Zxgp.KyInterface.Cs_GetInsuranceCheckState.Url)
 				uni.request({
-					url: $KyInterface.KyInterface.Cs_GetInsuranceCheckState.Url,
-					method: $KyInterface.KyInterface.Cs_GetInsuranceCheckState.method,
-					data: {
-						systemname: this.applyName
+					url: $KyInterface.KyInterface.getStations.Url,
+					method: $KyInterface.KyInterface.getStations.method,
+					data:{
+						systemName:this.applyName2
 					},
 					success: (res) => {
 						console.log('请求接口的数据：', res)
 						uni.hideLoading();
-						let that = this;
-						if (res.data.data.length != 0) {
-							that.mainArray = res.data.data;
-							console.log(that.mainArray)
-							// for (var i = 0; i < res.data.data.length; i++) {
-							// 	var countysArray = {
-							// 		LineName: res.data.data[i].LineName
-							// 	}
-							// 	this.mainArray.push(countysArray);
-							// 	console.log(countysArray)
-							// }
-							// if (that.type == 0) {
-							// 	that.mainArray = res.data.data.filter(item => {
-							// 		return item.StartSiteName !== '延平';
-							// 	})
-							// } else if (that.type == 1) {
-							// 	this.mainArray = res.data.data.filter(item => {
-							// 		return item.EndSiteName !== '延平';
-							// 	})
-							// }
+						// let that = this;
+						if(res.data.data.length != 0){
+							this.mainArray=res.data.data;
 						}
-					},
+						// if (res.data.data.length != 0) {
+						// 	console.log(that.mainArray)
+						// 	if (that.stationType == 'qidian') {
+						// 		for (var i = 0; i < res.data.data.length; i++) { 
+						// 			var a  = this.mainArray.filter(item => {
+						// 					return item.StartSiteName == res.data.data[i].StartSiteName;
+						// 			})
+						// 			if(a ==''){
+						// 				var countysArray = {
+						// 					StartSiteName: res.data.data[i].StartSiteName
+						// 				}
+										
+						// 				this.mainArray.push(countysArray);
+						// 			}
+						// 			console.log(this.mainArray)
+						// 		}
+						// 	} else if (that.stationType == 'zhongdian') {
+						// 		for (var i = 0; i < res.data.data.length; i++) {
+						// 			var a  = this.mainArray.filter(item => {
+						// 					return item.EndSiteName == res.data.data[i].EndSiteName;
+						// 			})
+						// 			if(a ==''){
+						// 				var countysArray = {
+						// 					EndSiteName: res.data.data[i].EndSiteName
+						// 				}
+										
+						// 				this.mainArray.push(countysArray);
+						// 			}
+						// 			console.log(this.mainArray)
+						// 		}
+						//    }
+						// }
+					},	
 					fail(res) {
 						uni.hideLoading();
 					}
 				})
-
+				
 				// var systemName = '';
 				// // #ifdef H5
 				// systemName = '南平旅游H5';
@@ -165,8 +177,8 @@
 				// })
 			},
 			//-------------------------监听输入-------------------------
-			onInput(event) {
-				var keyword = event.detail ? event.detail.value : event;
+			onInput(event){
+				var keyword = event.detail?event.detail.value:event;
 				if (!keyword) {
 					this.keywordList = [];
 					this.isShowList = false;
@@ -188,16 +200,16 @@
 				systemName = '南平旅游H5';
 				// #endif
 				uni.request({
-					url: $KyInterface.KyInterface.Ky_GetSatartSite.Url,
-					method: $KyInterface.KyInterface.Ky_GetSatartSite.method,
-					header: $KyInterface.KyInterface.Ky_GetSatartSite.header,
-					data: {
-						systemName: systemName,
-						keyword: keyword
+					url:$KyInterface.KyInterface.Ky_GetSatartSite.Url,
+					method:$KyInterface.KyInterface.Ky_GetSatartSite.method,
+					header:$KyInterface.KyInterface.Ky_GetSatartSite.header,
+					data:{
+						systemName:systemName,
+						keyword:keyword
 					},
 					success: (res) => {
 						uni.hideLoading();
-						console.log(res);
+						// console.log(res);
 						this.keywordList = [];
 						this.keywordList = this.drawCorrelativeKeyword(res.data, keyword);
 					},
@@ -225,53 +237,54 @@
 				return keywordArr;
 			},
 			//-------------------------点击下拉站点-------------------------
-			itemClick(index) {
+			itemClick(index){
 				var that = this;
 				//获取点击选项的文字
 				var key = this.keywordList[index].keyword;
-				uni.$emit('startstaionChange', {
-					data: key,
-					data2: '延平',
-				});
-				uni.navigateBack({});
-				// if (that.stationType == 'qidian') {
-				// 	//当前是上车点
-				// 	uni.$emit('startstaionChange', {
-				// 		data: key
-				// 	});
-				// 	uni.navigateBack({});
-				// } else if (that.stationType == 'zhongdian') {
-				// 	//当前是下车点
-				// 	uni.$emit('endStaionChange', {
-				// 		data: key
-				// 	});
-				// 	uni.navigateBack({});
-				// }
+				
+				if (that.stationType == 'qidian') {
+					//当前是上车点
+					uni.$emit('startstaionChange', {
+					    data: key
+					});
+					uni.navigateBack({ });
+				}else if(that.stationType == 'zhongdian') {
+					//当前是下车点
+					uni.$emit('endStaionChange', {
+					    data: key
+					});
+					uni.navigateBack({ });
+				}
 			},
 			//-------------------------点击站点-------------------------
-			detailStationTap(item) {
+			detailStationTap(item){
 				// console.log(item.countys);
 				var that = this;
-				//当前是上车点
-				uni.$emit('startstaionChange', {
-					// data: item.StartSiteName,
-					// data2: item.EndSiteName,
-					data: item.StartSiteName,
-					data2: item.EndSiteName,
-				});
-				uni.navigateBack({});
-
+				if (that.stationType == 'qidian') {
+					//当前是上车点
+					uni.$emit('startstaionChange', {
+					    data: item.StartSiteName
+					});
+					uni.navigateBack({ });
+				}else if(that.stationType == 'zhongdian') {
+					//当前是下车点
+					uni.$emit('endStaionChange', {
+					    data: item.EndSiteName
+					});
+					uni.navigateBack({ });
+				}
+				
 			},
-
+			
 			//-------------------------左侧导航点击-------------------------
-			leftTap(e) {
-				let index = e.currentTarget.dataset.index;
-				this.leftIndex = Number(index);
+			leftTap(e){
+				let index=e.currentTarget.dataset.index;
+				this.leftIndex=Number(index);
 			},
 			/* 轮播图切换 */
-			swiperChange(e) {
-				let index = e.detail.current;
-				this.leftIndex = Number(index);
+			swiperChange(e){
+				let index=e.detail.current;
+				this.leftIndex=Number(index);
 			}
 		}
 	}

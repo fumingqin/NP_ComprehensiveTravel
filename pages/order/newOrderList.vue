@@ -21,7 +21,7 @@
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
-								<image class="at_icon" src="../../static/Order/keche.png" mode="aspectFill"></image>
+								<image class="at_icon" src="../../pages_ZXGP/static/ZXGP/keche.png" mode="aspectFill"></image>
 								<view class="at_textView"><text class="at_title">{{item.startSiteName}}-{{item.endSiteName}}</text></view>
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
@@ -69,7 +69,7 @@
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
-								<image class="at_icon" src="../../static/Order/keche.png" mode="aspectFill"></image>
+								<image class="at_icon" src="../../pages_ZXGP/static/ZXGP/keche.png" mode="aspectFill"></image>
 								<view class="at_textView"><text class="at_title">{{item.startSiteName}}-{{item.endSiteName}}</text></view>
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
@@ -106,7 +106,7 @@
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
-								<image class="at_icon" src="../../static/Order/keche.png" mode="aspectFill"></image>
+								<image class="at_icon" src="../../pages_ZXGP/static/ZXGP/keche.png" mode="aspectFill"></image>
 								<view class="at_textView"><text class="at_title">{{item.startSiteName}}-{{item.endSiteName}}</text></view>
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
@@ -150,7 +150,7 @@
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
-								<image class="at_icon" src="../../static/Order/keche.png" mode="aspectFill"></image>
+								<image class="at_icon" src="../../pages_ZXGP/static/ZXGP/keche.png" mode="aspectFill"></image>
 								<view class="at_textView"><text class="at_title">{{item.startSiteName}}-{{item.endSiteName}}</text></view>
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
@@ -190,7 +190,7 @@
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
-								<image class="at_icon" src="../../static/Order/keche.png" mode="aspectFill"></image>
+								<image class="at_icon" src="../../pages_ZXGP/static/ZXGP/keche.png" mode="aspectFill"></image>
 								<view class="at_textView"><text class="at_title">{{item.startSiteName}}-{{item.endSiteName}}</text></view>
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
@@ -1773,11 +1773,11 @@
 				}
 			},
 			//-------------------------景区门票-打开取消弹框-------------------------
-			open3(e, exitindex) {
-				this.ticketOrderNumber = e;
-				this.exitindex = exitindex;
-				this.$refs.popup3.open()
-			},
+			// open3(e, exitindex) {
+			// 	this.ticketOrderNumber = e;
+			// 	this.exitindex = exitindex;
+			// 	this.$refs.popup3.open()
+			// },
 			//-------------------------景区门票-关闭取消弹框-------------------------
 			close3() {
 				this.$refs.popup3.close()

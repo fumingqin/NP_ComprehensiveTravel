@@ -6,7 +6,7 @@
 		<!-- 金刚区 -->
 		<swiper class="h_vajraDistrict">
 			<swiper-item class="vd_item" v-for="(item,index) in functionArray" :key="index">
-				<view class="item_view" v-for="(item2,index2) in item.array" :key="index2" v-if="item2.display == true">
+				<view class="item_view" v-for="(item2,index2) in item.array" :key="index2" v-if="item2.display == true" @click="itemClick(item2.entrance)">
 					<image class="view_image" :src="item2.image" mode="aspectFit"></image>
 					<text class="view_text">{{item2.name}}</text>
 				</view>
@@ -144,17 +144,17 @@
 						entrance: '',
 					}, {
 						name: '客运查询',
-						image: '../../static/home/vajra/keyun.png',
+						image: '../../static/home/vajra/keyun2.png',
 						display: true,
 						entrance: '',
 					}, {
 						name: '公交查询',
 						image: '../../static/home/vajra/gongjiao.png',
 						display: true,
-						entrance: '',
+						entrance: '../../pages_BUS/pages/Bus/BusQuery',
 					}, {
 						name: '景区售票',
-						image: '../../static/home/vajra/jingqu.png',
+						image: '../../static/home/vajra/jingqu2.png',
 						display: true,
 						entrance: '',
 					}],
@@ -261,6 +261,13 @@
 					}
 				})
 				
+			},
+			//点击
+			itemClick:function(entrance){
+				console.log(entrance)
+				uni.navigateTo({
+					url:'../../pages_BUS/pages/Bus/BusQuery'
+				})
 			},
 			
 			//同意添弹框缓存 - 隐私服务
