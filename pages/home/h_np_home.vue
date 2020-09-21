@@ -1,12 +1,12 @@
 <template>
 	<view>
 		<!-- 轮播区 -->
-		<u-swiper :list="rotationChart" :height="422" indicator-pos="bottomRight"></u-swiper>
+		<u-swiper :list="rotationChart" :height="422" indicator-pos="bottomRight" name="ImageURL"></u-swiper>
 
 		<!-- 金刚区 -->
 		<swiper class="h_vajraDistrict">
 			<swiper-item class="vd_item" v-for="(item,index) in functionArray" :key="index">
-				<view class="item_view" v-for="(item2,index2) in item.array" :key="index2" v-if="item2.display == true">
+				<view class="item_view" v-for="(item2,index2) in item.array" :key="index2" v-if="item2.display == true" @click="itemClick(item2.entrance)">
 					<image class="view_image" :src="item2.image" mode="aspectFit"></image>
 					<text class="view_text">{{item2.name}}</text>
 				</view>
@@ -20,7 +20,7 @@
 			<view  class="inf_view">
 				<swiper class="inf_view_swiper" vertical autoplay circular>
 					<swiper-item v-for="(item,index) in information2" :key="index">
-						<view class="inf_view_swiper_view">{{item}}</view>
+						<view class="inf_view_swiper_view">{{item.Title}}</view>
 					</swiper-item>
 				</swiper>
 				<view class="inf_view_view">点击查看资讯动态</view>
@@ -29,33 +29,33 @@
 		
 		<!-- 小功能引导区 -->
 		<view class="h_guidanceArea">
-			<u-row gutter="32">
+			<u-row gutter="12">
 				<u-col span="4">
 					<view class="gui_view">
 						<text class="gui_view_title">健康码</text>
 						<text class="gui_view_text">快捷八闽健康码</text>
-						<image class="gui_view_iamge" src="../../static/home/guidance/tuceng.png" ></image>
-						
-						<!-- <image src="../../static/home/guidance/jiangkangma.png" style=""></image> -->
+						<image class="gui_view_iamge" src="../../static/home/guidance/tuceng1.png" ></image>
 					</view>
 				</u-col>
 				<u-col span="4">
 					<view class="gui_view">
 						<text class="gui_view_title">出行助手</text>
 						<text class="gui_view_text">车站导航/找车车</text>
+						<image class="gui_view_iamge" src="../../static/home/guidance/tuceng2.png" ></image>
 					</view>
 				</u-col>
 				<u-col span="4">
 					<view class="gui_view">
 						<text class="gui_view_title">每日南平</text>
 						<text class="gui_view_text">南平那些新鲜事</text>
+						<image class="gui_view_iamge" src="../../static/home/guidance/tuceng3.png" ></image>
 					</view>
 				</u-col>
 			</u-row>
 		</view>
 		
 		<!-- 广告区 -->
-		<u-swiper style="margin-top: 32upx;" :list="advertisingMap"  :effect3d="true" :title="true" ></u-swiper>
+		<u-swiper style="margin-top: 32upx;" :list="advertisingMap"  :effect3d="true" :title="true" name="ShowImageURL"></u-swiper>
 		
 		<!-- 快捷入口 -->
 		<view class="h_quickEntry">
@@ -76,7 +76,6 @@
 				<text>和</text>
 				<text style="color: #2F9BFE;" @click="privacyClick">《隐私政策》</text>
 				<text>了解详细信息。</br>如你同意，请点击“同意”开始接受我们的服务。</text>
-				
 			</view>
 		</u-modal>
 		
@@ -94,19 +93,10 @@
 	export default {
 		data() {
 			return {
-				rotationChart: ['https://cdn.uviewui.com/uview/swiper/1.jpg', '../../static/home/h_banner1.jpg'], //轮播图
-				advertisingMap: [{
-					image : 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2674493023,3251836362&fm=26&gp=0.jpg',
-					title : '南平山水景观'
-				},{
-					image : 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600252567209&di=a9fc81b9c64096cb259da595b22b9ec6&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180815%2F2f156706827e4ae8803ab0908d9f51d7.jpeg',
-					title : '南平水上景观',
-				},{
-					image : 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600252420006&di=8ca7b10f5673dbd80740c50a6ea8e51e&imgtype=0&src=http%3A%2F%2Fphoto.tuchong.com%2F1315411%2Ff%2F21900506.jpg',
-					title : '茫荡镇三楼古村'
-				}], //广告图
+				rotationChart: ['',''], //轮播图
+				advertisingMap: ['','',''], //广告图
 				information : ['南平综合出行来啦！9月25日试运行！快来体验吧！'], //新闻列表
-				information2 : ['南平综合出行来啦！9月25日试运行！快来体验吧！','点击通告栏的文字时，会触发click事件'], //新闻列表
+				information2 : ['',''], //新闻列表
 				protocolStatus : false, //隐藏弹出层，f为不弹，t为弹
 				upgradeStatus : false, //升级弹出层，f为不弹，t为弹
 				upgradeContent : `
@@ -118,7 +108,7 @@
 				quickEntryData : [{
 					start : '建阳',
 					end : '新区',
-					image : '../../static/home/temporary/xianlu.png'
+					image : '../../static/home/temporary/xianlu.png' 
 				},{
 					start : '邵武',
 					end : '泰宁',
@@ -154,17 +144,17 @@
 						entrance: '',
 					}, {
 						name: '客运查询',
-						image: '../../static/home/vajra/keyun.png',
+						image: '../../static/home/vajra/keyun2.png',
 						display: true,
 						entrance: '',
 					}, {
 						name: '公交查询',
-						image: '../../static/home/vajra/gongjiao.png',
+						image: '../../static/home/vajra/gongjiao2.png',
 						display: true,
-						entrance: '',
+						entrance: '../Bus/BusQuery',
 					}, {
 						name: '景区售票',
-						image: '../../static/home/vajra/jingqu.png',
+						image: '../../static/home/vajra/jingqu2.png',
 						display: true,
 						entrance: '',
 					}],
@@ -205,7 +195,7 @@
 			if(pro !== true){
 				this.protocolStatus = true;
 			}
-			
+			this.loadData();
 			// #ifdef MP-WEIXIN
 			// 校验小程序登录
 			// this.getLoginState();       
@@ -213,6 +203,73 @@
 			
 		},
 		methods: {
+			//加载专线
+			loadData : function(){
+				uni.request({
+					url:'http://appdl.xmjdt.cn:60032/api/BasicImage/GetRotationChart',
+					method:'POST',
+					success:(res)=>{
+						// console.log('轮播区',res)
+						this.rotationChart = res.data.data;
+						// console.log(this.rotationChart)
+					},
+					fail:function(){
+						uni.showToast({
+							title:'首页轮播图网络加载异常',
+							icon:'none'
+						})
+					}
+				})
+				
+				uni.request({
+					url:'http://appdl.xmjdt.cn:60032/api/News/GetNews',
+					method:'POST',
+					success:(res)=>{
+						console.log('新闻资讯',res)
+						this.information2 = res.data.data;
+						// console.log(this.rotationChart)
+					},
+					fail:function(){
+						uni.showToast({
+							title:'新闻资讯加载异常',
+							icon:'none'
+						})
+					}
+				})
+				
+				uni.request({
+					url:'http://appdl.xmjdt.cn:60032/api/BasicImage/GetHomeStyle',
+					method:'POST',
+					success:(res)=>{
+						// console.log('广告区',res)
+						this.advertisingMap = [];
+						for(let i=0; i<res.data.data.length; i++){
+							var a = {
+								AID : res.data.data[i].AID,
+								ShowImageURL : res.data.data[i].ShowImageURL,
+								title : res.data.data[i].Title,
+							}
+							this.advertisingMap.push(a);
+						}
+						// console.log(this.rotationChart)
+					},
+					fail:function(){
+						uni.showToast({
+							title:'首页广告图网络加载异常',
+							icon:'none'
+						})
+					}
+				})
+				
+			},
+			//点击
+			itemClick:function(entrance){
+				console.log(entrance)
+				uni.navigateTo({
+					url:'../GRZX/userLogin'
+				})
+			},
+			
 			//同意添弹框缓存 - 隐私服务
 			agreeProtocol:function(){
 				uni.setStorage({
@@ -350,14 +407,14 @@
 		.gui_view{
 			// border-radius: 8upx; 
 			// background: #FFFFFF; 
-			padding: 24upx 20upx;
+			padding: 37upx 20upx;
 			position: relative;
 			.gui_view_iamge{
 				position: absolute;
 				left: 0;
 				top: 0;
-				width: 218upx;
-				height: 118upx;
+				width: 240upx;
+				height: 140upx;
 				z-index: 1;
 			}
 			.gui_view_title{

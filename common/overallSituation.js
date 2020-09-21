@@ -40,7 +40,8 @@ const appConfig={  //AppId,AppSecret配置
 	wxConfig:{
 		name:'小程序的Appid',
 		// wxAppId:'wxb9df0ad8d98f94a1', //专线购票
-		wxAppId:'wx37b8f978e30050e4', //南平综合出行
+		//wxAppId:'wx37b8f978e30050e4', //南平综合出行
+		wxAppId:'wxf64bf945b37a9939', //南平综合出行09-21
 	},
 	H5Config:{
 		name:'公众号的Appid和App秘钥',
