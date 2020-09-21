@@ -84,18 +84,6 @@ const Interface={
 		method:'POST',
 		pages: [],
 	},
-	// userInfoListDetail:{
-	// 	value:Url+'/api/person/userInfoListDetail',
-	// 	name:'获取详细信息',
-	// 	method:'POST',
-	// 	pages: [],
-	// },
-	// BindPersonInfoOpenID_wxAndPhoneNumber:{
-	// 	value:Url+'/api/person/BindPersonInfoOpenID_wxAndPhoneNumber',
-	// 	name:'微信openid，绑定手机号',
-	// 	method:'POST',
-	// 	pages: [],
-	// },
 	changeInfoPortrait:{
 		value:Url+'/api/person/changeInfoPortrait',
 		name:'只修改头像',
@@ -113,12 +101,6 @@ const Interface={
 		name:'获取版本号',
 		method:'POST',
 		pages: [],
-	},
-	AddSuggestion:{
-		value:Url+'/api/person/AddSuggestion',
-		name:'添加意见',
-		method:'POST',
-		pages: [],
 	}, 
 	GetOpenId_xcx:{
 		value:Url+'/api/person/GetOpenId_xcx',
@@ -126,45 +108,21 @@ const Interface={
 		method:'POST',
 		pages: [],
 	},
-	SearchCustomerService:{
-		value:Url+'/api/person/SearchCustomerService',
-		name:'获取QQ客服和电话客服',
-		method:'POST',
-		pages: [],
-	},
-	// getNews:{
-	// 	value:Url+'/api/person/getNews',
-	// 	name:'获取新闻资讯列表（旧）',
-	// 	method:'POST',
-	// 	pages: [],
-	// },
-	getallMsg:{
-		value:Url+'/api/ky/getallMsg',
+	GetNews:{
+		value:Url1+'/api/News/GetNews',
 		name:'获取新闻资讯列表',
 		method:'POST',
 		pages: [],
 	},
-	getbymsg:{
-		value:Url+'/api/ky/getbymsg',
+	GetNewsByAID:{
+		value:Url1+'/api/News/GetNewsByAID',
 		name:'获取新闻资讯详情',
-		method:'POST',
-		pages: [],
-	},
-	AddNewsCount:{
-		value:Url+'/api/person/AddNewsCount',
-		name:'添加游览量',
 		method:'POST',
 		pages: [],
 	},
 	AddEmergencyContact:{
 		value: Url + '/api/person/AddEmergencyContact',
 		name:'添加紧急联系人',
-		method:'POST',//GET-POST
-		pages:[]
-	},
-	GetUserLastLoginTime:{
-		value: Url + '/api/person/GetUserLastLoginTime',
-		name:'获取用户最后登录时间',
 		method:'POST',//GET-POST
 		pages:[]
 	},
