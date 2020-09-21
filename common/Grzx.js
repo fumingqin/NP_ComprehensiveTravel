@@ -15,7 +15,7 @@ import $oSit from '@/common/overallSituation.js';
 	const Url=$oSit.Interface.address.Url;
 // #endif
 
-const Url1 = 'http://36.250.234.10:60032';
+const Url1 = $oSit.Interface.address.Url2;
 
 const systemConfig={
 	appName:$oSit.Interface.system.appName,	
@@ -343,7 +343,7 @@ function navToHome(){
 		})
 	}else if($oSit.Interface.system.appName=="南平综合出行"){
 		uni.switchTab({
-			url:'/pages/Home/zy_zhcx',//南平综合出行
+			url:'/pages/home/h_np_home',//南平综合出行
 		})
 	}
 }
