@@ -250,124 +250,124 @@
 				ItemArr: [{
 					// 	IsUse: true,
 					// 	clickURL: "../../pages_DDQC/pages/RentBike/RentBikeHome",
-					// 	ImageURL: "../../static/Home/serve/DDQC.png",
+					// 	ImageURL: "../../static/home/serve/DDQC.png",
 					// 	ItemTitle: "达达骑车"
 					// },
 					// {
 						IsUse: false,
 						clickURL: "/pages_CTKY/pages/CTKY/TraditionSpecial/Home/ctkyIndex",
-						// ImageURL: "../../static/Home/serve/hcpdinggou.png",//暗
-						ImageURL: "../../static/Home/serve/cpdinggou.png",//亮
+						// ImageURL: "../../static/home/serve/hcpdinggou.png",//暗
+						ImageURL: "../../static/home/serve/cpdinggou.png",//亮
 						ItemTitle: "车票订购"
 					},
 					{
 						IsUse: true,
 						clickURL: "../../pages_GJCX/pages/GJCX/busH5",
-						ImageURL: "../../static/Home/serve/gjchaxun.png",//亮
-						// ImageURL: "../../static/Home/serve/hgjchaxun.png",//暗
+						ImageURL: "../../static/home/serve/gjchaxun.png",//亮
+						// ImageURL: "../../static/home/serve/hgjchaxun.png",//暗
 						ItemTitle: "公交查询"
 					},
 					{
 						IsUse: false,
 						clickURL: "../../pages_GJCX/pages/HB/hangban",
-						// ImageURL: "../../static/Home/serve/hhangban.png",//暗
-						ImageURL: "../../static/Home/serve/hangban.png",//亮
+						// ImageURL: "../../static/home/serve/hhangban.png",//暗
+						ImageURL: "../../static/home/serve/hangban.png",//亮
 						ItemTitle: "航班"
 					},
 					{
 						IsUse: false,
 						clickURL: "../../pages_GJCX/pages/HC/huoche",
-						// ImageURL: "../../static/Home/serve/hhuoche.png",//暗
-						ImageURL: "../../static/Home/serve/huoche.png",//亮
+						// ImageURL: "../../static/home/serve/hhuoche.png",//暗
+						ImageURL: "../../static/home/serve/huoche.png",//亮
 						ItemTitle: "火车"
 					},
 					{
 						IsUse: false,
 						// clickURL: "/pages_BCFW/pages/BCFW/bf_chartered",
 						clickURL:"",
-						ImageURL: "../../static/Home/serve/hbcfuwu.png",//暗
-						// ImageURL: "../../static/Home/serve/bcfuwu.png",//亮
+						ImageURL: "../../static/home/serve/hbcfuwu.png",//暗
+						// ImageURL: "../../static/home/serve/bcfuwu.png",//亮
 						ItemTitle: "包车服务"
 					},
 					
 					{
 						IsUse: false,
 						clickURL: "",
-						ImageURL: "../../static/Home/serve/hwlyueche.png",//暗
-						// ImageURL: "../../static/Home/serve/wlyueche.png",//亮
+						ImageURL: "../../static/home/serve/hwlyueche.png",//暗
+						// ImageURL: "../../static/home/serve/wlyueche.png",//亮
 						ItemTitle: "网络约车"
 					},
 					// {
 					// 	IsUse: false,
 					// 	clickURL: "",
-					// 	ImageURL: "../../static/Home/serve/hgwzuche.png",//暗
-					// 	// ImageURL: "../../static/Home/serve/gwzuche.png",//亮
+					// 	ImageURL: "../../static/home/serve/hgwzuche.png",//暗
+					// 	// ImageURL: "../../static/home/serve/gwzuche.png",//亮
 					// 	ItemTitle: "公务租车"
 					// },
 					{
 						IsUse: false,
 						clickURL: "",
-						ImageURL: "../../static/Home/serve/hxjkuaidi.png",//暗
-						// ImageURL: "../../static/Home/serve/xjkuaidi.png",//亮
+						ImageURL: "../../static/home/serve/hxjkuaidi.png",//暗
+						// ImageURL: "../../static/home/serve/xjkuaidi.png",//亮
 						ItemTitle: "小件快递"
 					},
 					// {
 					// 	IsUse: false,
 					// 	clickURL: "",
-					// 	ImageURL: "../../static/Home/serve/htianqi.png",//暗
-					// 	// ImageURL: "../../static/Home/serve/tianqi.png",//亮
+					// 	ImageURL: "../../static/home/serve/htianqi.png",//暗
+					// 	// ImageURL: "../../static/home/serve/tianqi.png",//亮
 					// 	ItemTitle: "天气"
 					// },
 				
 					{
 						IsUse: false,
 						clickURL: "",
-						ImageURL: "../../static/Home/serve/hjcyuyue.png",//暗
-						// ImageURL: "../../static/Home/serve/jcyuyue.png",//亮
+						ImageURL: "../../static/home/serve/hjcyuyue.png",//暗
+						// ImageURL: "../../static/home/serve/jcyuyue.png",//亮
 						ItemTitle: "检测预约"
 					},
 					{
 						IsUse: false,
 						clickURL: "",
-						ImageURL: "../../static/Home/serve/hxqzhuanxian.png",//暗
-						// ImageURL: "../../static/Home/serve/xqzhuanxian.png",//亮
+						ImageURL: "../../static/home/serve/hxqzhuanxian.png",//暗
+						// ImageURL: "../../static/home/serve/xqzhuanxian.png",//亮
 						ItemTitle: "武夷新区"
 					},
 					{
 						IsUse: false,
 						clickURL: "",
-						ImageURL: "../../static/Home/serve/hcuncuntong.png",//暗
-						// ImageURL: "../../static/Home/serve/cuncuntong.png",//亮
+						ImageURL: "../../static/home/serve/hcuncuntong.png",//暗
+						// ImageURL: "../../static/home/serve/cuncuntong.png",//亮
 						ItemTitle: "村村通"
 					}
 				],
 				ItemArr2: [{
 				// 		IsUse: false,
 				// 		clickURL: "",
-				// 		ImageURL: "../../static/Home/serve/hziyouxing.png",//暗
-				// 		// ImageURL: "../../static/Home/serve/ziyouxing.png",//亮
+				// 		ImageURL: "../../static/home/serve/hziyouxing.png",//暗
+				// 		// ImageURL: "../../static/home/serve/ziyouxing.png",//亮
 				// 		ItemTitle: "自由行"
 				// 	},
 				// 	{
 				// 		IsUse: false,
 				// 		clickURL: "",
-				// 		ImageURL: "../../static/Home/serve/hgentuanyou.png",//暗
-				// 		// ImageURL: "../../static/Home/serve/gentuanyou.png",//亮
+				// 		ImageURL: "../../static/home/serve/hgentuanyou.png",//暗
+				// 		// ImageURL: "../../static/home/serve/gentuanyou.png",//亮
 				// 		ItemTitle: "跟团游"
 				// 	},
 					// {
 						IsUse: true,
 						// clickURL: "/pages_LYFW/pages/LYFW/scenicSpotTickets/ticketsList",
 						clickURL:"",
-						// ImageURL: "../../static/Home/serve/jqgoupiao.png",//亮
-						ImageURL: "../../static/Home/serve/hjqgoupiao.png",//暗
+						// ImageURL: "../../static/home/serve/jqgoupiao.png",//亮
+						ImageURL: "../../static/home/serve/hjqgoupiao.png",//暗
 						ItemTitle: "景区购票"
 					}
 					// {
 					// 	IsUse: false,
 					// 	clickURL: "/pages_LYFW/pages/LYFW/tourismProducts/tp_ticketsList",
-					// 	ImageURL: "../../static/Home/serve/lyshangpin.png",//亮
-					// 	// ImageURL: "../../static/Home/serve/hlyshangpin.png",//暗
+					// 	ImageURL: "../../static/home/serve/lyshangpin.png",//亮
+					// 	// ImageURL: "../../static/home/serve/hlyshangpin.png",//暗
 					// 	ItemTitle: "旅游产品"
 					// }
 
