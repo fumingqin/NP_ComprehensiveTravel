@@ -85,7 +85,7 @@ const Interface={
 		pages: [],
 	},
 	changeInfoPortrait:{
-		value:Url+'/api/person/changeInfoPortrait',
+		value:Url1+'/api/person/changeInfoPortrait',
 		name:'只修改头像',
 		method:'POST',
 		pages: [],
@@ -103,7 +103,7 @@ const Interface={
 		pages: [],
 	}, 
 	GetOpenId_xcx:{
-		value:Url+'/api/person/GetOpenId_xcx',
+		value:Url1+'/api/person/GetOpenId_xcx',
 		name:'获取微信小程序的openid',
 		method:'POST',
 		pages: [],
@@ -121,17 +121,17 @@ const Interface={
 		pages: [],
 	},
 	AddEmergencyContact:{
-		value: Url + '/api/person/AddEmergencyContact',
+		value: Url1 + '/api/person/AddEmergencyContact',
 		name:'添加紧急联系人',
 		method:'POST',//GET-POST
 		pages:[]
 	},
-	getByTitle:{
-		value: Url + '/api/ky/getByTitle',
-		name:'获取乘车须知',
-		method:'POST',//GET-POST
-		pages:[]
-	},
+	// getByTitle:{
+	// 	value: Url + '/api/ky/getByTitle',
+	// 	name:'获取乘车须知',
+	// 	method:'POST',//GET-POST
+	// 	pages:[]
+	// },
 	
 	//------------------------------------意见反馈------------------------------------
 	Add_Suggestion:{
