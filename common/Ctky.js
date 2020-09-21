@@ -300,8 +300,15 @@ const KyInterface = {
 	},
 	
 	//--------------------------------------线路查询--------------------------------------
-	GetAllLine:{
-		Url: Url2 + '/api/CustomizedBus/GetAllLine',
+	GetLineName:{
+		Url: Url2 + '/api/KY/GetLineName',
+		name:'线路查询',
+		method:'GET',
+	},
+	
+	//--------------------------------------线路查询--------------------------------------
+	getStations:{
+		Url: Url2 + '/api/KY/getStations',
 		name:'线路查询',
 		method:'POST',
 	},
@@ -311,7 +318,7 @@ const KyInterface = {
 		Url: Url2 + '/api/CustomizedBus/GetSellableScheduleByLineName',
 		name:'查询班次',
 		method:'POST',
-	},
+	}, 
 }
 
 const InterfaceAddress = [
