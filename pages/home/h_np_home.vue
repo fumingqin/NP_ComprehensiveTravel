@@ -20,7 +20,7 @@
 			<view  class="inf_view">
 				<swiper class="inf_view_swiper" vertical autoplay circular>
 					<swiper-item v-for="(item,index) in information2" :key="index">
-						<view class="inf_view_swiper_view">{{item}}</view>
+						<view class="inf_view_swiper_view">{{item.Title}}</view>
 					</swiper-item>
 				</swiper>
 				<view class="inf_view_view">点击查看资讯动态</view>
@@ -76,7 +76,6 @@
 				<text>和</text>
 				<text style="color: #2F9BFE;" @click="privacyClick">《隐私政策》</text>
 				<text>了解详细信息。</br>如你同意，请点击“同意”开始接受我们的服务。</text>
-				
 			</view>
 		</u-modal>
 		
@@ -97,7 +96,7 @@
 				rotationChart: ['',''], //轮播图
 				advertisingMap: ['','',''], //广告图
 				information : ['南平综合出行来啦！9月25日试运行！快来体验吧！'], //新闻列表
-				information2 : ['南平综合出行来啦！9月25日试运行！快来体验吧！','点击通告栏的文字时，会触发click事件'], //新闻列表
+				information2 : ['',''], //新闻列表
 				protocolStatus : false, //隐藏弹出层，f为不弹，t为弹
 				upgradeStatus : false, //升级弹出层，f为不弹，t为弹
 				upgradeContent : `
@@ -223,10 +222,26 @@
 				})
 				
 				uni.request({
+					url:'http://appdl.xmjdt.cn:60032/api/News/GetNews',
+					method:'POST',
+					success:(res)=>{
+						console.log('新闻资讯',res)
+						this.information2 = res.data.data;
+						// console.log(this.rotationChart)
+					},
+					fail:function(){
+						uni.showToast({
+							title:'新闻资讯加载异常',
+							icon:'none'
+						})
+					}
+				})
+				
+				uni.request({
 					url:'http://appdl.xmjdt.cn:60032/api/BasicImage/GetHomeStyle',
 					method:'POST',
 					success:(res)=>{
-						console.log('广告区',res)
+						// console.log('广告区',res)
 						this.advertisingMap = [];
 						for(let i=0; i<res.data.data.length; i++){
 							var a = {
