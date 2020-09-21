@@ -295,6 +295,54 @@
 					}
 				}
 			]
+		},
+		//---------------------------------------------第二个包：专线购票------------------------------------------
+		{
+			"root":"pages_BUS/",
+			"pages":[
+				{
+					"path": "pages/Bus/BusQuery",
+					"style": {
+						"navigationBarTitleText": "公交查询"
+					}
+				},
+				{
+					"path": "pages/Bus/BusLocation",
+					"style": {
+						"navigationBarTitleText": "公交位置"
+					}
+				},
+				{
+					"path": "pages/Bus/BusSearch", 
+					"style": {
+						"navigationBarTitleText": "公交搜索"
+					}
+				},
+				{
+					"path": "pages/Bus/RoutePlan", 
+					"style": {
+						"navigationStyle": "线路推荐"
+					}
+				},
+				{
+					"path": "pages/Bus/SearchDetail", 
+					"style": {
+						"navigationBarTitleText": "搜索详情"
+					}
+				},
+				{
+					"path": "pages/Bus/TicketPurchase", 
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				{
+					"path": "pages/Bus/TransitSearch",
+					"style": {
+						"navigationBarTitleText": "公交搜索"
+					}
+				}
+			]
 		}
 	],
 	
