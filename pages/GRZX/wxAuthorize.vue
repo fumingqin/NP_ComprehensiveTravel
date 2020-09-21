@@ -98,62 +98,70 @@ export default{
 				},
 				success(logRes){
 					console.log(logRes,'logRes')
-					uni.setStorageSync('scenicSpotOpenId',logRes.data.data.openid)
-					var openid=logRes.data.data.openid;
-					that.sessionKey=logRes.data.data.session_key;
-					that.openId_xcx=logRes.data.data.openid;
-					uni.request({
-						url: that.$GrzxInter.Interface.GetUserInfoByOpenId.value,
-						data:{
-							openid:openid,
-							systemname:that.$GrzxInter.systemConfig.appName,//应用名称
-							openidtype:that.$GrzxInter.systemConfig.openidtype,//应用类型
-						},
-						method:that.$GrzxInter.Interface.GetUserInfoByOpenId.method,
-						success(res){
-							setTimeout(function(){
-								uni.hideLoading();
-							},1000);
-							console.log(res,"提示什么？");
-							if(!res.data.status || res.data.data.phoneNumber=="" || res.data.data.phoneNumber==null){
-								if(that.type=="index"){
+					if(logRes.data.status){
+						uni.setStorageSync('scenicSpotOpenId',logRes.data.data.openid)
+						var openid=logRes.data.data.openid;
+						that.sessionKey=logRes.data.data.session_key;
+						that.openId_xcx=logRes.data.data.openid;
+						uni.request({
+							url: that.$GrzxInter.Interface.GetUserInfoByOpenId.value,
+							data:{
+								openid:openid,
+								systemname:that.$GrzxInter.systemConfig.appName,//应用名称
+								openidtype:that.$GrzxInter.systemConfig.openidtype,//应用类型
+							},
+							method:that.$GrzxInter.Interface.GetUserInfoByOpenId.method,
+							success(res){
+								setTimeout(function(){
+									uni.hideLoading();
+								},1000);
+								console.log(res,"提示什么？");
+								if(!res.data.status || res.data.data.phoneNumber=="" || res.data.data.phoneNumber==null){
+									if(that.type=="index"){
+										uni.showToast({
+											title:'授权成功！',
+											icon:'success',
+										})
+										uni.navigateBack();
+									}else{
+										that.bindState=true;
+									}
+								}else{
+									var data = res.data.data;
+									var user = new Object();
+									user = {
+										address : data.Address,
+										autograph : data.Autograph,
+										birthday : data.Birthday,
+										gender : data.Gender,
+										openId_app : data.OpenId_app,
+										openId_ios : data.OpenId_ios,
+										openId_qq : data.OpenId_qq,
+										openId_wx : data.OpenId_wx,
+										openId_xcx : data.OpenId_xcx,
+										phoneNumber : data.PhoneNumber,
+										portrait : data.Portrait,
+										userId : data.UserId,
+										nickname : data.Nickname,
+									};
+									uni.setStorageSync('userInfo', user);
 									uni.showToast({
-										title:'授权成功！',
+										title:'登录成功！',
 										icon:'success',
 									})
-									uni.navigateBack();
-								}else{
-									that.bindState=true;
-								}
-							}else{
-								var data = res.data.data;
-								var user = new Object();
-								user = {
-									address : data.Address,
-									autograph : data.Autograph,
-									birthday : data.Birthday,
-									gender : data.Gender,
-									openId_app : data.OpenId_app,
-									openId_ios : data.OpenId_ios,
-									openId_qq : data.OpenId_qq,
-									openId_wx : data.OpenId_wx,
-									openId_xcx : data.OpenId_xcx,
-									phoneNumber : data.PhoneNumber,
-									portrait : data.Portrait,
-									userId : data.UserId,
-									nickname : data.Nickname,
-								};
-								uni.setStorageSync('userInfo', user);
-								uni.showToast({
-									title:'登录成功！',
-									icon:'success',
-								})
-								setTimeout(function(){
-									uni.navigateBack();
-								},500);
-							}	
-						}
-					})
+									setTimeout(function(){
+										uni.navigateBack();
+									},500);
+								}	
+							}
+						})
+					}else{
+						uni.showToast({
+							title: logRes.data.msg,
+							icon:'none',
+						});
+					}
+					
 				},
 				fail(res) {
 					console.log('请求错误',res)

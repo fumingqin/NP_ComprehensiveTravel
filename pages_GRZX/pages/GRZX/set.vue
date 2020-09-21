@@ -3,7 +3,7 @@
 		<view class="itemClass" @click="clearStorage" hover-class="btnClass">
 			<text class="">清除缓存</text>
 			<text class="sizeClass">{{currentSize}}</text>
-			<image src="../../static/GRZX/icon-right.png" class="rightClass"></image>
+			<!-- <image src="../../static/GRZX/icon-right.png" class="rightClass"></image> -->
 		</view>
 		<!-- #ifdef APP-PLUS -->
 		<view class="itemClass" @click="toLogout">
