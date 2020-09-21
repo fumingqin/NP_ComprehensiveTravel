@@ -144,17 +144,17 @@
 						entrance: '',
 					}, {
 						name: '客运查询',
-						image: '../../static/home/vajra/keyun.png',
+						image: '../../static/home/vajra/keyun2.png',
 						display: true,
 						entrance: '',
 					}, {
 						name: '公交查询',
-						image: '../../static/home/vajra/gongjiao.png',
+						image: '../../static/home/vajra/gongjiao2.png',
 						display: true,
 						entrance: '',
 					}, {
 						name: '景区售票',
-						image: '../../static/home/vajra/jingqu.png',
+						image: '../../static/home/vajra/jingqu2.png',
 						display: true,
 						entrance: '',
 					}],
