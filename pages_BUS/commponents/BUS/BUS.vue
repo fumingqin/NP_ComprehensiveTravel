@@ -14,7 +14,7 @@
 				<view class="carImage" :class="['carImage--' + direction]" v-for="(carItem,carIndex) in carLocationArray" :key="carIndex" 
 				v-if="index == carItem.stationIndex - 1">
 				    <view style="font-size: 20rpx;width: 140rpx;">{{carItem.registcode}}</view>
-				    <image  class="carLocation" src="../../pages_DDQC/static/Bus/busLocation.png"></image>
+				    <image  class="carLocation" src="../../static/Bus/busLocation.png"></image>
 					
 				</view>
 				<!-- 圆点 -->

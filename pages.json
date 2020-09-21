@@ -296,14 +296,24 @@
 				}
 			]
 		},
-		//---------------------------------------------第二个包：专线购票------------------------------------------
+		//---------------------------------------------第三个包：公交车------------------------------------------
 		{
 			"root":"pages_BUS/",
 			"pages":[
 				{
 					"path": "pages/Bus/BusQuery",
 					"style": {
-						"navigationBarTitleText": "公交查询"
+						"navigationBarBackgroundColor": "#6BD78C",
+						"titleNView": {
+							"searchInput": {
+								"align": "left",
+								"disabled": "true",
+								"borderRadius": "10px",
+								"backgroundColor": "#ffffff",
+								"placeholder": "搜索线路/站点/地点",
+								"placeholderColor": "#AAAAAA"
+							}
+						}
 					}
 				},
 				{
@@ -313,15 +323,9 @@
 					}
 				},
 				{
-					"path": "pages/Bus/BusSearch", 
-					"style": {
-						"navigationBarTitleText": "公交搜索"
-					}
-				},
-				{
 					"path": "pages/Bus/RoutePlan", 
 					"style": {
-						"navigationStyle": "线路推荐"
+						"navigationBarTitleText": "线路方案"
 					}
 				},
 				{
@@ -351,7 +355,7 @@
 
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		// "navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
