@@ -328,6 +328,8 @@
 			// --------------------------------------8.修改头像------------------------------------
 			changePortrait(){
 				var that=this;
+				console.log("头像",that.port);
+				console.log("用户ID",that.userId);
 				uni.request({
 					url:that.$GrzxInter.Interface.changeInfoPortrait.value,
 					data:{
@@ -336,7 +338,7 @@
 					},
 					method:that.$GrzxInter.Interface.changeInfoPortrait.method,
 					success(res1) {
-						// console.log(res1,"290")
+						console.log(res1,"290")
 						uni.showToast({
 							title:'信息保存成功！',
 							icon:'success'

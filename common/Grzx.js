@@ -108,15 +108,15 @@ const Interface={
 		method:'POST',
 		pages: [],
 	},
-	GetNews:{
-		value:Url1+'/api/News/GetNews',
-		name:'获取新闻资讯列表',
+	getallMsg:{
+		value:Url+'/api/ky/getallMsg',
+		name:'通知列表',
 		method:'POST',
 		pages: [],
 	},
-	GetNewsByAID:{
-		value:Url1+'/api/News/GetNewsByAID',
-		name:'获取新闻资讯详情',
+	getbymsg:{
+		value:Url+'/api/ky/getbymsg',
+		name:'通知详情',
 		method:'POST',
 		pages: [],
 	},
