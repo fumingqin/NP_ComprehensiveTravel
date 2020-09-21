@@ -1,28 +1,33 @@
 <template>
-	<view>
-		<!-- #ifdef APP-PLUS -->
+	<view class="content">
+		<view class="backImg">
+			
+			<!-- #ifdef APP-PLUS -->
 			<image src="../../static/GRZX/set.png" class="setClass" @click="navTo('set')"></image>
-		<!-- #endif -->
-		
-		<view class="container u-skeleton" @click="checkLogin">
-			<view class="userinfo">
-				<block>
-					<!--u-skeleton-circle 绘制圆形-->
-					<image class="userinfo-avatar u-skeleton-circle" :src="port ||'/static/GRZX/missing-face.png'"></image>
-					<!--u-skeleton-fillet 绘制圆角矩形-->
-					<view class="boxClass">
-						<text class="u-skeleton-fillet fontStyle1">{{nickname}}</text>
-						<text v-if="nickname != '游客'" class="u-skeleton-fillet fontStyle2">普通会员</text>
+			<image src="../../static/GRZX/info.png" class="infoClass" @click="navTo('myNews')"></image>
+			<image src="../../static/GRZX/scan.png" class="scanClass" @click="navTo('scan')"></image>
+			<!-- #endif -->
+			
+			<!-- 个人信息，头像，昵称等等 -->
+			<view class="userInfoClass" @click="checkLogin">
+				<image class="portraitClass" :src="port || '/static/GRZX/missing-face.png'"></image>
+				<view class="usernameClass" style="display: flex;flex-direction: column;">
+					<view><text>{{nickname}}</text></view>
+					<view class="userTypeBox" v-if="nickname != '游客'">
+						<!-- <image src="../../static/GRZX/huangguan.png" class="iconClass bc_GRZX_UserType"></image> -->
+						<text class="typeBox bc_GRZX_UserType" >普通用户</text>
 					</view>
-				</block>
+				</view>
 			</view>
-		</view>
-		<!--引用组件-->
-		<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
-		
-		<view class="myBox">
-			<text class="myClass">我的订单</text>
-			<view class="boxClass">
+						
+			<!-- 个人主页按钮 -->
+			<!-- <view class="grzyClass" @click="checkLogin">
+				<text>个人主页</text>
+				<image src="../../static/GRZX/btnRight_Home.png" class="rightClass"></image>
+			</view> -->
+			
+			<!-- 订单链接按钮 -->
+			<view class="myBox">
 				<view class="collection" @click="orderClick(3)" hover-class="btn_Click">
 					<image src="../../static/GRZX/tubiao_pay1.png" class="imgStyle1" mode="aspectFill"></image>
 					<text class="myFont">待支付</text>
@@ -37,10 +42,15 @@
 				</view>
 			</view>
 		</view>
+
 		<!-- 广告 -->
 		<image :src="advert" class="advertClass" lazy-load="true"></image>
-		
+
 		<view class="serviceBox">
+			<text class="moreClass">更多服务</text>
+			<!-- 分割线 -->
+			<view class="lineClass"></view>
+			
 			<!-- ========================更多服务的功能模块============================ -->
 			<view style="display: flex; flex-wrap: wrap;">
 				<view v-for="(item,index) in serviceList" :key="index">
@@ -58,7 +68,7 @@
 			<!-- ========================更多服务的功能模块============================ -->
 			
 		</view>
-		
+
 		<!-- 添加紧急联系人弹窗 -->
 		<view :hidden="userFeedbackHidden" class="popup_content">
 			<view class="popup_title">添加</view>
@@ -97,8 +107,6 @@
 				RealNameStatus: '', 	//是否实名--已实名、未实名、认证中
 				
 				serviceList:[], 	//服务功能模块
-				
-				loading: true, // 是否显示骨架屏组件
 			}
 		},
 		onLoad() {	
@@ -112,6 +120,14 @@
 		onShow() {
 			var that = this;
 			this.loadData();
+			
+			//读取客服热线
+			// uni.getStorage({
+			// 	key: 'ConsumerHotline',
+			// 	success(res) {
+			// 		that.phoneNumber = res.data.Phone1
+			// 	}
+			// })
 		},
 		methods: {
 			// ---------------------------加载图片----------------------------
@@ -270,11 +286,6 @@
 					fail() {
 						that.nickname = "游客";
 						that.port = "";
-					},
-					complete: () => {
-						setTimeout(function(){
-							that.loading = false;
-						},1500)
 					}
 				})
 			},
@@ -676,350 +687,471 @@
 	}
 </script>
 
-<style lang="scss" scoped>
-	page{
-		background-color: #e3e3e3;
+<style lang="scss">
+	page {
+		background-color: #F5F9FA;
 	}
-	.container {
-			padding: 50rpx 60rpx 20rpx 60rpx;
-		}
+
+	.content {}
+
+	.backImg {
+		width: 100%;
+		height: 510upx;
+		position: relative;  
+		z-index: 1;  
+		overflow: hidden;
+	}
 	
-		.userinfo {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			margin-top: 95upx;
-		}
-	
-		.userinfo-avatar {
-			width: 128rpx;
-			height: 128rpx;
-			margin: 20rpx;
-			border-radius: 50%;
-		}
-		.boxClass{
-			display: flex;
-			flex-direction: column;
-		}
-		.fontStyle1{
-			font-size: 40upx;
-			color: #333333;
-		}
-		.fontStyle2{
-			font-size: 27upx;
-			color: #CFCFDE;
-			margin-top: 10upx;
-		}
-	
-		.lists {
-			margin: 10px 0;
-		}
-		
-		.myBox {
-			//包括我的收藏，我的订单，我的历史
-			width: 93%;
-			margin-left: 3.5%;
-			margin-top: 10upx;
-			background-color: #FFFFFF;
-			display: flex;
-			flex-direction: column;
-			border-radius: 25upx;
-			box-shadow: 0px 7px 38px 8px rgba(97, 97, 97, 0.1);
-			.myClass{
-				font-size: 35upx;
-				font-weight: bold;
-				color: #000000;
-				margin-top: 20upx;
-				margin-left: 8%;
-			}
-			.boxClass{
-				display: flex;
-				flex-direction: row;
-			}
-		}
-		
-		.collection {
-			//我的收藏
-			width: 33.33%;
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-			border-radius: 10upx;
-		}
-		
-		.imgStyle1 {
-			width: 61upx;
-			height: 59upx;
-			margin-top: 31upx;
-			margin-left: 36.68%;
-		}
-		
-		.order {
-			//我的订单
-			width: 33.33%;
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-			border-radius: 10upx;
-		}
-		
-		.imgStyle2 {
-			width: 61upx;
-			height: 59upx;
-			margin-top: 31upx;
-			margin-left: 36.68%;
-		}
-		
-		.history {
-			//我的历史
-			width: 33.34%;
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-			border-radius: 10upx;
-		}
-		
-		.imgStyle3 {
-			width: 61upx;
-			height: 59upx;
-			margin-top: 31upx;
-			margin-left: 36.68%;
-		}
-		
-		.myFont {
-			//文字的样式
-			color: #2C2D2D;
-			height: 27upx;
-			line-height: 27upx;
-			font-size: 28upx;
-			font-family: SourceHanSansSC-Regular;
-			margin-top: 22upx;
-			text-align: center;
-			padding-bottom: 60upx;
-		}
-		
-		.advertClass {
-			//广告
-			width: 91.47%;
-			height: 160upx;
-			margin-top: 25upx;
-			margin-left: 4.27%;
-			border-radius: 12upx;
-		}
-		
-		.serviceBox {
-			//更多服务
-			width: 91.47%;
-			background-color: #ffffff;
-			border-radius: 12upx;
-			margin-top: 25upx;
-			margin-left: 4.27%;
-			display: flex;
-			flex-direction: column; //column:纵向排列，row横向排列
-			margin-bottom: 30upx;
-			box-shadow: 0px 7px 38px 8px rgba(97, 97, 97, 0.1);
-			
-			.lineClass {
-				//更多服务下面的分隔线
-				border-top: 2upx solid #EAEAEA;
-				width: 90%;
-				margin: 30upx 5% 20upx 5%;
-			}
-			
-			.moreClass {
-				font-size: 32upx;
-				font-weight: bold;
-				color: #000000;
-				margin-top: 34upx;
-				margin-left: 3.55%;
-			}
-			
-			.boxClass {
-				width: 100%;
-				// border: 1upx solid red;
-				display: flex;
-				flex-direction: row; //column:纵向排列，row横向排列
-			}
-			
-			.itemClass {
-				// border: 1upx solid black;
-				display: flex;
-				flex-direction: column; //column:纵向排列，row横向排列
-				padding-bottom: 30upx;
-				border-radius: 10upx;
-			}
-			
-			//图标样式开始
-			//第一排
-			.XXGLicon{
-				width: 50upx;
-				height: 54upx;
-				padding: 30upx 60upx 16upx 60upx;
-			}
-			
-			.ZDPZicon{
-				width: 48upx;
-				height: 50upx;
-				padding: 30upx 61upx 20upx 61upx;
-			}
-			
-			.WDTSicon{
-				width: 42upx;
-				height: 50upx;
-				padding: 30upx 64upx 20upx 64upx;
-			}
-			
-			.JJLXRicon{
-				width: 45upx;
-				height: 50upx;
-				padding: 30upx 62upx 20upx 63upx;
-			}
-			
-			//第二排
-			.SMRZicon{
-				width: 44upx;
-				height: 50upx;
-				padding: 30upx 63upx 20upx 63upx;
-			}
-			
-			.GHSJHicon{
-				width: 38upx;
-				height: 50upx;
-				padding: 30upx 66upx 20upx 66upx;
-			}
-			
-			.DHKFicon{
-				width: 41upx;
-				height: 50upx;
-				padding: 30upx 64upx 20upx 65upx;
-			}
-			
-			.YJFKicon{
-				width: 41upx;
-				height: 50upx;
-				padding: 30upx 64upx 20upx 65upx;
-			}   
-			
-			//第三排
-			.QQKFicon{
-				width: 43upx;
-				height: 50upx;
-				padding: 30upx 63upx 20upx 64upx;
-			}
-			
-			.ZXKFicon{
-				width: 45upx;
-				height: 50upx;
-				padding: 30upx 62upx 20upx 63upx;
-			}
-			
-			//图标样式结束
-			
-			.btnClass {
-				width: 11upx;
-				height: 22upx;
-				position: absolute;
-				left: 610upx;
-				top: 43upx;
-			}
-			
-			.fontStyle {
-				font-size: 28upx;
-				color: #2C2D2D;
-				width: 100%;
-				text-align: center;
-			}
-			
-			.borderTop {
-				border-top: 1upx solid #EAEAEA;
-			}
-			
-			.mb {
-				margin-bottom: 10upx;
-			}
-		}
-		
-		//弹窗
-		.popup_overlay {
-			position: fixed;
-			top: 0%;
-			left: 0%;
-			width: 100%;
-			height: 100%;
-			background-color: black;
-			z-index: 1001;
-			-moz-opacity: 0.8;
-			opacity: .80;
-			filter: alpha(opacity=88);
-		}
-		
-		.popup_content {
-			position: fixed;
-			top: 50%;
-			left: 50%;
-			width: 520upx;
-			height: 400upx;
-			margin-left: -270upx;
-			margin-top: -270upx;
-			border: 10px solid white;
-			background-color: white;
-			z-index: 1002;
-			overflow: auto;
-			border-radius: 20upx;
-		}
-		
-		.popup_title {
-			padding-top: 20upx;
-			width: 480upx;
-			text-align: center;
-			font-size: 32upx;
-		}
-		
-		.popup_textarea_item {
-			padding-top: 5upx;
-			height: 240upx;
-			width: 440upx;
-			// background-color: #F1F1F1;
-			margin-top: 30upx;
-			margin-left: 20upx;
-		}
-		
-		.popup_textarea {
-			width: 410upx;
-			font-size: 26upx;
-			margin-left: 20upx;
-		}
-		
-		.popup_button {
-			color: white;
-			background-color: #4399FC;
-			border-radius: 20upx;
-			margin-top: 83upx;
-			margin-left: 5%;
-		}
-		
-		.inputClass {
-			height: 40upx;
-			line-height: 40upx;
-			font-size: 32upx;
-			margin-top: 50upx;
-			margin-left: 8%;
-		}
-		
-		.contactClass {
-			position: absolute;
-			width: 100%;
-			height: 140upx;
-			opacity: 0;
-		}
-		
+	.backImg::after{
+		/* 以下不允许修改 */
+		width: 120%;
+		height: 490upx;
+		border-radius: 0 0 50% 50%;
+		position: absolute;
+		left:-10%;
+		z-index: -1;  
+		content: '';
+	}
+
+	.imgClass {
+		//背景图片
+		width: 100%;
+		height: 490upx;
+	}
+
 	.setClass {
 		//设置按钮
 		width: 47upx;
 		height: 45upx;
 		position: absolute;
-		left: 5.67%;
-		top: 85upx;
-		z-index: 999999999;
+		left: 4.67%;
+		top: 80upx;
 	}
+
+	.scanClass {
+		//扫一扫按钮
+		width: 44upx;
+		height: 41upx;
+		position: absolute;
+		left: 86.8%;
+		top: 80upx;
+	}
+
+	.infoClass {
+		//消息按钮
+		width: 47upx;
+		height: 42upx;
+		position: absolute;
+		//left: 87.73%;
+		left: 20%;
+		top: 80upx;
+	}
+
+	.userInfoClass {
+		//包括头像昵称
+		position: absolute;
+		left: 4.53%;
+		top: 161upx;
+		height: 127upx;
+		width: 68.4%;
+		// background-color: #06B4FD;
+		display: flex;
+		flex-direction: row;
+		z-index:999;
+	}
+
+	.portraitClass {
+		//头像
+		border-radius: 50%;
+		width: 127upx;
+		height: 127upx;
+	}
+
+	.usernameClass {
+		//昵称
+		font-size: 42upx;
+		color: #FFFFFF;
+		margin-top: 17upx;
+		margin-left: 3%;
+		width: 350upx;
+		display: block;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		// border: 1upx solid #007AFF;
+	}
+
+	.grzyClass {
+		//个人主页
+		width: 20%;
+		height: 34upx;
+		position: absolute;
+		left: 75.47%;
+		top: 200upx;
+		color: #FFFFFF;
+		font-size: 28upx;
+		line-height: 27upx;
+		z-index:999;
+	}
+
+	.rightClass {
+		width: 10%;
+		height: 29upx;
+		position: absolute;
+		left: 82%;
+		/* #ifdef APP-PLUS */
+		top: -3upx;
+		/* #endif */
+		/* #ifdef MP-WEIXIN */
+		top: -1upx;
+		/* #endif */
+	}
+
+	.userTypeBox{
+		display: flex;
+		align-items: center;
+		margin-top: 10upx;
+	}
+
+	// .iconClass{
+	// 	width: 20upx;
+	// 	height: 18upx;
+	// 	padding: 12upx;
+	// 	border-top-left-radius: 8upx;
+	// 	border-bottom-left-radius: 8upx;
+	// }
+	
+	.typeBox {
+		//普通用户
+		font-size: 21upx;
+		color: #FFFFFF;
+		line-height: 42upx;
+		padding-right:15upx;
+		border-radius:8upx;
+		padding: 0 20upx;
+		// border-top-right-radius: 8upx;
+		// border-bottom-right-radius: 8upx;
+	}
+
+	.imgTubiao {
+		width: 15%;
+		height: 21upx;
+		position: absolute;
+		left: 9upx;
+		top: 10upx;
+	}
+
+	.fontClass {
+		font-size: 20upx;
+		color: #FFFFFF;
+		line-height: 42upx;
+		height: 42upx;
+		position: absolute;
+		left: 34upx;
+		top: 1upx;
+		/* #ifdef H5 */
+		top: -3upx;
+		/* #endif */
+		/* #ifndef H5 */
+		top: 1upx;
+		/* #endif */
+	}
+
+	.editClass {
+		//修改按钮
+		width: 40upx;
+		height: 40upx;
+		margin-left: 17upx;
+		margin-top: 25upx;
+	}
+
+	.myBox {
+		//包括我的收藏，我的订单，我的历史
+		width: 91.47%;
+		height: 170upx;
+		position: absolute;
+		left: 4.27%;
+		top: 341upx;
+		background-color: #FFFFFF;
+		display: flex;
+		flex-direction: row;
+		border-radius: 12upx;
+		z-index:999;
+	}
+
+	.collection {
+		//我的收藏
+		width: 33.33%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.imgStyle1 {
+		width: 61upx;
+		height: 59upx;
+		margin-top: 31upx;
+		margin-left: 36.68%;
+	}
+
+	.order {
+		//我的订单
+		width: 33.33%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.imgStyle2 {
+		width: 61upx;
+		height: 59upx;
+		margin-top: 31upx;
+		margin-left: 36.68%;
+	}
+
+	.history {
+		//我的历史
+		width: 33.34%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.imgStyle3 {
+		width: 61upx;
+		height: 59upx;
+		margin-top: 31upx;
+		margin-left: 36.68%;
+	}
+
+	.myFont {
+		//文字的样式
+		color: #2C2D2D;
+		height: 27upx;
+		line-height: 27upx;
+		font-size: 28upx;
+		font-family: SourceHanSansSC-Regular;
+		margin-top: 22upx;
+		text-align: center;
+	}
+
+	.advertClass {
+		//广告
+		width: 91.47%;
+		height: 160upx;
+		margin-top: 25upx;
+		margin-left: 4.27%;
+		border-radius: 12upx;
+	}
+
+	.serviceBox {
+		//更多服务
+		width: 91.47%;
+		padding-bottom: 10upx;
+		//height: 510upx;
+		//height: 390upx;
+		background-color: #FFFFFF;
+		border-radius: 12upx;
+		margin-top: 25upx;
+		margin-left: 4.27%;
+		display: flex;
+		flex-direction: column; //column:纵向排列，row横向排列
+		margin-bottom: 30upx;
+	}
+
+	.lineClass {
+		//更多服务下面的分隔线
+		border-top: 2upx solid #EAEAEA;
+		width: 90%;
+		margin: 30upx 5% 20upx 5%;
+	}
+
+	.moreClass {
+		font-size: 32upx;
+		font-weight: bold;
+		color: #000000;
+		margin-top: 34upx;
+		margin-left: 3.55%;
+	}
+
+	.boxClass {
+		width: 100%;
+		// border: 1upx solid red;
+		display: flex;
+		flex-direction: row; //column:纵向排列，row横向排列
+	}
+
+	.itemClass {
+		// border: 1upx solid black;
+		display: flex;
+		flex-direction: column; //column:纵向排列，row横向排列
+		padding-bottom: 30upx;
+	}
+
+	//图标样式开始
+	//第一排
+	.XXGLicon{
+		width: 50upx;
+		height: 54upx;
+		padding: 30upx 60upx 16upx 60upx;
+	}
+	
+	.ZDPZicon{
+		width: 48upx;
+		height: 50upx;
+		padding: 30upx 61upx 20upx 61upx;
+	}
+	
+	.WDTSicon{
+		width: 42upx;
+		height: 50upx;
+		padding: 30upx 64upx 20upx 64upx;
+	}
+	
+	.JJLXRicon{
+		width: 45upx;
+		height: 50upx;
+		padding: 30upx 62upx 20upx 63upx;
+	}
+	
+	//第二排
+	.SMRZicon{
+		width: 44upx;
+		height: 50upx;
+		padding: 30upx 63upx 20upx 63upx;
+	}
+	
+	.GHSJHicon{
+		width: 38upx;
+		height: 50upx;
+		padding: 30upx 66upx 20upx 66upx;
+	}
+	
+	.DHKFicon{
+		width: 41upx;
+		height: 50upx;
+		padding: 30upx 64upx 20upx 65upx;
+	}
+	
+	.YJFKicon{
+		width: 41upx;
+		height: 50upx;
+		padding: 30upx 64upx 20upx 65upx;
+	}   
+	
+	//第三排
+	.QQKFicon{
+		width: 43upx;
+		height: 50upx;
+		padding: 30upx 63upx 20upx 64upx;
+	}
+	
+	.ZXKFicon{
+		width: 45upx;
+		height: 50upx;
+		padding: 30upx 62upx 20upx 63upx;
+	}
+	
+	//图标样式结束
+	
+	.btnClass {
+		width: 11upx;
+		height: 22upx;
+		position: absolute;
+		left: 610upx;
+		top: 43upx;
+	}
+
+	.fontStyle {
+		font-size: 28upx;
+		color: #2C2D2D;
+		width: 100%;
+		text-align: center;
+	}
+
+	.borderTop {
+		border-top: 1upx solid #EAEAEA;
+	}
+
+	.mb {
+		margin-bottom: 10upx;
+	}
+
+	//弹窗
+	.popup_overlay {
+		position: fixed;
+		top: 0%;
+		left: 0%;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		z-index: 1001;
+		-moz-opacity: 0.8;
+		opacity: .80;
+		filter: alpha(opacity=88);
+	}
+
+	.popup_content {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		width: 520upx;
+		height: 400upx;
+		margin-left: -270upx;
+		margin-top: -270upx;
+		border: 10px solid white;
+		background-color: white;
+		z-index: 1002;
+		overflow: auto;
+		border-radius: 20upx;
+	}
+
+	.popup_title {
+		padding-top: 20upx;
+		width: 480upx;
+		text-align: center;
+		font-size: 32upx;
+	}
+
+	.popup_textarea_item {
+		padding-top: 5upx;
+		height: 240upx;
+		width: 440upx;
+		// background-color: #F1F1F1;
+		margin-top: 30upx;
+		margin-left: 20upx;
+	}
+
+	.popup_textarea {
+		width: 410upx;
+		font-size: 26upx;
+		margin-left: 20upx;
+	}
+
+	.popup_button {
+		color: white;
+		background-color: #4399FC;
+		border-radius: 20upx;
+		margin-top: 83upx;
+		margin-left: 5%;
+	}
+
+	.inputClass {
+		height: 40upx;
+		line-height: 40upx;
+		font-size: 32upx;
+		margin-top: 50upx;
+		margin-left: 8%;
+	}
+
+	.contactClass {
+		position: absolute;
+		width: 100%;
+		height: 140upx;
+		opacity: 0;
+	}
+
+	// .contactClass::after{
+	// 	border: none; 
+	// }
 </style>
