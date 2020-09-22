@@ -83,9 +83,9 @@
 			});
 			that.orderInfo = JSON.parse(param.specialArray)
 			console.log('定制班车',that.orderInfo)
-			
-			that.startArray = that.orderInfo.starSiteArr[0]
-			that.endArray = that.orderInfo.endSiteArr[0]
+			var a = that.orderInfo.endSiteArr.length-2;
+			that.startArray = that.orderInfo.starSiteArr[1]
+			that.endArray = that.orderInfo.endSiteArr[a]
 			var startLonLat = that.startArray.Longitude + ',' + that.startArray.Latitude
 			var endLonLat = that.endArray.Longitude + ',' + that.endArray.Latitude
 			
