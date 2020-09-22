@@ -130,7 +130,6 @@ const KyInterface = {
 		Url: Url + '/api/zhcx/getImage',
 		name:'客运-添加图片',
 		method:'POST',
-		pages:["CTKY/TraditionSpecoal/Home/ctkyIndex.vue"],
 		header:{'content-type': 'application/json'},
 		systemName:systemName,
 	},
@@ -310,14 +309,14 @@ const KyInterface = {
 	getStations:{
 		Url: Url2 + '/api/KY/getStations',
 		name:'线路查询',
-		method:'POST',
+		method:'GET',
 	},
 	
 	//--------------------------------------查询班次--------------------------------------
-	GetSellableScheduleByLineName:{
-		Url: Url2 + '/api/CustomizedBus/GetSellableScheduleByLineName',
+	getListSchedulesInfo:{
+		Url: Url2 + '/api/KY/getListSchedulesInfo',
 		name:'查询班次',
-		method:'POST',
+		method:'GET',
 	}, 
 }
 
