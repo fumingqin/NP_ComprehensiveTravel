@@ -202,7 +202,7 @@
 						date: date,
 					},
 					success: (res) => {
-						// console.log(res)
+						console.log(res)
 						uni.hideLoading();
 						var a=res.data;
 						var b=JSON.parse(a);
