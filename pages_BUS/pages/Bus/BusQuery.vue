@@ -100,6 +100,11 @@
 				}
 			})
 		},
+		created() {
+			uni.setNavigationBarColor({
+				backgroundColor:"#6BD78C"
+			})
+		},
 		methods: {
 			
 			//--------------------------------------获取当前位置的经纬度--------------------------------------
@@ -214,7 +219,7 @@
 						encryption:encryption,
 					},
 					success(res) {
-						console.log('请求成功',res)
+						// console.log('请求成功',res)
 						if(res.data.status == true){
 							_self.lineDetail.push(res.data.data[0])
 							console.log('线路详情',_self.lineDetail)

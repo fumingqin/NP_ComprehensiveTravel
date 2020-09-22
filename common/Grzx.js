@@ -84,20 +84,8 @@ const Interface={
 		method:'POST',
 		pages: [],
 	},
-	// userInfoListDetail:{
-	// 	value:Url+'/api/person/userInfoListDetail',
-	// 	name:'获取详细信息',
-	// 	method:'POST',
-	// 	pages: [],
-	// },
-	// BindPersonInfoOpenID_wxAndPhoneNumber:{
-	// 	value:Url+'/api/person/BindPersonInfoOpenID_wxAndPhoneNumber',
-	// 	name:'微信openid，绑定手机号',
-	// 	method:'POST',
-	// 	pages: [],
-	// },
 	changeInfoPortrait:{
-		value:Url+'/api/person/changeInfoPortrait',
+		value:Url1+'/api/person/changeInfoPortrait',
 		name:'只修改头像',
 		method:'POST',
 		pages: [],
@@ -108,72 +96,42 @@ const Interface={
 		method:'POST',
 		pages: [],
 	 },
-	SearchVersion:{
-		value:Url+'/api/person/SearchVersion',
+	GetVersion:{
+		value:Url1+'/api/ShowContent/GetVersion',
 		name:'获取版本号',
-		method:'POST',
-		pages: [],
-	},
-	AddSuggestion:{
-		value:Url+'/api/person/AddSuggestion',
-		name:'添加意见',
 		method:'POST',
 		pages: [],
 	}, 
 	GetOpenId_xcx:{
-		value:Url+'/api/person/GetOpenId_xcx',
+		value:Url1+'/api/person/GetOpenId_xcx',
 		name:'获取微信小程序的openid',
 		method:'POST',
 		pages: [],
 	},
-	SearchCustomerService:{
-		value:Url+'/api/person/SearchCustomerService',
-		name:'获取QQ客服和电话客服',
-		method:'POST',
-		pages: [],
-	},
-	// getNews:{
-	// 	value:Url+'/api/person/getNews',
-	// 	name:'获取新闻资讯列表（旧）',
-	// 	method:'POST',
-	// 	pages: [],
-	// },
 	getallMsg:{
 		value:Url+'/api/ky/getallMsg',
-		name:'获取新闻资讯列表',
+		name:'通知列表',
 		method:'POST',
 		pages: [],
 	},
 	getbymsg:{
 		value:Url+'/api/ky/getbymsg',
-		name:'获取新闻资讯详情',
-		method:'POST',
-		pages: [],
-	},
-	AddNewsCount:{
-		value:Url+'/api/person/AddNewsCount',
-		name:'添加游览量',
+		name:'通知详情',
 		method:'POST',
 		pages: [],
 	},
 	AddEmergencyContact:{
-		value: Url + '/api/person/AddEmergencyContact',
+		value: Url1 + '/api/person/AddEmergencyContact',
 		name:'添加紧急联系人',
 		method:'POST',//GET-POST
 		pages:[]
 	},
-	GetUserLastLoginTime:{
-		value: Url + '/api/person/GetUserLastLoginTime',
-		name:'获取用户最后登录时间',
-		method:'POST',//GET-POST
-		pages:[]
-	},
-	getByTitle:{
-		value: Url + '/api/ky/getByTitle',
-		name:'获取乘车须知',
-		method:'POST',//GET-POST
-		pages:[]
-	},
+	// getByTitle:{
+	// 	value: Url + '/api/ky/getByTitle',
+	// 	name:'获取乘车须知',
+	// 	method:'POST',//GET-POST
+	// 	pages:[]
+	// },
 	
 	//------------------------------------意见反馈------------------------------------
 	Add_Suggestion:{

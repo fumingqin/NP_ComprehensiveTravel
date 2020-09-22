@@ -295,6 +295,58 @@
 					}
 				}
 			]
+		},
+		//---------------------------------------------第三个包：公交车------------------------------------------
+		{
+			"root":"pages_BUS/",
+			"pages":[
+				{
+					"path": "pages/Bus/BusQuery",
+					"style": {
+						"navigationBarBackgroundColor": "#6BD78C",
+						"titleNView": {
+							"searchInput": {
+								"align": "left",
+								"disabled": "true",
+								"borderRadius": "10px",
+								"backgroundColor": "#ffffff",
+								"placeholder": "搜索线路/站点/地点",
+								"placeholderColor": "#AAAAAA"
+							}
+						}
+					}
+				},
+				{
+					"path": "pages/Bus/BusLocation",
+					"style": {
+						"navigationBarTitleText": "公交位置"
+					}
+				},
+				{
+					"path": "pages/Bus/RoutePlan", 
+					"style": {
+						"navigationBarTitleText": "线路方案"
+					}
+				},
+				{
+					"path": "pages/Bus/SearchDetail", 
+					"style": {
+						"navigationBarTitleText": "搜索详情"
+					}
+				},
+				{
+					"path": "pages/Bus/TicketPurchase", 
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				{
+					"path": "pages/Bus/TransitSearch",
+					"style": {
+						"navigationBarTitleText": "公交搜索"
+					}
+				}
+			]
 		}
 	],
 	
@@ -303,7 +355,7 @@
 
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		// "navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},

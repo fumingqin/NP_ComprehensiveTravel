@@ -58,7 +58,7 @@
 
 <script>
 	var _self;
-	import BusTimeSteps from '../../../components/BUS/BUS.vue';
+	import BusTimeSteps from '../../commponents/BUS/BUS.vue';
 	export default {
 		components:{
 			BusTimeSteps
