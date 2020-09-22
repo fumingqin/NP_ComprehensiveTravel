@@ -121,7 +121,7 @@
 					},
 					method:that.$Bus.BusInterface.getBusChange.method,
 					success:function(res){
-						// console.log(res)
+						console.log(res)
 						uni.hideLoading(); 
 						if(res.data.status){
 							that.planArr = res.data.data;

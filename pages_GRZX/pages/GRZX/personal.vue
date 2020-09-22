@@ -336,7 +336,7 @@
 					},
 					method:that.$GrzxInter.Interface.changeInfoPortrait.method,
 					success(res1) {
-						// console.log(res1,"290")
+						console.log(res1,"290")
 						uni.showToast({
 							title:'信息保存成功！',
 							icon:'success'

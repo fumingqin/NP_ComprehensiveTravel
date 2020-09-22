@@ -61,7 +61,7 @@ export default {
 						DriverID : '2000001',		//司机ID
 						DriverName:'测试司机',					//司机姓名
 						AppType : this.$GrzxInter.systemConfig.openidtype,	//应用类型
-						ProjectCode : this.$GrzxInter.newApplyName,		//项目名称
+						ProjectCode : this.$GrzxInter.systemConfig.applyName,		//项目名称
 					},
 					success: res => {
 						uni.showToast({

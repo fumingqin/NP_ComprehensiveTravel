@@ -149,9 +149,9 @@
 						entrance: '',
 					}, {
 						name: '公交查询',
-						image: '../../static/home/vajra/gongjiao2.png',
+						image: '../../static/home/vajra/gongjiao.png',
 						display: true,
-						entrance: '../Bus/BusQuery',
+						entrance: '../../pages_BUS/pages/Bus/BusQuery',
 					}, {
 						name: '景区售票',
 						image: '../../static/home/vajra/jingqu2.png',
@@ -266,7 +266,7 @@
 			itemClick:function(entrance){
 				console.log(entrance)
 				uni.navigateTo({
-					url:'../GRZX/userLogin'
+					url:'../../pages_BUS/pages/Bus/BusQuery'
 				})
 			},
 			

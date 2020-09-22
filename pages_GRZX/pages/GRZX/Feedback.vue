@@ -194,7 +194,7 @@ export default {
 						SystemType : this.systemType,		//系统类型
 						SuggestionType:'',					//反馈类型
 						AppType : this.$GrzxInter.systemConfig.openidtype,	//应用类型
-						ProjectCode : this.$GrzxInter.newApplyName,		//项目名称
+						ProjectCode : this.$GrzxInter.systemConfig.applyName,		//项目名称
 					},
 					success: res => {
 						console.log(res,"反馈");
