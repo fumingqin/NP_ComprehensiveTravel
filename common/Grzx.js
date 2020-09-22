@@ -132,6 +132,12 @@ const Interface={
 	// 	method:'POST',//GET-POST
 	// 	pages:[]
 	// },
+	GetAggrement:{
+		value: Url1 + '/api/ShowContent/GetAggrement',
+		name:'获取乘车须知',
+		method:'POST',//GET-POST
+		pages:[]
+	},
 	
 	//------------------------------------意见反馈------------------------------------
 	Add_Suggestion:{

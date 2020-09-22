@@ -77,7 +77,7 @@
 					</view>
 				</view>
 				
-				<view class="hp_view">
+				<!-- <view class="hp_view">
 					<view class="hp_Line"></view>
 					<view class="hp_text">特惠须知</view>
 					<view class="hp_Line2"></view>
@@ -85,7 +85,7 @@
 				
 				<view class="ct_noticeText ct_noticeText2">
 					<rich-text :nodes="way2"></rich-text>
-				</view>
+				</view> -->
 				
 				<view class="hp_view">
 					<view class="hp_Line"></view>

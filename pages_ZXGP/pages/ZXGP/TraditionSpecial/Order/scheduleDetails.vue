@@ -29,7 +29,7 @@
 			</view>
 
 			<!-- 地图标点 -->
-			<!-- <view class="orderCommonClass" v-if="true" @click="checkLocation" >
+			<!-- <view class="orderCommonClass"  v-if="ticketDetail.shuttleType == '定制班车'" @click="checkLocation" >
 				<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">地图标点</view>
 				<view style="display: flex;margin-right: 41upx;align-items: center;">
 					<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;">查看班次信息</view>
@@ -45,7 +45,7 @@
 					<image src="../../../../static/ZXGP/right.png" style="width: 11upx;height: 21upx;margin-left: 10upx;"></image>
 				</view>
 			</view>
-
+			
 			<!-- 上下车点选择,0是普通购票不显示上下车点选择 -->
 			<!-- v-if="ticketDetail.shuttleType == '定制班车'" -->
 			<view class="stationContentView" v-if="ticketDetail.shuttleType == '普通班车'">
