@@ -96,8 +96,8 @@ const Interface={
 		method:'POST',
 		pages: [],
 	 },
-	SearchVersion:{
-		value:Url+'/api/person/SearchVersion',
+	GetVersion:{
+		value:Url1+'/api/ShowContent/GetVersion',
 		name:'获取版本号',
 		method:'POST',
 		pages: [],

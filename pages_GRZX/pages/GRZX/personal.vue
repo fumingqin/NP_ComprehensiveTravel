@@ -328,8 +328,6 @@
 			// --------------------------------------8.修改头像------------------------------------
 			changePortrait(){
 				var that=this;
-				console.log("头像",that.port);
-				console.log("用户ID",that.userId);
 				uni.request({
 					url:that.$GrzxInter.Interface.changeInfoPortrait.value,
 					data:{

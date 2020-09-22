@@ -3,9 +3,13 @@
 		<view class="itemClass" @click="clearStorage" hover-class="btnClass">
 			<text class="">清除缓存</text>
 			<text class="sizeClass">{{currentSize}}</text>
-			<!-- <image src="../../static/GRZX/icon-right.png" class="rightClass"></image> -->
+			<image src="../../static/GRZX/icon-right.png" class="rightClass"></image>
 		</view>
-		<!-- #ifdef APP-PLUS -->
+		<!-- #ifndef APP-PLUS -->
+		<view class="itemClass" @click="aboutAPP" hover-class="btnClass">
+			<text class="">关于APP</text>
+			<image src="../../static/GRZX/icon-right.png" class="rightClass1"></image>
+		</view>
 		<view class="itemClass" @click="toLogout">
 			<text class="loginClass">退出登录</text>
 		</view>
@@ -127,24 +131,13 @@
 				});
 			},
 			
-			//------------------------------------switchChange--------------------------
-			switchChange(e){
-				let statusTip = e.detail.value ? true: false;
-				uni.setStorage({
-					key:'switch',
-					data:statusTip
+			//------------------------------------aboutAPP--------------------------
+			aboutAPP(){
+				uni.navigateTo({
+					url:'./aboutApp',
 				})
 			},
 			
-			//------------------------------------playChange--------------------------
-			playChange(e){
-				let statusTip = e.detail.value ? true: false;
-				uni.setStorage({
-					key:'play',
-					data:statusTip
-				})
-			},
-
 		}
 	}
 </script>
@@ -166,6 +159,12 @@
 		height: 30upx;
 		margin-top: 5upx;
 		margin-left: 1%;
+	}
+	.rightClass1{
+		width: 30upx;
+		height: 30upx;
+		margin-top: 5upx;
+		margin-left: 76%;
 	}
 	.sizeClass{
 		width: 50%;
