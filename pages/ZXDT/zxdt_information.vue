@@ -22,6 +22,11 @@
 			<u-gap height="4" bg-color="#f9f9f9"></u-gap>
 		</view>
 		
+		<!-- 缺省提示 -->
+		<view style="margin-top: 360upx;" :hidden="listStatusIndex !==0">
+			<u-empty text="该分类没有资讯哦~" mode="news"></u-empty>
+		</view>
+		
 	</view>
 </template>
 
@@ -36,24 +41,46 @@
 				},{
 					name : '每日南平'
 				},{
-					name : '反馈公示'
+					name : '其他资讯'
 				}],//头部数组
-				headCurrent : 0, //头部tabs下标
-				informationList : '',//资讯列表
+				headCurrent : 0,  //头部tabs下标
+				informationList : '', //资讯列表
+				listStatusIndex : '', //资讯缺省提示初始值
 			}
 		},
 		onLoad:function(){
-			this.loadData();
+			this.loadData(0);
 		},
 		methods: {
 			//加载接口数据
-			loadData:function(){
+			loadData:function(e){
 				uni.request({
 					url:'http://appdl.xmjdt.cn:60032/api/News/GetNews',
 					method:'POST',
 					success:(res)=>{
-						this.informationList = res.data.data;
-						console.log(res)
+						// console.log(e)
+						if(e == 0){
+							this.informationList = res.data.data.filter(item =>{
+								return item.Type == '通知公告';
+							})
+							
+						}else if(e == 1){
+							this.informationList = res.data.data.filter(item =>{
+								return item.Type == '车站新讯';
+							})
+						}else if(e == 2){
+							this.informationList = res.data.data.filter(item =>{
+								return item.Type == '每日南平';
+							})
+						}else if(e == 3){
+							this.informationList = res.data.data.filter(item =>{
+								return item.Type !== '通知公告' && item.Type !== '车站新讯' && item.Type !== '每日南平';
+							})
+						}
+						console.log(this.informationList.length)
+						this.listStatusIndex = this.informationList.length;
+						
+						
 					}
 				})
 			},
@@ -79,9 +106,10 @@
 				return a;
 			},
 			
-			//点击头部切换下标
+			//点击tab切换
 			headChange:function(e){
 				this.headCurrent = e;
+				this.loadData(e);
 			}
 		}
 	}
