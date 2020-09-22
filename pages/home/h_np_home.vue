@@ -293,7 +293,7 @@
 			
 			//快捷车票跳转
 			quickEntryClick:function(item){
-				console.log(item)
+				// console.log(item)
 				uni.navigateTo({
 					url:'../../pages_ZXGP/pages/ZXGP/TraditionSpecial/Order/selectTickets?&startStation=' +item.start +'&endStation=' +item.end +'&date=' + this.currentDate
 				})
