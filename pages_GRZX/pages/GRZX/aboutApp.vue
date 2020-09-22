@@ -4,17 +4,10 @@
 		<text class="titleClass">{{title}}</text>
 		<text class="versionClass">{{versionNum}}{{version}}</text>
 		<view class="boxClass1">
-			<!-- <view class="functionClass" @click="functionClick">
-				<text class="fontClass">{{functionIntroduction}}</text>
-				<image src="../../static/GRZX/btnRight.png" class="imgClass1"></image>
-			</view> -->
-			<!-- #ifndef H5 -->
 			<view class="checkClass" @click="checkClick">
 				<text class="fontClass">{{checkVersion}}</text>
-				<!-- <text class="textCLass">{{version}}</text> -->
 				<image src="../../static/GRZX/btnRight.png" class="imgClass1"></image>
 			</view>
-			<!-- #endif -->
 		</view>
 		<view class="boxClass2">
 			<text class="agreementClass" @click="agreementClick">{{agreement}}</text>
@@ -63,7 +56,6 @@
 			}
 		},
 		onLoad(){
-			// this.loadImg();
 			// #ifdef APP-PLUS
 			this.version=plus.runtime.version;
 			//#endif
@@ -127,11 +119,8 @@
 			checkClick(){
 				var that=this;
 				uni.request({
-					url:that.$GrzxInter.Interface.SearchVersion.value,
-					data:{
-						model:'旅客端',
-					},
-					method:that.$GrzxInter.Interface.SearchVersion.method,
+					url:that.$GrzxInter.Interface.GetVersion.value,
+					method:that.$GrzxInter.Interface.GetVersion.method,
 					success(res) {
 						console.log(res)
 						if(that.version!=res.data.data.version){
@@ -164,16 +153,16 @@
 			
 			//--------------------------软件许可及服务协议--------------------------
 			agreementClick(){
-				uni.navigateTo({
-					url:this.$GrzxInter.Route.privacyService.url+'?title=软件许可及服务协议',
-				})
+				// uni.navigateTo({
+				// 	url:this.$GrzxInter.Route.privacyService.url+'?title=软件许可及服务协议',
+				// })
 			},
 			
 			//--------------------------隐私政策--------------------------
 			privacyClick(){
-				uni.navigateTo({
-					url:this.$GrzxInter.Route.privacyService.url+'?title=隐私政策',
-				})
+				// uni.navigateTo({
+				// 	url:this.$GrzxInter.Route.privacyService.url+'?title=隐私政策',
+				// })
 			},
 		}
 	}

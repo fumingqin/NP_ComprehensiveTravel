@@ -190,45 +190,35 @@
 					date = new Date();
 				}
 				that.allTicketsList = [];
-				var systemName = '';
-				// #ifdef H5
-				systemName = $KyInterface.KyInterface.systemName.systemNameXYYHH5;;
-				// #endif
-				// #ifdef APP-PLUS
-				systemName = $KyInterface.KyInterface.systemName.systemNameXYYHAPP;
-				// #endif
-				// #ifdef MP-WEIXIN
-				systemName = $KyInterface.KyInterface.systemName.systemNameXYYHWeiXin;
-				// #endif
-				console.log(that.startStation)
-				console.log(that.endStation)
+				var systemName3 = '';
+				systemName3 = that.$oSit.Interface.system.applyName3
 				uni.request({
-					url: $KyInterface.KyInterface.Ky_getListSchedulesInfo.Url,
-					method: $KyInterface.KyInterface.Ky_getListSchedulesInfo.method,
-					header: $KyInterface.KyInterface.Ky_getListSchedulesInfo.header,
+					url: $KyInterface.KyInterface.getListSchedulesInfo.Url,
+					method: $KyInterface.KyInterface.getListSchedulesInfo.method,
 					data: {
-						systemName: systemName,
+						systemName: systemName3,
 						startPosition: that.startStation,
 						endPosition: that.endStation,
 						date: date,
 					},
 					success: (res) => {
-						// uni.hideLoading();
+						// console.log(res)
+						uni.hideLoading();
+						var a=res.data;
+						var b=JSON.parse(a);
 						//非空判断
-						if (res.data.status == true) {
-							if (res.data.data) {
-								that.departureData = res.data.data;
+						if (b.status == true) {
+							if (b.data!==0) {
+								that.departureData = b.data;
 								let i = 0;
-								for (i; i < res.data.data.length; i++) {
-									if(res.data.data[i].startStaion == that.startStation && res.data.data[i].endStation == that.endStation){
-										that.allTicketsList.push(res.data.data[i])
-									}
+								for (i; i < b.data.length; i++) {
+									that.allTicketsList.push(b.data[i])
 								}
 								console.log('客运班次信息2', that.allTicketsList)
 								//加载定制巴士班次列表数据
 								// that.getSpecialBusTicketInfo(date);
 								uni.hideLoading();
-							} else if (res.data.data.length == 0) {
+							} else if (b.data.length == 0) {
 								//加载定制巴士班次列表数据
 								// that.getSpecialBusTicketInfo(date);
 								uni.showToast({
@@ -236,14 +226,8 @@
 									icon: 'none'
 								})
 								uni.hideLoading();
-							} else if (res.data.msg == '服务器无法处理请求。 ---> 未将对象引用设置到对象的实例。') {
-								uni.showToast({
-									title: '服务器异常,请联系客服',
-									icon: 'none'
-								})
-								uni.hideLoading();
 							}
-						} else if (res.data.status == false) {
+						} else if (b.status == false) {
 							//加载定制巴士班次列表数据
 							// that.getSpecialBusTicketInfo(date);
 							uni.showToast({
@@ -254,7 +238,7 @@
 						}
 					},
 					fail(res) {
-						console.log(res);
+						// console.log(res);
 						uni.showToast({
 							title: '服务器异常，班次列表数据出错',
 							icon: 'none'

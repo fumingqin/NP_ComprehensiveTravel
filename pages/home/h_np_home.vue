@@ -15,7 +15,7 @@
 		
 		<!-- 资讯区 -->
 		<u-notice-bar  :list="information" :volume-icon="false" type="warning" font-size="26"></u-notice-bar>
-		<view class="h_information">
+		<view class="h_information" @click="itemClick('../ZXDT/zxdt_information')">
 			<image class="inf_image" src="../../static/home/information/dongtai.png"></image>
 			<view  class="inf_view">
 				<swiper class="inf_view_swiper" vertical autoplay circular>
@@ -61,7 +61,7 @@
 		<view class="h_quickEntry">
 			<view class="qui_titleView">快捷车票</view>
 			<view class="qui_imageview">
-				<view class="qui_imageview_view" v-for="(item,index) in quickEntryData" :key="index">
+				<view class="qui_imageview_view" v-for="(item,index) in quickEntryData" :key="index" @click="quickEntryClick(item)">
 					<image class="qui_imageview_view_image" :src="item.image" mode="aspectFill"></image>
 					<text class="qui_imageview_view_text">{{item.start}} → {{item.end}}</text>
 				</view>
@@ -99,6 +99,7 @@
 				information2 : ['',''], //新闻列表
 				protocolStatus : false, //隐藏弹出层，f为不弹，t为弹
 				upgradeStatus : false, //升级弹出层，f为不弹，t为弹
+				currentDate : '', //当前时间
 				upgradeContent : `
 								1. 修复badge组件的size参数无效问题<br>
 								2. 新增Modal模态框组件<br>
@@ -106,28 +107,28 @@
 								4. 修复键盘组件在微信小程序上遮罩无效的问题
 								`,
 				quickEntryData : [{
-					start : '建阳',
-					end : '新区',
+					start : '延平',
+					end : '建瓯',
 					image : '../../static/home/temporary/xianlu.png' 
 				},{
-					start : '邵武',
-					end : '泰宁',
-					image : '../../static/home/temporary/xianlu.png'
-				},{
-					start : '南平',
-					end : '三明',
+					start : '延平',
+					end : '建阳',
 					image : '../../static/home/temporary/xianlu.png'
 				},{
 					start : '建阳',
 					end : '新区',
 					image : '../../static/home/temporary/xianlu.png'
 				},{
-					start : '建阳',
-					end : '新区',
+					start : '建瓯',
+					end : '延平',
 					image : '../../static/home/temporary/xianlu.png'
 				},{
 					start : '建阳',
-					end : '新区',
+					end : '延平',
+					image : '../../static/home/temporary/xianlu.png'
+				},{
+					start : '新区',
+					end : '建阳',
 					image : '../../static/home/temporary/xianlu.png'
 				}], //快捷入口数据
 				functionArray: [
@@ -136,12 +137,12 @@
 						name: '车票订购', //功能名称
 						image: '../../static/home/vajra/chepiao.png', //功能图标
 						display: true, //是否显示
-						entrance: '', //跳转路径
+						entrance: '../../pages_ZXGP/pages/ZXGP/TraditionSpecial/Home/ctkyIndex', //跳转路径
 					}, {
 						name: '新区直达',
 						image: '../../static/home/vajra/xinqu.png',
 						display: true,
-						entrance: '',
+						entrance: '../../pages_ZXGP/pages/ZXGP/SpecialBus/Home/zxgpHomePage',
 					}, {
 						name: '客运查询',
 						image: '../../static/home/vajra/keyun2.png',
@@ -157,35 +158,35 @@
 						image: '../../static/home/vajra/jingqu2.png',
 						display: true,
 						entrance: '',
-					}],
-					},{
-					array: [{
-						name: '定位点一',
-						image: '../../static/home/vajra/dingwei.png',
-						display: true,
-						entrance: '',
-					}, {
-						name: '定位点二',
-						image: '../../static/home/vajra/dingwei.png',
-						display: true,
-						entrance: '',
-					}, {
-						name: '定位点三',
-						image: '../../static/home/vajra/dingwei.png',
-						display: false,
-						entrance: '',
-					}, {
-						name: '定位点四',
-						image: '../../static/home/vajra/dingwei.png',
-						display: false,
-						entrance: '',
-					}, {
-						name: '定位点五',
-						image: '../../static/home/vajra/dingwei.png',
-						display: true,
-						entrance: '',
-					}],
-					}
+					}]}
+					// {
+					// array: [{
+					// 	name: '定位点一',
+					// 	image: '../../static/home/vajra/dingwei.png',
+					// 	display: true,
+					// 	entrance: '',
+					// }, {
+					// 	name: '定位点二',
+					// 	image: '../../static/home/vajra/dingwei.png',
+					// 	display: true,
+					// 	entrance: '',
+					// }, {
+					// 	name: '定位点三',
+					// 	image: '../../static/home/vajra/dingwei.png',
+					// 	display: false,
+					// 	entrance: '',
+					// }, {
+					// 	name: '定位点四',
+					// 	image: '../../static/home/vajra/dingwei.png',
+					// 	display: false,
+					// 	entrance: '',
+					// }, {
+					// 	name: '定位点五',
+					// 	image: '../../static/home/vajra/dingwei.png',
+					// 	display: true,
+					// 	entrance: '',
+					// }],
+					// }
 				], //功能数组
 			}
 		},
@@ -196,6 +197,7 @@
 				this.protocolStatus = true;
 			}
 			this.loadData();
+			this.getTodayDate();
 			// #ifdef MP-WEIXIN
 			// 校验小程序登录
 			// this.getLoginState();       
@@ -203,7 +205,7 @@
 			
 		},
 		methods: {
-			//加载专线
+			//加载数据
 			loadData : function(){
 				uni.request({
 					url:'http://appdl.xmjdt.cn:60032/api/BasicImage/GetRotationChart',
@@ -262,11 +264,38 @@
 				})
 				
 			},
-			//点击
+			
+			//获取时间
+			getTodayDate() {
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+			    var timer = year + '-' + month + '-' + day;
+				this.currentDate = timer;
+				// console.log(this.currentDate)
+			},
+			
+			//点击跳转
 			itemClick:function(entrance){
-				console.log(entrance)
+				// console.log(entrance)
+				if(entrance == ''){
+					uni.showToast({
+						title:'敬请期待',
+						icon:'none'
+					})
+				}else{
+					uni.navigateTo({
+						url:entrance,
+					})
+				}
+			},
+			
+			//快捷车票跳转
+			quickEntryClick:function(item){
+				console.log(item)
 				uni.navigateTo({
-					url:'../../pages_BUS/pages/Bus/BusQuery'
+					url:'../../pages_ZXGP/pages/ZXGP/TraditionSpecial/Order/selectTickets?&startStation=' +item.start +'&endStation=' +item.end +'&date=' + this.currentDate
 				})
 			},
 			
