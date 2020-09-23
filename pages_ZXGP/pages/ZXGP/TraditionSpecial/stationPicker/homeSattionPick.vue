@@ -118,12 +118,12 @@
 				uni.showLoading();
 				// console.log($Zxgp.KyInterface.Cs_GetInsuranceCheckState.Url)
 				// console.log($KyInterface.KyInterface.getStations.Url)
-				if(this.type==1){
+				if(this.type=='八闽出行'){
 					uni.request({
 						url: $KyInterface.KyInterface.getStations.Url,
 						method: $KyInterface.KyInterface.getStations.method,
 						data:{
-							systemName:this.applyName2
+							systemName:this.type
 						},
 						success: (res) => {
 							
@@ -159,12 +159,12 @@
 							uni.hideLoading();
 						}
 					})
-				}else if(this.type==2){
+				}else if(this.type=='邵泰专线'){
 					uni.request({
 						url: $KyInterface.KyInterface.GetLineName.Url,
 						method: $KyInterface.KyInterface.GetLineName.method,
 						data:{
-							AppSystemName:this.applyName5
+							AppSystemName:this.type
 						},
 						success: (res) => {
 							uni.hideLoading();
