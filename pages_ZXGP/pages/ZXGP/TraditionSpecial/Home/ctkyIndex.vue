@@ -2,8 +2,8 @@
     <view class="myView">
 		<!-- 照片背景图 -->
 		<view>
-			<image :src="imageUrl" class="imageTop" mode="aspectFill"></image>
-			<!-- <image src="../../static/index/左-箭头.png" class="imageReturn"></image> -->
+			<!-- <image :src="imageUrl" class="imageTop" mode="aspectFill"></image> -->
+			<image src="../../../../static/ZXGP/banner.png" class="imageTop" mode="aspectFill"></image>
 		</view>
 		<!-- 车票查询 -->
 		<view class="queryTickets">
