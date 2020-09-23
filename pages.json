@@ -179,7 +179,7 @@
 					"path": "pages/ZXGP/SpecialBus/Home/zxgpHomePage",
 					"style": {
 						"navigationBarTitleText": "专线订购",
-						"navigationStyle": "custom"
+						"navigationBarBackgroundColor": "#ffad29"
 					}
 				},
 				{

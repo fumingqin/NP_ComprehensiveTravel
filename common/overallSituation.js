@@ -19,6 +19,8 @@ const Interface = {
 		applyName:'南平综合出行',
 		applyName2:'八闽出行',
 		applyName3:'武夷交运微信',
+		applyName4:'邵泰专线',
+		applyName5:'武夷新区专线',
 		// appName:'专线购票小程序', //仅用于微信授权登录
 		appName:'南平综合出行', //仅用于微信授权登录
 		imageApplicationType:'XCX',//全局图片接口应用类型，用于请求全局图片使用
