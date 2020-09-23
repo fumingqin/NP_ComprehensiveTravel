@@ -116,7 +116,7 @@ export default{
 									uni.hideLoading();
 								},1000);
 								console.log(res,"提示什么？");
-								if(!res.data.status || res.data.data.phoneNumber=="" || res.data.data.phoneNumber==null){
+								if(!res.data.status || res.data.data.PhoneNumber=="" || res.data.data.PhoneNumber==null){
 									if(that.type=="index"){
 										uni.showToast({
 											title:'授权成功！',
@@ -215,24 +215,6 @@ export default{
 							method:that.$GrzxInter.Interface.changeInfo.method,
 							success(res2){
 								console.log('修改用户信息', res2)
-								let data = res2.data.data;
-								var user = new Object();
-								user = {
-									address : data.Address,
-									autograph : data.Autograph,
-									birthday : data.Birthday,
-									gender : data.Gender,
-									openId_app : data.OpenId_app,
-									openId_ios : data.OpenId_ios,
-									openId_qq : data.OpenId_qq,
-									openId_wx : data.OpenId_wx,
-									openId_xcx : data.OpenId_xcx,
-									phoneNumber : data.PhoneNumber,
-									portrait : data.Portrait,
-									userId : data.UserId,
-									nickname : data.Nickname,
-								};
-								uni.setStorageSync('userInfo', user);
 								uni.request({
 									url:that.$GrzxInter.Interface.changeInfoPortrait.value,
 									data:{
@@ -247,7 +229,24 @@ export default{
 												title:'绑定成功！',
 												icon:'success',
 											})
-											// uni.setStorageSync('userInfo',res3.data.data)
+											let data = res3.data.data;
+											// var user = new Object();
+											// user = {
+											// 	address : data.Address,
+											// 	autograph : data.Autograph,
+											// 	birthday : data.Birthday,
+											// 	gender : data.Gender,
+											// 	openId_app : data.OpenId_app,
+											// 	openId_ios : data.OpenId_ios,
+											// 	openId_qq : data.OpenId_qq,
+											// 	openId_wx : data.OpenId_wx,
+											// 	openId_xcx : data.OpenId_xcx,
+											// 	phoneNumber : data.PhoneNumber,
+											// 	portrait : data.Portrait,
+											// 	userId : data.UserId,
+											// 	nickname : data.Nickname,
+											// };
+											uni.setStorageSync('userInfo', data);
 											setTimeout(function(){
 												uni.navigateBack();
 											},500);

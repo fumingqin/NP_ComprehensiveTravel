@@ -40,8 +40,8 @@
 				var that=this;
 				that.tweetArticle=[];
 				uni.request({
-					url:that.$GrzxInter.Interface.getallMsg.value,
-					method:that.$GrzxInter.Interface.getallMsg.method,
+					url:that.$GrzxInter.Interface.GetNews.value,
+					method:that.$GrzxInter.Interface.GetNews.method,
 					data:{
 						SystemName:'南平综合出行',
 					},
@@ -64,7 +64,7 @@
 				})
 				uni.navigateTo({
 					//url:'/pages/GRZX/detailTweet'
-					url:this.$GrzxInter.Route.detailTweet.url,
+					url:this.$GrzxInter.Interface.GetNewsByAID.url,
 				})
 			},
 			

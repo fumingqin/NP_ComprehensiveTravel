@@ -337,13 +337,20 @@
 					method:that.$GrzxInter.Interface.changeInfoPortrait.method,
 					success(res1) {
 						console.log(res1,"290")
-						uni.showToast({
-							title:'信息保存成功！',
-							icon:'success'
-						})
-						setTimeout(function(){
-							uni.navigateBack();
-						},500);
+						if(res1.data.status){
+							uni.showToast({
+								title:'信息保存成功！',
+								icon:'success'
+							})
+							setTimeout(function(){
+								uni.navigateBack();
+							},500);
+						}else{
+							uni.showToast({
+								title:res1.data.msg,
+								icon:'none'
+							})
+						}
 					},
 					fail() {
 						uni.showToast({

@@ -220,7 +220,6 @@
 </template>
 
 <script>
-	import $KyInterface from "@/common/Ctky.js"
 	import popup from "@/pages_ZXGP/components/ZXGP/uni-popup/uni-popup.vue";
 	export default {
 		components: {
@@ -367,16 +366,15 @@
 				})
 
 				uni.request({
-					url: $KyInterface.KyInterface.Cs_getByTitle.Url,
-					method: $KyInterface.KyInterface.Cs_getByTitle.method,
-					data: {
-						title: '用户购票须知',
-						systemName: this.applyName,
-					},
+					url: this.$ky_cpdg.KyInterface.Cs_getByTitle.Url,
+					method: this.$ky_cpdg.KyInterface.Cs_getByTitle.method,
 					success: (res) => {
-						console.log('用户购票须知', res)
-						this.way = res.data.data.msg;
-						// console.log('购票须知2',this.way)
+						console.log('购票须知', res)
+						var data = res.data.data.filter(item =>{
+							return item.Type == '购票须知';
+						})
+						this.way = data[0].Body;
+						console.log('购票须知2',this.way)
 					}
 				})
 

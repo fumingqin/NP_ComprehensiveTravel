@@ -100,7 +100,6 @@
 </template>
 
 <script>
-	import $KyInterface from "@/common/Ctky.js"
 	import utils from "@/pages_ZXGP/components/ZXGP/shoyu-date/utils.filter.js";
 	export default {
 		data() {
@@ -349,13 +348,13 @@
 				// #endif
 				var companyCode = '';
 				// #ifdef H5
-				companyCode = $KyInterface.KyInterface.systemName.systemNameXYYHH5;
+				companyCode = this.$ky_cpdg.KyInterface.system.systemNameH5;
 				// #endif
 				// #ifdef APP-PLUS
-				companyCode = $KyInterface.KyInterface.systemName.systemNameXYYHAPP;
+				companyCode = this.$ky_cpdg.KyInterface.system.systemNameApp;
 				// #endif
 				// #ifdef MP-WEIXIN
-				companyCode = $KyInterface.KyInterface.systemName.systemNameXYYHWeiXin;
+				companyCode = this.$ky_cpdg.KyInterface.system.systemNameWeiXin;
 				// #endif
 				//--------------------------发起下单请求-----------------------
 				uni.showLoading({
@@ -364,42 +363,45 @@
 				console.log(that.specialStartStation)
 				console.log(that.specialEndStation)
 				uni.request({
-					url:$KyInterface.KyInterface.Ky_PaymentUrl.Url,
-					method:$KyInterface.KyInterface.Ky_PaymentUrl.method,
-					// header:$KyInterface.KyInterface.Ky_PaymentUrl.header,
+					url:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.Url,
+					method:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.method,
+					// header:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.header,
 					
 					data: {
-						companyCode: companyCode,
-						SystemName:companyCode,//公司代码
+						carType: that.orderInfo.shuttleType, //班车类型
+						companyCode: companyCode, //公司代码
 						clientID: that.userInfo.userId, //用户ID
 						clientName: that.userInfo.nickname, //用户名
-						phoneNumber: that.userInfo.phoneNumber, //手机号码
-
-						scheduleCompanyCode: that.orderInfo.scheduleCompanyCode, //班次代码
+						scheduleCompanyCode: that.orderInfo.scheduleCompanyCode, //调度公司代码
 						executeScheduleID: that.orderInfo.executeScheduleID, //班次ID
 						startSiteID: that.orderInfo.startSiteID, //上车点ID
 						endSiteID: that.orderInfo.endSiteID, //下车点ID
 						startSiteName: that.orderInfo.startStaion, //起点站
 						endSiteName: that.orderInfo.endStation, //终点站
 						priceID: that.orderInfo.priceID, //价格ID
-						setOutTime: setTime, //发车时间
-						insuredPrice: that.insuredPrice, //保险价格
-						carType: that.orderInfo.shuttleType, //班车类型
-
+						phoneNumber: that.userInfo.phoneNumber, //手机号码
 						fullTicket: that.adultNum, //全票人数
 						halfTicket: that.childrenNum, //半票人数
 						carryChild: that.freeTicketNum, //携童人数
 						idNameType: that.idNameTypeStr, //乘车人信息
 						insured: that.isInsurance, //是否选择了保险
-						openId: openId,
+						insuredPrice: that.insuredPrice, //保险价格
+						openId: openId, //小程序公众号OPENID
 						totalPrice: that.totalPrice, //总价格
-						payParameter: '', //不需要的参数，传空
+						setOutTime: setTime, //发车时间
 						
+						IsPickUp : '',//是否上门接送
+						PickUpAddress : '', //接送点
+						PickUpLatitude : '',//接送点纬度
+						PickUpLongitude : '',//接送点经度
+						StartStaionLatitude : '',//始发站点纬度
+						StartStaionLongitude : '',//始发站经度
+						
+						payParameter: '', //不需要的参数，传空
 						getOnPoint: that.specialStartStation, //定制班车上车点
 						getOffPoint: that.specialEndStation, //定制班车下车点
 						planScheduleCode:that.orderInfo.planScheduleCode,//班次号
 						lineName: that.orderInfo.lineName,//线路名称
-						
 					},
 
 					success: (res) => {
@@ -455,9 +457,9 @@
 				that.timer = timer;
 				timer = setInterval(function() {
 					uni.request({
-						url:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.Url,
-						method:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.method,
-						// header:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.header,
+						url:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
+						method:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
+						// header:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.header,
 						data: {
 							//订单编号
 							orderNumber: orderNumber
@@ -487,8 +489,8 @@
 													that.payment();
 												}else if(res.confirm == false) {
 													uni.request({
-														url: $KyInterface.KyInterface.Ky_CancelTicket.Url,
-														method: $KyInterface.KyInterface.Ky_CancelTicket.method,
+														url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+														method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 														data: {
 															orderNumber: orderNumber,
 														},
@@ -535,6 +537,8 @@
 			//--------------------------调起支付--------------------------
 			payment: function() {
 				var that = this;
+				
+				
 				// #ifdef H5
 				uni.hideLoading()
 				WeixinJSBridge.invoke('getBrandWCPayRequest', {
@@ -552,8 +556,8 @@
 						that.getTicketPaymentInfo_ticketIssue(that.orderNum);
 					} else if (res.err_msg == "get_brand_wcpay_request:cancel") {
 						uni.request({
-							url: $KyInterface.KyInterface.Ky_CancelTicket.Url,
-							method: $KyInterface.KyInterface.Ky_CancelTicket.method,
+							url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+							method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 							data: {
 								orderNumber: that.orderNum,
 							},
@@ -622,9 +626,26 @@
 								icon: 'none'
 							})
 						} else if (res.errMsg == 'requestPayment:fail canceled') { //用户取消
-							uni.showToast({
-								title: '您取消了支付',
-								icon: 'none'
+							uni.request({
+								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+								data: {
+									orderNumber: that.orderNum,
+								},
+								success: (respones) => {
+									uni.hideLoading()
+									console.log('取消结果', respones)
+									if (respones.data.status == true) {
+										that.showToast("您取消了支付，已自动取消订单")
+									} else {
+										that.showToast("您取消了支付，自动取消订单失败")
+									}
+								},
+								fail: (respones) => {
+									// alert(respones.data.msg)
+									uni.hideLoading()
+									that.showToast("您取消了支付，自动取消订单失败")
+								}
 							})
 						}
 					},
@@ -637,9 +658,26 @@
 								icon: 'none'
 							})
 						} else if (res.errMsg == 'requestPayment:fail') { //用户取消
-							uni.showToast({
-								title: '您取消了支付',
-								icon: 'none'
+							uni.request({
+								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+								data: {
+									orderNumber: that.orderNum,
+								},
+								success: (respones) => {
+									uni.hideLoading()
+									console.log('取消结果', respones)
+									if (respones.data.status == true) {
+										that.showToast("您取消了支付，已自动取消订单")
+									} else {
+										that.showToast("您取消了支付，自动取消订单失败")
+									}
+								},
+								fail: (respones) => {
+									// alert(respones.data.msg)
+									uni.hideLoading()
+									that.showToast("您取消了支付，自动取消订单失败")
+								}
 							})
 						}else{
 							uni.showToast({
@@ -651,6 +689,10 @@
 					}
 				})
 				// #endif
+				
+				
+				
+				
 				// #ifdef MP-WEIXIN
 				uni.hideLoading()
 				uni.requestPayment({
@@ -675,8 +717,8 @@
 							},4000)
 						}else if (res.errMsg == "requestPayment:fail cancel") {
 							uni.request({
-								url: $KyInterface.KyInterface.Ky_CancelTicket.Url,
-								method: $KyInterface.KyInterface.Ky_CancelTicket.method,
+								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 								data: {
 									orderNumber: that.orderNum,
 								},
@@ -705,8 +747,8 @@
 						console.log(res)
 						if (res.errMsg == "requestPayment:fail cancel") {
 							uni.request({
-								url: $KyInterface.KyInterface.Ky_CancelTicket.Url,
-								method: $KyInterface.KyInterface.Ky_CancelTicket.method,
+								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 								data: {
 									orderNumber: that.orderNum,
 								},
@@ -736,12 +778,15 @@
 				});
 				// #endif
 			},
+			
+			
 			showToast: function(msg, icon = 'none') {
 				uni.showToast({
 					title: msg,
 					icon: icon
 				})
 			},
+			
 			//--------------------------成功之后重新获取车票支付参数--------------------------
 			getTicketPaymentInfo_ticketIssue: function(orderNumber) {
 				var that = this;
@@ -752,9 +797,9 @@
 				});
 				timer = setInterval(function() {
 					uni.request({
-						url:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.Url,
-						method:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.method,
-						// header:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.header,
+						url:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
+						method:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
+						// header:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.header,
 						data: {
 							orderNumber: orderNumber,
 						},

@@ -17,6 +17,9 @@ import $oSit from '@/common/overallSituation.js';
 
 const Url1 = $oSit.Interface.address.Url2;
 
+//APP下载地址
+const downloadAPP = "http://27.148.155.9:9248/LoadAppWebsite/泉运出行综合平台.apk"; 
+
 const systemConfig={
 	appName:$oSit.Interface.system.appName,	
 	applyName:$oSit.Interface.system.applyName,		//应用名称
@@ -317,12 +320,12 @@ function navToHome(){
 //跳转订单列表
 function navToOrderList(){
 	if($oSit.Interface.system.appName=="专线购票小程序"){
-		uni.switchTab({
-			url: '/pages/order/newOrderList',
-		})
+		// uni.switchTab({
+		// 	url: '/pages/order/newOrderList',
+		// })
 	}else if($oSit.Interface.system.appName=="南平综合出行"){
 		uni.switchTab({
-			url: '/pages/order/OrderList',
+			url: '/pages/order/newOrderList',
 		})
 	}
 }
@@ -337,4 +340,5 @@ export default {
 	navToHome,
 	navToOrderList,
 	newApplyName,
+	downloadAPP
 }

@@ -190,19 +190,29 @@
 					date = new Date();
 				}
 				that.allTicketsList = [];
-				var systemName3 = '';
-				systemName3 = that.$oSit.Interface.system.applyName3
+				
+				var systemNameCode = '';
+				// #ifdef APP-NVUE
+				systemNameCode = this.$ky_cpdg.KyInterface.system.systemNameApp
+				// #endif
+				// #ifdef MP-WEIXIN
+				systemNameCode = this.$ky_cpdg.KyInterface.system.systemNameWeiXin
+				// #endif
+				// #ifdef H5
+				systemNameCode = this.$ky_cpdg.KyInterface.system.systemNameH5
+				// #endif
+				console.log(systemNameCode)
 				uni.request({
-					url: $KyInterface.KyInterface.getListSchedulesInfo.Url,
-					method: $KyInterface.KyInterface.getListSchedulesInfo.method,
+					url: this.$ky_cpdg.KyInterface.getListSchedulesInfo.Url,
+					method: this.$ky_cpdg.KyInterface.getListSchedulesInfo.method,
 					data: {
-						systemName: systemName3,
+						systemName: systemNameCode,
 						startPosition: that.startStation,
 						endPosition: that.endStation,
 						date: date,
 					},
 					success: (res) => {
-						console.log(res)
+						console.log('111',res)
 						uni.hideLoading();
 						var a=res.data;
 						var b=JSON.parse(a);
@@ -214,7 +224,7 @@
 								for (i; i < b.data.length; i++) {
 									that.allTicketsList.push(b.data[i])
 								}
-								console.log('客运班次信息2', that.allTicketsList)
+								console.log('客运班次信息', that.allTicketsList)
 								//加载定制巴士班次列表数据
 								// that.getSpecialBusTicketInfo(date);
 								uni.hideLoading();
@@ -247,65 +257,67 @@
 					}
 				});
 			},
+			
 			//-------------------------------加载定制巴士班次列表数据-------------------------------
-			getSpecialBusTicketInfo: function(date) {
-				var that = this;
-				uni.showLoading();
-				var LineName = that.startStation + '-' + that.endStation;
-				uni.request({
-					url: $KyInterface.KyInterface.Cs_GetSellableScheduleByLineName.Url,
-					method: $KyInterface.KyInterface.Cs_GetSellableScheduleByLineName.method,
-					header: $KyInterface.KyInterface.Cs_GetSellableScheduleByLineName.header,
-					data: {
-						executeDate: date,
-						LineName: LineName,
-					},
-					success: (res) => {
-						// console.log('定制巴士班次数据',res)
-						uni.hideLoading();
-						//非空判断
-						if (res.data.Successed == true) {
-							if (res.data.ScheduleForSell) {
-								let i = 0;
-								for (i; i < res.data.ScheduleForSell.length; i++) {
-									var array = {
-										shuttleType: '定制巴士',
-										setTime: res.data.ScheduleForSell[i].SetoutTime,
-										startStaion: res.data.ScheduleForSell[i].StartSiteName,
-										endStation: res.data.ScheduleForSell[i].EndSiteName,
-										SetoutTimeDesc: res.data.ScheduleForSell[i].SetoutTimeDesc,
-										remainingVotes: res.data.ScheduleForSell[i].MaxTicket,
-										LineViaSiteName: res.data.ScheduleForSell[i].LineViaSiteName,
-										ScheduleID: res.data.ScheduleForSell[i].ScheduleID,
-										ScheduleCompanyCode: res.data.ScheduleForSell[i].ScheduleCompanyCode,
-										PriceRange: res.data.ScheduleForSell[i].PriceRange,
-									};
-									that.allTicketsList.push(array);
-								}
-								that.allTicketsList = that.ForwardRankingDate(that.allTicketsList);
-							} else if (res.data.ScheduleForSell.length == 0) {
-								if (that.departureData.length == 0) {
-									uni.showToast({
-										title: '暂无班次信息',
-										icon: 'none'
-									})
-								}
-							}
-						} else if (res.data.Successed == false) {
-							// that.departureData = res.data.ScheduleForSell;
-							if (that.departureData.length == 0) {
-								uni.showToast({
-									title: '暂无班次信息',
-									icon: 'none'
-								})
-							}
-						}
-					},
-					fail(res) {
-						uni.hideLoading();
-					}
-				});
-			},
+			// getSpecialBusTicketInfo: function(date) {
+			// 	var that = this;
+			// 	uni.showLoading();
+			// 	var LineName = that.startStation + '-' + that.endStation;
+			// 	uni.request({
+			// 		url: $KyInterface.KyInterface.Cs_GetSellableScheduleByLineName.Url,
+			// 		method: $KyInterface.KyInterface.Cs_GetSellableScheduleByLineName.method,
+			// 		header: $KyInterface.KyInterface.Cs_GetSellableScheduleByLineName.header,
+			// 		data: {
+			// 			executeDate: date,
+			// 			LineName: LineName,
+			// 		},
+			// 		success: (res) => {
+			// 			console.log('定制巴士班次数据',res)
+			// 			uni.hideLoading();
+			// 			//非空判断
+			// 			if (res.data.Successed == true) {
+			// 				if (res.data.ScheduleForSell) {
+			// 					let i = 0;
+			// 					for (i; i < res.data.ScheduleForSell.length; i++) {
+			// 						var array = {
+			// 							shuttleType: '定制巴士',
+			// 							setTime: res.data.ScheduleForSell[i].SetoutTime,
+			// 							startStaion: res.data.ScheduleForSell[i].StartSiteName,
+			// 							endStation: res.data.ScheduleForSell[i].EndSiteName,
+			// 							SetoutTimeDesc: res.data.ScheduleForSell[i].SetoutTimeDesc,
+			// 							remainingVotes: res.data.ScheduleForSell[i].MaxTicket,
+			// 							LineViaSiteName: res.data.ScheduleForSell[i].LineViaSiteName,
+			// 							ScheduleID: res.data.ScheduleForSell[i].ScheduleID,
+			// 							ScheduleCompanyCode: res.data.ScheduleForSell[i].ScheduleCompanyCode,
+			// 							PriceRange: res.data.ScheduleForSell[i].PriceRange,
+			// 						};
+			// 						that.allTicketsList.push(array);
+			// 					}
+			// 					that.allTicketsList = that.ForwardRankingDate(that.allTicketsList);
+			// 				} else if (res.data.ScheduleForSell.length == 0) {
+			// 					if (that.departureData.length == 0) {
+			// 						uni.showToast({
+			// 							title: '暂无班次信息',
+			// 							icon: 'none'
+			// 						})
+			// 					}
+			// 				}
+			// 			} else if (res.data.Successed == false) {
+			// 				// that.departureData = res.data.ScheduleForSell;
+			// 				if (that.departureData.length == 0) {
+			// 					uni.showToast({
+			// 						title: '暂无班次信息',
+			// 						icon: 'none'
+			// 					})
+			// 				}
+			// 			}
+			// 		},
+			// 		fail(res) {
+			// 			uni.hideLoading();
+			// 		}
+			// 	});
+			// },
+			
 			//-------------------------------班次排序--升序-------------------------------
 			ForwardRankingDate: function(param) {
 				for (let i = 0; i < param.length - 1; i++) {
