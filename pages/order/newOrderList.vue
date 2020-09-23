@@ -318,7 +318,7 @@
 					lunchTime: '18:00',
 					carNum: '闽C12345'
 				}],
-				info: [], //请求服务器订单列表
+				info: [],//请求服务器订单列表
 				userInfo: '', //个人信息
 				finishArr: [],
 				goingArr: [],
@@ -1653,7 +1653,7 @@
 			KyComplain:function(item){
 				console.log(item)
 					uni.navigateTo({
-						url:'../../pages_GRZX/pages/GRZX/complaint?driverID' +item.driverPhone'&driverName=' + item.driverName +'&orderID=' +item.driverPhone
+						url:'/pages_GRZX/pages/GRZX/complaint?driverID=' +item.driverPhone'&driverName=' + item.driverName +'&orderID=' +item.driverPhone
 					})
 			},
 			onchange(e){
