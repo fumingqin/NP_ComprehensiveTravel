@@ -18,7 +18,7 @@
 				</view> -->
 
 				<!-- 暂时用不到 v-if="type2==0" -->
-				<view>
+				<view style="margin-top: 90upx;">
 					<!-- 选择出发地 -->
 					<view style="display: flex;margin-top: 26upx;">
 						<view class="top_chooseTheRoute" hover-class="ve_hover" @tap="setOutStationTap">
@@ -112,7 +112,7 @@
 		}, //注册为子组件
 		data() {
 			return {
-				type2: 2,
+				type2: '武夷新区专线',
 				datestring: '',
 				Week: '',
 				type: 'rangetime',
@@ -152,6 +152,8 @@
 			//加载应用名称
 			this.applyName = this.$oSit.Interface.system.applyName;
 			this.applyName5 = this.$oSit.Interface.system.applyName5;
+			this.type2 = this.$KyInterface.systemName4;
+			
 			var that = this;
 			// if(that.departure == '' || that.destination == '' || that.type2==0) {
 			// 	that.departure = '请选择起点';
