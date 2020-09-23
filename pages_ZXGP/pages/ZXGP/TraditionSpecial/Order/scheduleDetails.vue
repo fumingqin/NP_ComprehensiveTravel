@@ -39,7 +39,7 @@
 
 			<!-- 查看所有途经点 -->
 			<view class="orderCommonClass" @tap="approachPoint">
-				<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">查看所有途经点</view>
+				<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">查看所有途经站</view>
 				<view style="display: flex;margin-right: 41upx;align-items: center;">
 					<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;">{{routeSite.length}}个站点</view>
 					<image src="../../../../static/ZXGP/right.png" style="width: 11upx;height: 21upx;margin-left: 10upx;"></image>
@@ -203,7 +203,7 @@
 		<popup ref="popup3" type="center">
 			<view class="boxView2">
 				<view class="titleView2">
-					<text class="Nb_text3">所有途经点</text>
+					<text class="Nb_text3">所有途经站</text>
 					<text class="Nb_text4 jdticon icon-fork " @click="close2(3)"></text>
 				</view>
 				<scroll-view class="noticeBox2" scroll-y="ture">
@@ -259,7 +259,6 @@
 				InsurePrice: '0', //保险价格
 				adultNum: 0, //成人数
 				applyName: '',
-				shuttleType: '',
 				mainArray: [],
 				approachPoint1: '', //终点
 				approachPoint2: '', //起点
@@ -283,24 +282,20 @@
 			uni.setNavigationBarTitle({
 				title: '填写订单'
 			});
-			//---------------------读取订单数据-----------------
+			//---------------------读取班次数据-----------------
 			uni.getStorage({
 				key: 'ticketDate',
 				success: function(data) {
 					that.ticketDetail = data.data; //车票数组
 					that.totalPrice = data.data.fare; //价格
 					that.shuttleType = data.data.shuttleType; //班车类型
-					//班车起点数组
-					that.sepecialStartArray = data.data.starSiteArr;
-					//班车终点数组
-					that.specialEndArray = data.data.endSiteArr;
-					//普通班车的起点数据
-					that.ordinaryBoarding = data.data.startStaion;
-					//班车类型
-					that.shuttleType = data.data.shuttleType;
-					//读取保险信息
-					that.getExecuteScheduleInfoForSellByID(that.ticketDetail);
+					that.sepecialStartArray = data.data.starSiteArr;//班车起点数组
+					that.specialEndArray = data.data.endSiteArr;//班车终点数组
+					that.ordinaryBoarding = data.data.startStaion; //普通班车的起点数据
+					that.shuttleType = data.data.shuttleType; //班车类型
+					that.InsurePrice = that.ticketDetail.insurePrice; //保险价格
 					console.log('选择车票的班次数据', that.ticketDetail);
+					that.calculateTotalPrice(); //执行计算价格
 					that.removal(that.ticketDetail);
 				}
 			})
@@ -384,61 +379,7 @@
 						// console.log('购票须知2',this.way)
 					}
 				})
-				
-				// uni.request({
-				// 	url: $KyInterface.KyInterface.Ky_getExecuteScheduleInfoForSellByID.Url,
-				// 	method: $KyInterface.KyInterface.Ky_getExecuteScheduleInfoForSellByID.method,
-				// 	data: {
-				// 		systemName: this.applyName,
-				// 		scheduleCompanyCode: this.ticketDetail.scheduleCompanyCode,
-				// 		ExecuteScheduleID:this.ticketDetail.planScheduleCode,
-				// 		StartSiteID:this.startStation,
-				// 		EndSiteID:this.endStation,
-				// 	},
-				// 	success: (res) => {
-				// 		console.log('请求价格2', this.ticketDetail.scheduleCompanyCode)
-				// 		console.log('请求价格', res)
-				// 	}
-				// })
-			},
 
-			//--------------------------获取保险信息--------------------------
-			getExecuteScheduleInfoForSellByID: function(orderInfo) {
-				var that = this;
-				uni.showLoading({
-					title: '加载中...'
-				})
-
-				uni.request({
-					url: $KyInterface.KyInterface.Ky_getExecuteScheduleInfoForSellByID.Url,
-					method: $KyInterface.KyInterface.Ky_getExecuteScheduleInfoForSellByID.method,
-					header: $KyInterface.KyInterface.Ky_getExecuteScheduleInfoForSellByID.header,
-					data: {
-						systemName: $KyInterface.KyInterface.systemName.systemName,
-						scheduleCompanyCode: orderInfo.scheduleCompanyCode,
-						ExecuteScheduleID: orderInfo.executeScheduleID,
-						StartSiteID: orderInfo.startSiteID,
-						EndSiteID: orderInfo.endSiteID,
-					},
-					success(res) {
-						uni.hideLoading();
-						console.log('保险数据', res);
-						var respones = res.data;
-						if (respones.Successed == true) {
-							that.InsurePrice = respones.ScheduleInfos[0].InsurePrice;
-							//计算价格
-							that.calculateTotalPrice();
-						} else {
-							that.InsurePrice = 0;
-							//计算价格
-							that.calculateTotalPrice();
-						}
-					},
-					fail(res) {
-						uni.hideLoading();
-						console.log(res);
-					}
-				})
 			},
 			//-------------------------------时间转换-------------------------------
 			turnDate(date) {
@@ -604,32 +545,32 @@
 								//loginType=1,泉运登录界面
 								//loginType=2,今点通登录界面
 								//loginType=3,武夷股份登录界面
-								url: '../../../../../pages/GRZX/userLogin?loginType=1',
+								url: '/pages/GRZX/userLogin?loginType=1',
 							})
 						}, 500);
 						//#endif
 						//#ifdef MP-WEIXIN
 						uni.navigateTo({
-							url: '/pages/Home/wxAuthorize',
+							url: '/pages/GRZX/wxAuthorize',
 						})
 						// #endif
 					},
 					success() {
 						//跳转到选择乘客页面
 						uni.navigateTo({
-							url: '../../../../../pages/GRZX/passengerInfo?submitType=1',
+							url: '/pages/GRZX/passengerInfo?submitType=1',
 						})
 					}
 				})
 			},
-			//点击添加乘客
+			//点击携带儿童
 			addPassenger(param) {
 				uni.getStorage({
 					key: 'userInfo',
 					fail() {
 						uni.showToast({
 							icon: 'none',
-							title: '未登录无法添加乘车人,请先登录'
+							title: '未登录无法添加儿童,请先登录'
 						})
 						//#ifdef APP-PLUS
 						setTimeout(function() {
@@ -637,13 +578,13 @@
 								//loginType=1,泉运登录界面
 								//loginType=2,今点通登录界面
 								//loginType=3,武夷股份登录界面
-								url: '../../../../../pages/GRZX/userLogin?loginType=1'
+								url: '/pages/GRZX/userLogin?loginType=1'
 							})
 						}, 500);
 						// #endif
 						//#ifdef MP-WEIXIN
 						uni.navigateTo({
-							url: '/pages/Home/wxAuthorize',
+							url: '/pages/GRZX/wxAuthorize',
 						})
 						// #endif
 					},
@@ -651,11 +592,11 @@
 						//跳转到添加乘客页面
 						if (param == '成人') {
 							uni.navigateTo({
-								url: '../../../../../pages/GRZX/addPassenger?type=add',
+								url: '/pages/GRZX/addPassenger?type=add',
 							})
 						} else if (param == '免童') {
 							uni.navigateTo({
-								url: '../../../../../pages/GRZX/addFreeChildren?type=add',
+								url: '/pages/GRZX/addFreeChildren?type=add',
 							})
 						}
 
@@ -951,7 +892,7 @@
 
 	//须知弹框
 	.boxView {
-		width: 90%;
+		width: 100%;
 		padding: 16upx 40upx;
 		padding-bottom: 92upx;
 		background: #FFFFFF;
@@ -1089,7 +1030,7 @@
 	}
 
 	.ticketInfoClass {
-		width: 652upx;
+		width: 700upx;
 		text-align: left;
 		padding: 28upx 29upx;
 	}
@@ -1183,7 +1124,7 @@
 
 	//途径点弹框
 	.boxView2 {
-		width: 90%;
+		width: 100%;
 		padding: 16upx 40upx;
 		padding-bottom: 92upx;
 		background: #FFFFFF;
