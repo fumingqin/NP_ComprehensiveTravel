@@ -23,6 +23,11 @@ const KyInterface = {
 		// systemNameApp:'专线购票APP',
 		// systemNameH5:'专线购票H5',
 		// systemNameWeiXin:'专线购票小程序',
+		
+		// 用于邵泰专线 - 专线购票小程序使用
+		// systemNameApp:'交通出行APP',
+		// systemNameH5:'交通出行H5',
+		// systemNameWeiXin:'交通出行小程序',
 	},
 	//--------------------------------------查询班次--------------------------------------
 	getListSchedulesInfo:{
