@@ -9,11 +9,11 @@
 			<view class="si_ct_selectAddress">
 				<view class="si_ct_sa_lineClass">
 					<!-- 起点站 -->
-					<view class="start" @tap="startStationTap">{{departure}}</view>
+					<view class="start" @tap="setOutStationTap">{{departure}}</view>
 					<!-- </navigator> -->
 					<image class="changeImage" src="../../../../static/ZXGP/change.png" mode="aspectFill" @click="changeClick"></image>
 					<!-- 终点站 -->
-					<view class="start" style="text-align: right;" @tap="endStationTap">{{destination}}</view>
+					<view class="start" style="text-align: right;" @tap="setOutStationTap">{{destination}}</view>
 				</view>
 
 				<view class="si_ct_sa_lineClass">
@@ -24,7 +24,7 @@
 					 :show-seconds="true" @confirm="onSelected" @cancel="onSelected" />
 				</view>
 
-				<u-button :ripple="true" shape="circle" ripple-bg-color="#ffcb27" :custom-style="customStyle">查询</u-button>
+				<u-button :ripple="true" shape="circle" ripple-bg-color="#ffcb27" :custom-style="customStyle" @click="queryClick">查询</u-button>
 			</view>
 
 			<!-- 查看历史 -->
@@ -71,6 +71,7 @@
 					color: '#FFFFFF',
 				},
 				state: '邵泰专线', //状态值
+				isNormal:0,//判断是普通购票还是定制班车默认是普通购票
 			}
 		},
 
@@ -81,7 +82,6 @@
 				that.destination = '选择下车点';
 				that.Week = '今天';
 			}
-			that.state = that.$KyInterface.systemName3;
 			uni.getStorage({
 				key:'historyLines2',
 				success:function(data){
@@ -100,34 +100,19 @@
 
 		methods: {
 			//---------------------------------点击起点站---------------------------------
-			startStationTap() {
+			setOutStationTap() {
 				var that = this;
 				//监听事件,监听下个页面返回的值
 				uni.$on('startstaionChange', function(data) {
 					// data即为传过来的值，给上车点赋值
 					that.departure = data.data;
+					that.destination = data.data2;
 					//清除监听，不清除会消耗资源
 					uni.$off('startstaionChange');
 				});
 				uni.navigateTo({
 					//跳转到下个页面的时候加个字段，判断当前点击的是上车点
 					url: '../stationPicker/homeSattionPick?&station=' + 'qidian' + '&type=' + this.state,
-				})
-			},
-
-			//---------------------------------点击终点站---------------------------------
-			endStationTap() {
-				var that = this;
-				//监听事件,监听下个页面返回的值，给下车点赋值
-				uni.$on('endStaionChange', function(data) {
-					// data即为传过来的值
-					that.destination = data.data;
-					//清除监听，不清除会消耗资源
-					uni.$off('endStaionChange');
-				});
-				uni.navigateTo({
-					//跳转到下个页面的时候加个字段，判断当前点击的是下车点
-					url: '../stationPicker/homeSattionPick?&station=' + 'zhongdian' + '&type=' + this.state,
 				})
 			},
 
@@ -202,6 +187,37 @@
 				let stationArray = this.historyLines2[res].split('-');
 				this.departure = stationArray[0];
 				this.destination = stationArray[1];
+			},
+			
+			//---------------------------------点击查询---------------------------------
+			queryClick: function() {
+				var that = this;
+				if(that.departure == '选择上车点' || that.destination == '选择下车点') {
+					uni.showToast({
+						title: '请选择上下车点',
+						icon: 'none'
+					})
+				}else {
+					var station = this.departure + "-" + this.destination;
+					if(this.historyLines) {
+						for(let i = 0; i <= this.historyLines.length;i++){
+							if(station == this.historyLines[i]) {
+								this.historyLines.splice(i,1);
+							}
+						}
+						this.historyLines.unshift(this.departure + "-" + this.destination);
+					}
+					uni.setStorage({
+						key:'historyLines',
+						data:this.historyLines,
+					})
+					//页面传参通过地址后面添加参数 this.isNormal=0是普通购票1是定制班车
+					
+					var params='../Order/selectTickets?&startStation=' + this.departure +'&endStation=' + this.destination + '&date=' + this.datestring + '&isNormal=' + this.isNormal;
+					uni.navigateTo({ 
+						url:params
+					})
+				}
 			},
 		}
 	}
