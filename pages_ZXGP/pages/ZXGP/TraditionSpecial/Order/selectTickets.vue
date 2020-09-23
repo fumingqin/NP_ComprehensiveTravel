@@ -834,7 +834,7 @@
 		display: flex;
 		flex-direction: column;
 		width: 100%;
-		padding: 0;
+		padding:12upx 0;
 	}
 	
 	.st_routeSite{

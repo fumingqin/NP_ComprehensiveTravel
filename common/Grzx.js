@@ -60,6 +60,7 @@ const Interface={
 		method:'POST',
 		pages: [],
 	},
+	//乘车人信息开始
 	userInfoList:{
 		value:Url1+'/api/person/userInfoList',
 		name:'获取乘车人信息',
@@ -78,6 +79,7 @@ const Interface={
 		method:'POST',
 		pages: [],
 	},
+	//乘车人信息结束
 	getLoginCode:{
 		value:Url1+'/api/person/getLoginCode',
 		name:'获取手机验证码',

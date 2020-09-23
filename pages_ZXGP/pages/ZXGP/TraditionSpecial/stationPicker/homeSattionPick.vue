@@ -40,8 +40,34 @@
 					</swiper-item>
 				</swiper>
 			</view>
+		</view>
+		
+		<!-- 联动列表 -->
+		<view class="list_box" v-if="type==2">	
+			<!-- 左边的列表 -->
+			<!-- <view class="left">
+				<scroll-view scroll-y="true" :style="{ 'height':scrollHeight }">
+					<view class="item" v-for="(item,index) in stationArray" :key="index" :class="{ 'active':index==leftIndex }"
+					 @click="leftTap(index)">{{item.cityName}}</view>
+				</scroll-view>
+			</view> -->
 			
-			
+			<!-- 右边的列表 -->
+			<view class="main">
+				<swiper class="swiper" :style="{ 'height':scrollHeight }" vertical="true" duration="300">
+					<swiper-item>
+						<scroll-view scroll-y="true" :style="{ 'height':scrollHeight }">
+							<view class="item">
+								<view class="goods" v-for="(item,index) in mainArray" :key="index" @click="detailStationTap(item)">
+									<view>
+										<view>{{item.LineName}}</view>
+									</view>
+								</view>
+							</view>
+						</scroll-view>
+					</swiper-item>
+				</swiper>
+			</view>
 		</view>
 	</view>
 </template>
@@ -70,6 +96,8 @@
 			that.type = param.type;
 			that.applyName = that.$oSit.Interface.system.appName;
 			that.applyName2 = that.$oSit.Interface.system.applyName2;
+			that.applyName4 = that.$oSit.Interface.system.applyName4;
+			that.applyName5 = that.$oSit.Interface.system.applyName5;
 			console.log(that.type);
 			/* 设置当前滚动容器的高，若非窗口的高度，请自行修改 */
 			uni.getSystemInfo({
@@ -127,6 +155,25 @@
 								
 							}
 						},	
+						fail(res) {
+							uni.hideLoading();
+						}
+					})
+				}else if(this.type==2){
+					uni.request({
+						url: $KyInterface.KyInterface.GetLineName.Url,
+						method: $KyInterface.KyInterface.GetLineName.method,
+						data:{
+							AppSystemName:this.applyName5
+						},
+						success: (res) => {
+							uni.hideLoading();
+							console.log('type2路线',res)
+							if(res.data.data.length != 0){
+								this.mainArray = res.data.data;
+								console.log(this.mainArray)
+							}
+						},
 						fail(res) {
 							uni.hideLoading();
 						}
@@ -231,6 +278,13 @@
 						});
 						uni.navigateBack({ });
 					}
+				}else if(this.type==2){
+					//当前是上车点
+					uni.$emit('startstaionChange', {
+						data: item.StartSite,
+						data2: item.EndSite,
+					});
+					uni.navigateBack({});
 				}
 			},
 			
@@ -313,6 +367,7 @@
 			.item {
 				padding-left: 20rpx;
 				position: relative;
+				padding: 8upx 0;
 
 				&:not(:first-child) {
 					margin-top: 1px;
@@ -335,6 +390,7 @@
 				&:active {
 					color: #42b983;
 					background-color: #fff;
+					padding: 8upx 0;
 				}
 			}
 		}

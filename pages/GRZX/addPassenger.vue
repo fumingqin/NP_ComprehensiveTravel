@@ -173,7 +173,7 @@
 				selectCode:['请选择','身份证','护照','港澳通行证','台胞证'],
 				// codeType:'请选择证件类型 >',
 				codeType:'身份证 >',
-				ticketType:'请选择购票类型 >',
+				ticketType:'成人 >',
 				selector:'请选择特殊凭证 >',
 				user:{
 					passengerId:'',//乘车人id
@@ -184,7 +184,7 @@
 					userDefault:false,
 					show:true,
 					prove:0,
-					type:0,
+					type:1,
 					// userEmergencyContact:false,
 					// date:'请选择',
 					// date:'',
