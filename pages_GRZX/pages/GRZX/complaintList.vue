@@ -18,10 +18,10 @@
 		<view v-if="show">
 			<view class="itemClass" v-for="(item,index) in complaintList" :key="index" v-if="formatType(item.IsReply) == type">
 				<text class="fontStyle fontSize">{{item.ProjectType}}</text>
-				<text class="fontStyle">投诉对象：{{item.DriverName}}</text>
-				<text class="fontStyle">投诉时间：{{formateTime(item.CreatetTime)}}</text>
-				<text class="fontStyle">投诉内容：{{item.ComplaintContent}}</text>
-				<text class="statusClass">{{formatState(item.IsReply)}}</text>
+				<text class="fontStyle">投诉对象：{{item.DriverName ||'暂无'}}</text>
+				<text class="fontStyle">投诉时间：{{formateTime(item.CreatetTime) ||'暂无'}}</text>
+				<text class="fontStyle">投诉内容：{{item.ComplaintContent ||'暂无'}}</text>
+				<text class="statusClass">{{formatState(item.IsReply) ||'暂无'}}</text>
 				<view class="btnClass" @click="gotoStatus(item)">详细</view>
 			</view>
 		</view>

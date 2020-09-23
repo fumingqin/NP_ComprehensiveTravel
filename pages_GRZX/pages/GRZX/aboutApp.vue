@@ -118,6 +118,7 @@
 			//--------------------------检查新功能--------------------------
 			checkClick(){
 				var that=this;
+				console.log(that.$GrzxInter.downloadAPP);
 				uni.request({
 					url:that.$GrzxInter.Interface.GetVersion.value,
 					method:that.$GrzxInter.Interface.GetVersion.method,
@@ -130,7 +131,7 @@
 							    success: (e)=>{
 							    	if(e.confirm){
 										// #ifdef APP-PLUS
-										plus.runtime.openURL("http://27.148.155.9:9248/LoadAppWebsite/泉运出行综合平台.apk");
+										plus.runtime.openURL(that.$GrzxInter.downloadAPP);
 										// #endif
 										// #ifndef APP-PLUS
 										uni.showToast({

@@ -220,7 +220,7 @@
 		font-size: 28upx;
 		color: #999999;
 		margin-top: 3upx;
-		margin-left: 10upx;
+		margin-left: 10%;
 	}
 
 	.talkinfo {
