@@ -319,6 +319,47 @@ const KyInterface = {
 		name:'查询班次',
 		method:'POST',
 	}, 
+	
+	//--------------------------------------退票--------------------------------------
+	RefundTicket_Flow:{
+		Url: Url2 + '/api/KY/RefundTicket_Flow',
+		name:'退票',
+		method:'GET',
+	}, 
+	
+	//-------------------------------------取消--------------------------------------
+	CancelTicket_Flow:{
+		Url: Url2 + '/api/KY/CancelTicket_Flow',
+		name:'取消',
+		method:'GET',
+	}, 
+	
+	//--------------------------------------查询退票费率--------------------------------------
+	GetBounceChargeByOrderNumber:{
+		Url: Url2 + '/api/KY/GetBounceChargeByOrderNumber',
+		name:'查询退票费率',
+		method:'GET',
+	}, 
+	
+	//--------------------------------------改签--------------------------------------
+	ChangeSignClick:{
+		Url: Url2 + '/api/KY/ChangeSignClick',
+		name:'改签',
+		method:'GET',
+	},
+	
+	//--------------------------------------删除订单--------------------------------------
+	DeleteKYOrderByOrderNumber:{
+		Url: Url2 + '/api/KY/DeleteKYOrderByOrderNumber',
+		name:'删除订单',
+		method:'GET',
+	},
+	//--------------------------------------查询订单状态--------------------------------------
+	SellTicket_Flow:{
+		Url: Url2 + '/api/KY/SellTicket_Flow',
+		name:'查询订单状态',
+		method:'GET',
+	},
 }
 
 const InterfaceAddress = [

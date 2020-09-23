@@ -781,8 +781,8 @@
 			GetBounceChargeByOrderNumber:function(orderNumber){
 				var that = this;
 				uni.request({
-					url: $KyInterface.KyInterface.Ky_GetBounceChargeByOrderNumber.Url,
-					method: $KyInterface.KyInterface.Ky_GetBounceChargeByOrderNumber.method,
+					url: $KyInterface.KyInterface.GetBounceChargeByOrderNumber.Url,
+					method: $KyInterface.KyInterface.GetBounceChargeByOrderNumber.method,
 					data: {
 						orderNumber: orderNumber,
 					},
@@ -829,8 +829,8 @@
 				})
 				var that = this;
 				uni.request({
-					url: $KyInterface.KyInterface.Ky_RefundTicket.Url,
-					method: $KyInterface.KyInterface.Ky_RefundTicket.method,
+					url: $KyInterface.KyInterface.RefundTicket_Flow.Url,
+					method: $KyInterface.KyInterface.RefundTicket_Flow.method,
 					data: {
 						orderNumber: orderNumber,
 					},
@@ -1006,7 +1006,7 @@
 				uni.request({
 					url: $KyInterface.KyInterface.Cs_Cancel.Url,
 					method: $KyInterface.KyInterface.Cs_Cancel.method,
-					header: $KyInterface.KyInterface.Cs_Cancel.header,
+					
 					data: {
 						bookID: orderNumber,
 					},
@@ -1051,8 +1051,8 @@
 				});
 				timer = setInterval(function() {
 					uni.request({
-						url:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.Url,
-						method:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.method,
+						url:$KyInterface.KyInterface.SellTicket_Flow.Url,
+						method:$KyInterface.KyInterface.SellTicket_Flow.method,
 						data: {
 							orderNumber: orderNumber,
 						},
@@ -1096,8 +1096,8 @@
 				var that = this;
 				that.ky_currentType = '传统客运';
 				uni.request({
-					url: $KyInterface.KyInterface.Ky_CancelTicket.Url,
-					method: $KyInterface.KyInterface.Ky_CancelTicket.method,
+					url: $KyInterface.KyInterface.CancelTicket_Flow.Url,
+					method: $KyInterface.KyInterface.CancelTicket_Flow.method,
 					data: {
 						orderNumber: orderNumber,
 					},
@@ -1157,7 +1157,7 @@
 			//--------------------------检测订单支付状态--------------------------
 			Cs_CheckPayState:function(orderNumber,totalPrice){
 				var that = this;
-				var payType = $KyInterface.KyInterface.payType.payType;
+				var payType = $KyInterface.KyInterface.SellTicket_Flow.payType;
 				console.log('检测订单支付状态',orderNumber,payType)
 				var number = '';
 				if(that.ky_currentType == '定制巴士退票'){
@@ -1166,8 +1166,8 @@
 					number = orderNumber.orderNumber;
 				}
 				uni.request({
-					url:$KyInterface.KyInterface.Cs_CheckPayState.Url,
-					method:$KyInterface.KyInterface.Cs_CheckPayState.method,
+					url:$KyInterface.KyInterface.SellTicket_Flow.Url,
+					method:$KyInterface.KyInterface.SellTicket_Flow.method,
 					data:{
 						orderNumber:number,
 						payType:payType
@@ -1652,19 +1652,9 @@
 			//-------------------------客运投诉-------------------------
 			KyComplain:function(item){
 				console.log(item)
-				if(item.carType=='普通班车'){
 					uni.navigateTo({
-						url:'../../pages_GRZX/pages/GRZX/gz_complaintsPage?or_entrance=1&or_class=普通班车&or_name=' + item.driverName +'&or_nameId=0' +'&or_phoneNumber' +item.driverPhone
+						url:'../../pages_GRZX/pages/GRZX/complaint?driverID' +item.driverPhone'&driverName=' + item.driverName +'&orderID=' +item.driverPhone
 					})
-				}else if(item.carType=='定制班车'){
-					uni.navigateTo({
-						url:'../../pages_GRZX/pages/GRZX/gz_complaintsPage?or_entrance=1&or_class=定制班车&or_name=' + item.driverName +'&or_nameId=0' +'&or_phoneNumber' +item.driverPhone
-					})
-				}else if(item.carType=='定制巴士'){
-					uni.navigateTo({
-						url:'../../pages_GRZX/pages/GRZX/gz_complaintsPage?or_entrance=1&or_class=定制巴士&or_name=' + item.driverName +'&or_nameId=0' +'&or_phoneNumber' +item.driverPhone
-					})
-				}
 			},
 			onchange(e){
 				this.num = e.value;
