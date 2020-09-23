@@ -196,16 +196,18 @@
 			
 			//------------------加载乘车人须知----------------
 			loadText:function(){
-				var that=this;
 				uni.request({
-					url:that.$GrzxInter.Interface.getByTitle.value,
-					data:{
-						systemName:that.$GrzxInter.systemConfig.applyName,
-						title:'乘车人须知',
-					},
-					method:'POST',
-					success(res){
-						that.noticeText=res.data.data.msg;
+					url:this.$GrzxInter.Interface.GetAggrement.value,
+					method:this.$GrzxInter.Interface.GetAggrement.method,
+					success: res =>{
+						console.log(res,'乘车人须知');
+						if(res.data.status){
+							for(let i = 0; i < res.data.data.length; i++){
+								if(res.data.data[i].Title == "购票须知"){
+									this.noticeText=res.data.data[i].Body;
+								}
+							}
+						}
 					},
 				})
 			},

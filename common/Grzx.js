@@ -60,6 +60,7 @@ const Interface={
 		method:'POST',
 		pages: [],
 	},
+	//乘车人信息开始
 	userInfoList:{
 		value:Url1+'/api/person/userInfoList',
 		name:'获取乘车人信息',
@@ -78,6 +79,7 @@ const Interface={
 		method:'POST',
 		pages: [],
 	},
+	//乘车人信息结束
 	getLoginCode:{
 		value:Url1+'/api/person/getLoginCode',
 		name:'获取手机验证码',
@@ -96,8 +98,8 @@ const Interface={
 		method:'POST',
 		pages: [],
 	 },
-	SearchVersion:{
-		value:Url+'/api/person/SearchVersion',
+	GetVersion:{
+		value:Url1+'/api/ShowContent/GetVersion',
 		name:'获取版本号',
 		method:'POST',
 		pages: [],
@@ -108,15 +110,15 @@ const Interface={
 		method:'POST',
 		pages: [],
 	},
-	GetNews:{
-		value:Url1+'/api/News/GetNews',
-		name:'获取新闻资讯列表',
+	getallMsg:{
+		value:Url+'/api/ky/getallMsg',
+		name:'通知列表',
 		method:'POST',
 		pages: [],
 	},
-	GetNewsByAID:{
-		value:Url1+'/api/News/GetNewsByAID',
-		name:'获取新闻资讯详情',
+	getbymsg:{
+		value:Url+'/api/ky/getbymsg',
+		name:'通知详情',
 		method:'POST',
 		pages: [],
 	},
@@ -132,6 +134,12 @@ const Interface={
 	// 	method:'POST',//GET-POST
 	// 	pages:[]
 	// },
+	GetAggrement:{
+		value: Url1 + '/api/ShowContent/GetAggrement',
+		name:'获取乘车须知',
+		method:'POST',//GET-POST
+		pages:[]
+	},
 	
 	//------------------------------------意见反馈------------------------------------
 	Add_Suggestion:{

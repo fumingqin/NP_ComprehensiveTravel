@@ -2,8 +2,8 @@
     <view class="myView">
 		<!-- 照片背景图 -->
 		<view>
-			<image :src="imageUrl" class="imageTop" mode="aspectFill"></image>
-			<!-- <image src="../../static/index/左-箭头.png" class="imageReturn"></image> -->
+			<!-- <image :src="imageUrl" class="imageTop" mode="aspectFill"></image> -->
+			<image src="../../../../static/ZXGP/banner.png" class="imageTop" mode="aspectFill"></image>
 		</view>
 		<!-- 车票查询 -->
 		<view class="queryTickets">
@@ -79,6 +79,7 @@
 				specialPickerNum:0,
 				isNormal:0,//判断是普通购票还是定制班车默认是普通购票
 				imageUrl:'',
+				state:1,
 			}
 		},
 		onLoad() {
@@ -141,7 +142,7 @@
 				});
 				uni.navigateTo({
 					//跳转到下个页面的时候加个字段，判断当前点击的是上车点
-					url:'../stationPicker/homeSattionPick?&station=' + 'qidian'
+					url:'../stationPicker/homeSattionPick?&station=' + 'qidian' +'&type=' + this.state,
 				})
 			},
 			//---------------------------------点击终点站---------------------------------
@@ -156,7 +157,7 @@
 				});
 				uni.navigateTo({
 					//跳转到下个页面的时候加个字段，判断当前点击的是下车点
-					url:'../stationPicker/homeSattionPick?&station=' + 'zhongdian',
+					url:'../stationPicker/homeSattionPick?&station=' + 'zhongdian' +'&type=' + this.state,
 				})
 			},
 			//---------------------------------点击车票类型---------------------------------
