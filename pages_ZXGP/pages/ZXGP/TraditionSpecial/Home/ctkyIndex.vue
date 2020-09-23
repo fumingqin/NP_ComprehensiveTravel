@@ -79,7 +79,7 @@
 				specialPickerNum:0,
 				isNormal:0,//判断是普通购票还是定制班车默认是普通购票
 				imageUrl:'',
-				state:'',
+				state:'车票订购',
 			}
 		},
 		onLoad() {
@@ -88,7 +88,6 @@
 				that.departure = '选择上车点';
 				that.destination = '选择下车点';
 			}
-			that.state = that.$KyInterface.systemName2;
 			that.getPicture();
 			//读取历史记录
 			uni.getStorage({

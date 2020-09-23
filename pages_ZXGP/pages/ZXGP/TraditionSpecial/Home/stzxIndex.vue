@@ -70,7 +70,7 @@
 					background: 'linear-gradient(to right,#ffbe29, #ff9c20)',
 					color: '#FFFFFF',
 				},
-				state: '', //状态值
+				state: '邵泰专线', //状态值
 			}
 		},
 

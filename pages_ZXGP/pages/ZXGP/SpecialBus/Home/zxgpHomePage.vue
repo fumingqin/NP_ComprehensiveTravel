@@ -66,7 +66,7 @@
 
 
 
-				<view class="zl_recommend">
+				<view class="zl_recommend" v-if="mainArray.length!==0">
 					<view>
 						<view class="zl_reContent">
 							<text class="zl_reTitle">快捷选项</text>
@@ -151,17 +151,8 @@
 			// #endif
 			//加载应用名称
 			this.applyName = this.$oSit.Interface.system.applyName;
-			this.applyName5 = this.$oSit.Interface.system.applyName5;
-			this.type2 = this.$KyInterface.systemName4;
 			
 			var that = this;
-			// if(that.departure == '' || that.destination == '' || that.type2==0) {
-			// 	that.departure = '请选择起点';
-			// 	that.destination = '请选择终点';
-			// }else{
-			// 	that.departure2 = '请选择起点';
-			// 	that.destination2 = '请选择终点';
-			// }
 			that.loadData();
 			this.getBusStationList();
 		},
@@ -215,30 +206,6 @@
 				uni.stopPullDownRefresh();
 			},
 
-			//-----------------tab事件---------------------------------------
-			// tabClick(e) {
-			// 	if (e == 0) {
-
-			// 		if( this. departure2 !== '请选择起点'){
-			// 			this.departure = this.destination2;
-			// 			this.destination = this.departure2;
-			// 			this.type2 = 0;
-			// 		}else{
-			// 			this.type2 = 0;
-			// 		}
-			// 	} else if (e == 1) {
-			// 		if( this. departure !== '请选择起点'){
-			// 			console.log('222222')
-			// 			this.departure2 = this.destination;
-			// 			this.destination2 = this.departure;
-			// 			console.log(this.departure2	)
-			// 			this.type2 = 1;
-			// 		}else{
-			// 			this.type2 = 1;
-			// 		}
-			// 	}
-			// },
-
 			//---------------------------------点击出发专线---------------------------------
 			setOutStationTap() {
 				var that = this;
@@ -255,22 +222,6 @@
 					url: '../../TraditionSpecial/stationPicker/homeSattionPick?&station=' + 'qidian' + '&type=' + this.type2,
 				})
 
-				// uni.$on('startstaionChange', function(data) {
-				//     // data即为传过来的值，给上车点赋值
-				// 	if(that.type2==0){
-				// 		that.departure = data.data;
-				// 		that.destination=data.data2;
-				// 	}else if(that.type2==1){
-				// 		that.departure2 = data.data;
-				// 		that.destination2=data.data2;
-				// 	}
-				//     //清除监听，不清除会消耗资源
-				//     uni.$off('startstaionChange');
-				// });
-				// uni.navigateTo({
-				// 	//跳转到下个页面的时候加个字段，判断当前点击的是上车点
-				// 	url:'../../pages_ZXGP/pages/ZXGP/TraditionSpecial/stationPicker/homeSattionPick?&station=' + 'qidian' +'&type=' + this.type2,
-				// })
 			},
 
 			//---------------------------------获取当前日期---------------------------------
@@ -352,31 +303,6 @@
 						url: params,
 					})
 				}
-				// if(that.type2==0 && that.departure == '请选择起点') {
-				// 	uni.showToast({
-				// 		title: '请选择起点',
-				// 		icon: 'none'
-				// 	})
-				// }else if(that.type2==1 && that.destination2 == '请选择终点'){
-				// 	uni.showToast({
-				// 		title: '请选择到达地点',
-				// 		icon: 'none'
-				// 	})
-				// }else {
-				// 	//页面传参通过地址后面添加参数 this.isNormal=0是普通购票1是定制班车
-				// 	if(that.type2==0){
-				// 		var params='/pages_ZXGP/pages/ZXGP/TraditionSpecial/Order/selectTickets?&startStation=' + this.departure +'&endStation=' + this.destination + '&date=' + this.datestring + '&isNormal=' + this.type2 + '&Week=' + this.Week;
-				// 		uni.navigateTo({
-				// 			url:params,
-				// 		})
-				// 	}
-				// 	else if(that.type2==1){
-				// 		var params='/pages_ZXGP/pages/ZXGP/TraditionSpecial/Order/selectTickets?&startStation=' + this.departure2 +'&endStation=' + this.destination2 + '&date=' + this.datestring + '&isNormal=' + this.type2 + '&Week=' + this.Week;
-				// 		uni.navigateTo({
-				// 			url:params,
-				// 		})
-				// 	}
-				// }
 			},
 
 			//-------------------------获取车站列表数据-------------------------
@@ -385,7 +311,7 @@
 					url: $KyInterface.KyInterface.GetLineName.Url,
 					method: $KyInterface.KyInterface.GetLineName.method,
 					data: {
-						AppSystemName: this.applyName5
+						AppSystemName: this.type2
 					},
 					success: (res) => {
 						uni.hideLoading();

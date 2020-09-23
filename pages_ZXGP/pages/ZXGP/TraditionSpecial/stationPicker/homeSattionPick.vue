@@ -15,7 +15,7 @@
 			</block>
 		</view>
 		<!-- 联动列表 -->
-		<view class="list_box" v-if="type==1">	
+		<view class="list_box" v-if="type== '车票订购'">	
 			<!-- 左边的列表 -->
 			<view class="left">
 				<scroll-view scroll-y="true" :style="{ 'height':scrollHeight }">
@@ -43,16 +43,7 @@
 		</view>
 		
 		<!-- 联动列表 -->
-		<view class="list_box" v-if="type==2">	
-			<!-- 左边的列表 -->
-			<!-- <view class="left">
-				<scroll-view scroll-y="true" :style="{ 'height':scrollHeight }">
-					<view class="item" v-for="(item,index) in stationArray" :key="index" :class="{ 'active':index==leftIndex }"
-					 @click="leftTap(index)">{{item.cityName}}</view>
-				</scroll-view>
-			</view> -->
-			
-			<!-- 右边的列表 -->
+		<view class="list_box" v-if="type=='邵泰专线' || type== '武夷新区专线'">	
 			<view class="main">
 				<swiper class="swiper" :style="{ 'height':scrollHeight }" vertical="true" duration="300">
 					<swiper-item>
@@ -118,12 +109,13 @@
 				uni.showLoading();
 				// console.log($Zxgp.KyInterface.Cs_GetInsuranceCheckState.Url)
 				// console.log($KyInterface.KyInterface.getStations.Url)
-				if(this.type=='八闽出行'){
+				if(this.type=='车票订购'){
+					var systemNameCode = '八闽出行';
 					uni.request({
 						url: $KyInterface.KyInterface.getStations.Url,
 						method: $KyInterface.KyInterface.getStations.method,
 						data:{
-							systemName:this.type
+							systemName: systemNameCode
 						},
 						success: (res) => {
 							
@@ -159,7 +151,7 @@
 							uni.hideLoading();
 						}
 					})
-				}else if(this.type=='邵泰专线'){
+				}else if(this.type=='邵泰专线' || this.type=='武夷新区专线'){
 					uni.request({
 						url: $KyInterface.KyInterface.GetLineName.Url,
 						method: $KyInterface.KyInterface.GetLineName.method,
