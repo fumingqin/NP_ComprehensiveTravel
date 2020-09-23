@@ -5,7 +5,7 @@
 			<text class="sizeClass">{{currentSize}}</text>
 			<image src="../../static/GRZX/icon-right.png" class="rightClass"></image>
 		</view>
-		<!-- #ifndef APP-PLUS -->
+		<!-- #ifdef APP-PLUS -->
 		<view class="itemClass" @click="aboutAPP" hover-class="btnClass">
 			<text class="">关于APP</text>
 			<image src="../../static/GRZX/icon-right.png" class="rightClass1"></image>
