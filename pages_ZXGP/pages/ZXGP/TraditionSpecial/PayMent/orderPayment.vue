@@ -52,7 +52,7 @@
 					<view class="MP_cost" v-if="isInsurance == 1 ">
 						<text>保险</text>
 						<text class="MP_number">×{{ticketNum}}</text>
-						<text class="MP_total">¥{{insuredPrice}}</text>
+						<text class="MP_total">¥{{orderInfo.insurePrice}}</text>
 					</view>
 
 					<!-- 优惠券 -->
@@ -115,7 +115,6 @@
 				}],
 				insurance: '', //保险
 				isInsurance: '', //是否有保险
-				insuredPrice: '0',//保险价格
 				channeIndex: 0, //选择支付方式
 				orderInfo: [], //订单数据
 				passengerInfo: [], //乘车人信息
@@ -143,20 +142,15 @@
 			// console.log(JSON.parse(param.array))
 			var that = this;
 			that.ticketInfo = JSON.parse(param.array);
-			//定制班车上车点
-			that.specialStartStation = that.ticketInfo.getOnPoint;
-			//定制班车下车点
-			that.specialEndStation = that.ticketInfo.getOffPoint;
-			//班车类型
-			that.tickettype = that.ticketInfo.shuttleType;
-			
+			that.specialStartStation = that.ticketInfo.getOnPoint;//上车点
+			that.specialEndStation = that.ticketInfo.getOffPoint;//下车点
+			that.tickettype = that.ticketInfo.shuttleType;//班车类型
+			that.totalPrice = that.ticketInfo.totalPrice;//总价格
+			that.isInsurance = that.ticketInfo.isInsurance;//是否选择保险
 			uni.showLoading({
 			    title: '正在下单...'
 			});
-			
-			that.totalPrice = that.ticketInfo.totalPrice;//总价格
-			that.insuredPrice = that.ticketInfo.insuredPrice;//保险价格
-			if (that.ticketInfo.isInsurance == 1) {
+			if (that.isInsurance == 1) {
 				that.insurance = '保险';
 				that.isInsurance = true;
 			} else {
@@ -360,8 +354,33 @@
 				uni.showLoading({
 				    title: '正在下单...'
 				});
-				console.log(that.specialStartStation)
-				console.log(that.specialEndStation)
+				console.log('----------------接下来是下单的请求参数-------------------')
+				console.log('班车类型： ',that.specialStartStation)
+				console.log('公司代码： ',companyCode)
+				console.log('用户ID： ',that.userInfo.userId)
+				console.log('用户名： ',that.userInfo.nickname)
+				console.log('调度公司代码： ',that.orderInfo.scheduleCompanyCode)
+				console.log('班次ID： ',that.orderInfo.executeScheduleID)
+				console.log('上车点ID： ',that.orderInfo.startSiteID)
+				console.log('下车点ID： ',that.orderInfo.endSiteID)
+				console.log('起点站： ',that.orderInfo.startStaion)
+				console.log('终点站： ',that.orderInfo.endStation)
+				console.log('价格ID： ',that.orderInfo.priceID)
+				console.log('手机号码： ',that.userInfo.phoneNumber)
+				console.log('全票人数： ',that.adultNum)
+				console.log('半票人数： ',that.childrenNum)
+				console.log('携童人数： ',that.freeTicketNum)
+				console.log('乘车人信息： ',that.idNameTypeStr)
+				console.log('是否选择了保险： ',that.isInsurance)
+				console.log('保险价格： ',that.orderInfo.insurePrice)
+				console.log('小程序公众号OPENID： ',openId)
+				console.log('总价格： ',that.totalPrice)
+				console.log('发车时间： ',setTime)
+				console.log('定制班车上车点： ',that.specialStartStation)
+				console.log('定制班车下车点： ',that.specialEndStation)
+				console.log('班次号： ',that.orderInfo.planScheduleCode)
+				console.log('线路名称： ',that.orderInfo.lineName)
+				console.log('-------------------------结束---------------------------')
 				uni.request({
 					url:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.Url,
 					method:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.method,
@@ -385,12 +404,12 @@
 						carryChild: that.freeTicketNum, //携童人数
 						idNameType: that.idNameTypeStr, //乘车人信息
 						insured: that.isInsurance, //是否选择了保险
-						insuredPrice: that.insuredPrice, //保险价格
+						insuredPrice: that.orderInfo.insurePrice, //保险价格
 						openId: openId, //小程序公众号OPENID
 						totalPrice: that.totalPrice, //总价格
 						setOutTime: setTime, //发车时间
 						
-						IsPickUp : '',//是否上门接送
+						IsPickUp : false,//是否上门接送
 						PickUpAddress : '', //接送点
 						PickUpLatitude : '',//接送点纬度
 						PickUpLongitude : '',//接送点经度

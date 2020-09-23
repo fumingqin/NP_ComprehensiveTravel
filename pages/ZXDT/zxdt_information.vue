@@ -10,12 +10,12 @@
 					<text class="tv_label">{{labelVariety(item.Type)}}</text>
 					<text class="tv_title">{{item.Title}}</text>
 				</text>
-				<image class="tv_image" src="../../static/ZXDT/h_banner2.png" mode="aspectFill"></image>
+				<image class="tv_image" :src="item.ImageUrl" mode="aspectFill"></image>
 			</view>
 			
 			<view class="view_contentView">
 				<text>中国社电</text>
-				<text class="cont_text">5561评</text>
+				<text class="cont_text">{{item.ViewCount}}人看过</text>
 				<text class="cont_text">{{informationDate(item.CreateTime)}}</text>
 				<u-icon class="cont_icon" name="more-dot-fill"></u-icon>
 			</view>
@@ -58,7 +58,7 @@
 					url:'http://appdl.xmjdt.cn:60032/api/News/GetNews',
 					method:'POST',
 					success:(res)=>{
-						// console.log(e)
+						console.log(e)
 						if(e == 0){
 							this.informationList = res.data.data.filter(item =>{
 								return item.Type == '通知公告';
