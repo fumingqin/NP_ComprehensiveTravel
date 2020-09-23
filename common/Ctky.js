@@ -362,6 +362,12 @@ const KyInterface = {
 		name:'查询订单状态',
 		method:'GET',
 	},
+	//--------------------------------------模糊查询--------------------------------------
+	GetLineNameByKey:{
+		Url: Url2 + '/api/KY/GetLineNameByKey',
+		name:'模糊查询',
+		method:'GET',
+	},
 }
 
 const InterfaceAddress = [
