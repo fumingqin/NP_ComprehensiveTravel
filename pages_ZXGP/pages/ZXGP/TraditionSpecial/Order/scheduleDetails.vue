@@ -151,7 +151,8 @@
 
 				</view>
 			</popup>
-
+			
+			
 			<!-- 乘车险 -->
 			<view class="orderCommonClass">
 				<view style="display: flex; align-items: center;">
@@ -163,7 +164,21 @@
 					<radio class="Mp_box" value="1" :color="'#01aaef'" :checked="isInsurance===1 ? true : false" @click="insuranceTap"></radio>
 				</view>
 			</view>
-
+			
+			
+			<!-- <view class="orderCommonClass">
+				<view style="display: flex; align-items: center;">
+					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">上门接客服务</view>
+					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:30upx ;">{{InsurePrice}}元</view>
+				</view>
+				<view style="display: flex;margin-right: 41upx;align-items: center;">
+					<view style="font-size: 30upx;color: #2C2D2D;">{{passengerNum}}份</view>
+					<radio class="Mp_box" value="1" :color="'#01aaef'" :checked="isInsurance===1 ? true : false" @click="insuranceTap"></radio>
+				</view>
+			</view>
+			 -->
+			
+			
 			<!-- 购票须知 -->
 			<view class="orderCommonClass">
 				<view style="display: flex; align-items: center;">
@@ -220,7 +235,6 @@
 </template>
 
 <script>
-	import $KyInterface from "@/common/Ctky.js"
 	import popup from "@/pages_ZXGP/components/ZXGP/uni-popup/uni-popup.vue";
 	export default {
 		components: {
@@ -230,7 +244,6 @@
 			return {
 				way: '',
 				title: '',
-				isNormal: 0, //判断是普通购票还是定制班车:1是普通0是定制
 				count: 1,
 				startStation: '', //定制班车上车点
 				endStation: '', //定制班车下车点
@@ -266,6 +279,16 @@
 				selectRoutePoint:[],//普通班车下车点
 				ordinaryBoarding:'',//普通班车上车点
 				appName:'',
+				
+				pickUp_Display : true, //接送服务是否显示
+				pickUp_Price : 4 ,//上门默认价格
+				pickUp_Status : false , //默认不开启
+				pickUp_Address : '' , //接送点
+				pickUp_Latitude : '' , //接送点纬度
+				pickUp_Longitude : '' , //接送点经度
+				StartStaion_Latitude : '',//始发站点纬度
+				StartStaion_Longitude : '',//始发站经度
+				
 			}
 		},
 
@@ -274,8 +297,6 @@
 			//加载应用名称
 			that.applyName = that.$oSit.Interface.system.applyName;
 			that.appName = that.$oSit.Interface.system.appName;
-			//给车票类型赋值，0：普通购票，不显示上下车点选择 1:定制班车，显示上下车点选择
-			// this.isNormal = e.isNormal;
 			that.startStation = '', //定制班车上车点
 			that.endStation = '', //定制班车下车点
 			console.log(that.endStation)
@@ -367,16 +388,15 @@
 				})
 
 				uni.request({
-					url: $KyInterface.KyInterface.Cs_getByTitle.Url,
-					method: $KyInterface.KyInterface.Cs_getByTitle.method,
-					data: {
-						title: '用户购票须知',
-						systemName: this.applyName,
-					},
+					url: this.$ky_cpdg.KyInterface.Cs_getByTitle.Url,
+					method: this.$ky_cpdg.KyInterface.Cs_getByTitle.method,
 					success: (res) => {
-						console.log('用户购票须知', res)
-						this.way = res.data.data.msg;
-						// console.log('购票须知2',this.way)
+						console.log('购票须知', res)
+						var data = res.data.data.filter(item =>{
+							return item.Type == '购票须知';
+						})
+						this.way = data[0].Body;
+						console.log('购票须知2',this.way)
 					}
 				})
 
@@ -721,7 +741,6 @@
 					shuttleType: that.shuttleType, //班车类型
 					getOnPoint: that.startStation, //起点
 					getOffPoint: that.endStation, //终点
-					insuredPrice: that.InsurePrice, //保险价格
 				}
 				console.log(array)
 				uni.navigateTo({

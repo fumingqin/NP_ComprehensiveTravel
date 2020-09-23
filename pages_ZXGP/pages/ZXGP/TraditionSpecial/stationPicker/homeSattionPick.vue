@@ -15,7 +15,7 @@
 			</block>
 		</view>
 		<!-- 联动列表 -->
-		<view class="list_box" v-if="type==1">	
+		<view class="list_box" v-if="type== '车票订购'">	
 			<!-- 左边的列表 -->
 			<view class="left">
 				<scroll-view scroll-y="true" :style="{ 'height':scrollHeight }">
@@ -43,16 +43,7 @@
 		</view>
 		
 		<!-- 联动列表 -->
-		<view class="list_box" v-if="type==2">	
-			<!-- 左边的列表 -->
-			<!-- <view class="left">
-				<scroll-view scroll-y="true" :style="{ 'height':scrollHeight }">
-					<view class="item" v-for="(item,index) in stationArray" :key="index" :class="{ 'active':index==leftIndex }"
-					 @click="leftTap(index)">{{item.cityName}}</view>
-				</scroll-view>
-			</view> -->
-			
-			<!-- 右边的列表 -->
+		<view class="list_box" v-if="type=='邵泰专线' || type== '武夷新区专线'">	
 			<view class="main">
 				<swiper class="swiper" :style="{ 'height':scrollHeight }" vertical="true" duration="300">
 					<swiper-item>
@@ -118,19 +109,20 @@
 				uni.showLoading();
 				// console.log($Zxgp.KyInterface.Cs_GetInsuranceCheckState.Url)
 				// console.log($KyInterface.KyInterface.getStations.Url)
-				if(this.type==1){
+				if(this.type=='车票订购'){
+					var systemNameCode = '八闽出行';
 					uni.request({
 						url: $KyInterface.KyInterface.getStations.Url,
 						method: $KyInterface.KyInterface.getStations.method,
 						data:{
-							systemName:this.applyName2
+							systemName: systemNameCode
 						},
 						success: (res) => {
 							
 							uni.hideLoading();
 							var a=res.data;
 							var b=JSON.parse(a);
-							// console.log('请求接口的数据：', b)
+							console.log('请求接口的数据：', b)
 							// console.log(this.stationArray)
 							if (b.length != 0) {
 								for (var i = 0; i < b.length; i++) {
@@ -159,19 +151,19 @@
 							uni.hideLoading();
 						}
 					})
-				}else if(this.type==2){
+				}else if(this.type=='邵泰专线' || this.type=='武夷新区专线'){
 					uni.request({
 						url: $KyInterface.KyInterface.GetLineName.Url,
 						method: $KyInterface.KyInterface.GetLineName.method,
 						data:{
-							AppSystemName:this.applyName5
+							AppSystemName:this.type
 						},
 						success: (res) => {
 							uni.hideLoading();
-							console.log('type2路线',res)
+							// console.log('type2路线',res)
 							if(res.data.data.length != 0){
 								this.mainArray = res.data.data;
-								console.log(this.mainArray)
+								// console.log(this.mainArray)
 							}
 						},
 						fail(res) {
@@ -193,29 +185,18 @@
 				this.isShowAllList = false;
 				//以下示例截取淘宝的关键字，请替换成你的接口
 				uni.showLoading();
-				var systemName = '';
-				// #ifdef H5
-				systemName = '南平旅游H5';
-				// #endif
-				// #ifdef APP-PLUS
-				systemName = '南平旅游APP';
-				// #endif
-				// #ifdef MP-WEIXIN
-				systemName = '南平旅游H5';
-				// #endif
 				uni.request({
-					url:$KyInterface.KyInterface.Ky_GetSatartSite.Url,
-					method:$KyInterface.KyInterface.Ky_GetSatartSite.method,
-					header:$KyInterface.KyInterface.Ky_GetSatartSite.header,
+					url:$KyInterface.KyInterface.GetLineNameByKey.Url,
+					method:$KyInterface.KyInterface.GetLineNameByKey.method,
 					data:{
-						systemName:systemName,
-						keyword:keyword
+						AppSystemName:this.type,
+						key:keyword
 					},
 					success: (res) => {
 						uni.hideLoading();
-						// console.log(res);
+						console.log('模糊搜索',res);
 						this.keywordList = [];
-						this.keywordList = this.drawCorrelativeKeyword(res.data, keyword);
+						this.keywordList = this.drawCorrelativeKeyword(res.data.data, keyword);
 					},
 					fail(res) {
 						uni.hideLoading();
@@ -228,7 +209,7 @@
 				var len = keywords.length,
 					keywordArr = [];
 				for (var i = 0; i < len; i++) {
-					var row = keywords[i].siteName;
+					var row = keywords[i].LineName;
 					//定义高亮#9f9f9f
 					var html = row.replace(keyword, "<span style='color: #9f9f9f;'>" + keyword + "</span>");
 					html = '<div>' + html + '</div>';
@@ -245,26 +226,25 @@
 				var that = this;
 				//获取点击选项的文字
 				var key = this.keywordList[index].keyword;
-				
-				if (that.stationType == 'qidian') {
+				if(this.type=='邵泰专线' || this.type=='武夷新区专线'){
 					//当前是上车点
 					uni.$emit('startstaionChange', {
-					    data: key
+						data: key.StartSite,
+						data2: key.EndSite,
 					});
-					uni.navigateBack({ });
-				}else if(that.stationType == 'zhongdian') {
-					//当前是下车点
-					uni.$emit('endStaionChange', {
-					    data: key
-					});
-					uni.navigateBack({ });
+					uni.navigateBack({});
+				}else {
+					uni.showToast({
+						title:'暂无搜索',
+						icon:'none'
+					})
 				}
 			},
 			//-------------------------点击站点-------------------------
 			detailStationTap(item){
 				// console.log(item.countys);
 				var that = this;
-				if(this.type==1){
+				if(this.type=='车票订购'){
 					if (that.stationType == 'qidian') {
 						//当前是上车点
 						uni.$emit('startstaionChange', {
@@ -278,7 +258,7 @@
 						});
 						uni.navigateBack({ });
 					}
-				}else if(this.type==2){
+				}else if(this.type=='邵泰专线' || this.type=='武夷新区专线'){
 					//当前是上车点
 					uni.$emit('startstaionChange', {
 						data: item.StartSite,

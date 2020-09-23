@@ -79,7 +79,7 @@
 				specialPickerNum:0,
 				isNormal:0,//判断是普通购票还是定制班车默认是普通购票
 				imageUrl:'',
-				state:1,
+				state:'车票订购',
 			}
 		},
 		onLoad() {
@@ -342,9 +342,7 @@
 	}
 	.ticketView {
 		background-color: #FFFFFF;
-		border-radius: 20rpx;
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
+		border-radius: 14rpx;
 	}
 	//选择起始点
 	.lineClass {
@@ -414,7 +412,7 @@
 		// padding-left: 36upx;
 		// padding-right: 36upx;
 		background-color: #FFFFFF;
-		border-radius: 20rpx;
+		border-radius: 14rpx;
 		margin-top: 20rpx;
 		width: 706upx;
 		font-family: MicrosoftYaHei;
