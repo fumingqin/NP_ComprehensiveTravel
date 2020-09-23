@@ -29,15 +29,25 @@ export default {
 			textmarn:0,//字数
 			btncheck:false,//默认提交按钮样式
 			userInfo:'',	//用户信息
+			
+			DriverID : '2000001',		//司机ID
+			DriverName:'测试司机',		//司机姓名
+			OrderID: '100000',			//订单ID
 		}
 	},
-	onLoad(){
+	onLoad(options){
+		uni.setNavigationBarTitle({
+			title:'我的投诉',
+		})
 		uni.getStorage({
 			key:'userInfo',
 			success: res => {
 				this.userInfo = res.data;
 			}
 		})
+		this.DriverID = options.driverID;
+		this.DriverName = options.driverName;
+		this.OrderID = options.orderID;
 	},
 	methods: {
 		//字数统计
@@ -51,15 +61,17 @@ export default {
 					title:'请先描述问题'
 				})
 			}else{
+				console.log(this.userInfo.userId);
 				uni.request({
 					url: this.$GrzxInter.Interface.Add_Complaint.value,
 					method: this.$GrzxInter.Interface.Add_Complaint.method,
 					data: {
-						userID : this.userInfo.userId,		//用户id
+						UserID : this.userInfo.userId,		//用户id
 						ComplaintContent : this.complaintInfo,		//投诉内容
 						Phone : this.userInfo.phoneNumber,	//用户手机号
-						DriverID : '2000001',		//司机ID
-						DriverName:'测试司机',					//司机姓名
+						DriverID : this.DriverID,		//司机ID
+						DriverName:this.DriverName,					//司机姓名
+						OrderID: this.OrderID,				//订单ID
 						AppType : this.$GrzxInter.systemConfig.openidtype,	//应用类型
 						ProjectCode : this.$GrzxInter.systemConfig.applyName,		//项目名称
 					},
