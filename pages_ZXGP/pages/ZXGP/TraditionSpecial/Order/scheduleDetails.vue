@@ -156,11 +156,11 @@
 			<!-- 乘车险 -->
 			<view class="orderCommonClass">
 				<view style="display: flex; align-items: center;">
-					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">购买乘车险</view>
-					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:30upx ;">{{InsurePrice}}元</view>
+					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 28upx;">购买乘车险</view>
+					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:28upx ;">{{InsurePrice}}元</view>
 				</view>
 				<view style="display: flex;margin-right: 41upx;align-items: center;">
-					<view style="font-size: 30upx;color: #2C2D2D;">{{passengerNum}}份</view>
+					<view style="font-size: 28upx;color: #2C2D2D;">{{passengerNum}}份</view>
 					<radio class="Mp_box" value="1" :color="'#01aaef'" :checked="isInsurance===1 ? true : false" @click="insuranceTap"></radio>
 				</view>
 			</view>
@@ -168,7 +168,7 @@
 			<!-- 上门服务 -->
 			<view class="orderCommonClass" v-if="pickUp_Display == true">
 				<view style="display: flex; align-items: center;">
-					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">上门接客服务</view>
+					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 28upx;">上门接客服务</view>
 					<view style="margin-left: 16upx;color:#01aaef ; font-size:24upx; margin-top: 6upx;" @click="pickUpPoint">查看服务</view>
 					<u-popup v-model="pickUp_popup" mode="bottom">
 						<view class="boxView">
@@ -190,8 +190,8 @@
 			<!-- 选择接送上车点 -->
 			<view class="orderCommonClass" :hidden="pickUp_Status == false" @click="pickUpAddress">
 				<view style="display: flex; align-items: center; margin-left: 41upx;">
-					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 28upx;" v-if="pickUp_Address !== '请选择接送上车点'">接送上车点：</view>
-					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #01aaef;font-size: 28upx;">{{pickUp_Address}}</view>
+					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 26upx;" v-if="pickUp_Address !== '请选择接送上车点'">接送上车点：</view>
+					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #01aaef;font-size: 26upx;">{{pickUp_Address}}</view>
 				</view>
 			</view>
 			

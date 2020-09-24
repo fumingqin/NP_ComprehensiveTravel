@@ -192,8 +192,8 @@
 				that.allTicketsList = [];
 				
 				var systemNameCode = '';
-				// #ifdef APP-NVUE
-				systemNameCode = this.$ky_cpdg.KyInterface.system.systemNameApp
+				// #ifdef APP-PLUS
+				systemNameCode = this.$ky_cpdg.KyInterface.system.systemNameWeiXin
 				// #endif
 				// #ifdef MP-WEIXIN
 				systemNameCode = this.$ky_cpdg.KyInterface.system.systemNameWeiXin
