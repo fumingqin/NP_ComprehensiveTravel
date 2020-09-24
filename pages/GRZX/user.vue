@@ -12,7 +12,7 @@
 					<!--u-skeleton-fillet 绘制圆角矩形-->
 					<view class="boxClass">
 						<text class="u-skeleton-fillet fontStyle1">{{nickname}}</text>
-						<text v-if="nickname != '游客'" class="u-skeleton-fillet fontStyle2">普通会员</text>
+						<text v-if="nickname != '游客'" class="u-skeleton-fillet fontStyle2">普通用户</text>
 					</view>
 				</block>
 			</view>
@@ -21,7 +21,6 @@
 		<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 		
 		<view class="myBox">
-			<text class="myClass">我的订单</text>
 			<view class="boxClass">
 				<view class="collection" @click="orderClick(3)" hover-class="btn_Click">
 					<image src="../../static/GRZX/tubiao_pay1.png" class="imgStyle1" mode="aspectFill"></image>
@@ -41,21 +40,14 @@
 		<image :src="advert" class="advertClass" lazy-load="true"></image>
 		
 		<view class="serviceBox">
-			<!-- ========================更多服务的功能模块============================ -->
-			<view style="display: flex; flex-wrap: wrap;">
-				<view v-for="(item,index) in serviceList" :key="index">
-					<view class="itemClass" v-if="item.ItemTitle!='在线客服'&&item.IsUse" hover-class="btn_Click" @click="operateClick(item.ItemTitle)">
-						<image :src="item.ImageURL" :class="item.style"></image>
-						<text class="fontStyle">{{item.ItemTitle}}</text>
-					</view>
-					<view class="itemClass" style="position: relative;" v-if="item.ItemTitle=='在线客服'&&item.IsUse">
-						<image :src="item.ImageURL" class="ZXKFicon"></image>
-						<button open-type="contact" class="contactClass" hover-class="btn_Click"></button>
-						<text class="fontStyle">{{item.ItemTitle}}</text>
-					</view>
+			<view v-for="(item,index) in serviceList" :key="index">
+				<view class="itemClass bt" v-if="item.IsUse" hover-class="btn_Click" @click="operateClick(item.ItemTitle)">
+					<image :src="item.ImageURL" :class="item.style"></image>
+					<text class="fontStyle">{{item.ItemTitle}}</text>
+					<button open-type="contact" class="contactClass" v-if="item.ItemTitle=='在线客服'"></button>
+					<image src="../../static/GRZX/btnRight.png" class="imgClass"></image>
 				</view>
 			</view>
-			<!-- ========================更多服务的功能模块============================ -->
 		</view>
 		
 		<!-- 添加紧急联系人弹窗 -->
@@ -85,7 +77,7 @@
 				QQ: '', 		//qq客服
 				nickname: '', 	//昵称
 				port: '', 		//头像
-				advert: '', 	//广告
+				advert: 'http://36.250.234.10:60032/UpLoadImages/广告/advert.png', 	//广告
 				userFeedbackHidden: true,  //是否隐藏弹框
 				focusType: false, 		   //是否获取input焦点
 				
@@ -103,7 +95,7 @@
 		onLoad() {	
 			
 			//加载广告图片
-			this.loadImg();
+			// this.loadImg();
 			
 			//加载服务功能模块
 			this.loadServiceList();
@@ -126,15 +118,9 @@
 				this.serviceList=[{
 						IsUse: true,
 						clickURL: "",
-						ImageURL: "../../static/GRZX/ServiceIcon/tb_XXGL.png",
+						ImageURL: "../../static/GRZX/ServiceIcon/tb_CKGL.png",
 						ItemTitle: "乘客管理",
-						style:"XXGLicon",
-					},{
-						IsUse: false,
-						clickURL: "",
-						ImageURL: "../../static/GRZX/ServiceIcon/tb_ZDPZ.png",
-						ItemTitle: "站点拍照",
-						style:"ZDPZicon",
+						style:"CKGLicon",
 					},
 					{
 						IsUse: true,
@@ -142,27 +128,6 @@
 						ImageURL: "../../static/GRZX/ServiceIcon/tb_WDTS.png",
 						ItemTitle: "我的投诉",
 						style:"WDTSicon",
-					},
-					{
-						IsUse: false,
-						clickURL: "",
-						ImageURL: "../../static/GRZX/ServiceIcon/tb_JJLXR.png",
-						ItemTitle: "紧急联系人",
-						style:"JJLXRicon",
-					},
-					{
-						IsUse: false,
-						clickURL: "",
-						ImageURL: "../../static/GRZX/ServiceIcon/tb_SMRZ.png",
-						ItemTitle: "实名认证",
-						style:"SMRZicon",
-					},
-					{
-						IsUse: false,
-						clickURL: "",
-						ImageURL: "../../static/GRZX/ServiceIcon/tb_GHSJH.png",
-						ItemTitle: "更换手机号",
-						style:"GHSJHicon",
 					},
 					//#ifdef H5
 					{
@@ -705,9 +670,16 @@
 			color: #333333;
 		}
 		.fontStyle2{
+			width: 130upx;
+			height: 44upx;
+			line-height: 44upx;
+			text-align: center;
 			font-size: 27upx;
-			color: #CFCFDE;
+			color: #FFFFFF;
 			margin-top: 10upx;
+			background-color: #333333;
+			opacity: 0.3;
+			border-radius: 8Upx;
 		}
 	
 		.lists {
@@ -719,11 +691,11 @@
 			width: 93%;
 			margin-left: 3.5%;
 			margin-top: 10upx;
-			background-color: #FFFFFF;
+			// background-color: #FFFFFF;
 			display: flex;
 			flex-direction: column;
 			border-radius: 25upx;
-			box-shadow: 0px 7px 38px 8px rgba(97, 97, 97, 0.1);
+			// box-shadow: 0px 7px 38px 8px rgba(97, 97, 97, 0.1);
 			.myClass{
 				font-size: 35upx;
 				font-weight: bold;
@@ -807,134 +779,62 @@
 		}
 		
 		.serviceBox {
-			//更多服务
-			width: 91.47%;
-			background-color: #ffffff;
-			border-radius: 12upx;
-			margin-top: 25upx;
-			margin-left: 4.27%;
+			width: 90%;
+			margin-left: 5%;
+			margin-top: 20upx;
 			display: flex;
-			flex-direction: column; //column:纵向排列，row横向排列
-			margin-bottom: 30upx;
-			box-shadow: 0px 7px 38px 8px rgba(97, 97, 97, 0.1);
-			
-			.lineClass {
-				//更多服务下面的分隔线
-				border-top: 2upx solid #EAEAEA;
-				width: 90%;
-				margin: 30upx 5% 20upx 5%;
+			flex-direction: column;
+			.bt{
+				border-bottom: 1upx solid #EAEAEA;
 			}
-			
-			.moreClass {
-				font-size: 32upx;
-				font-weight: bold;
-				color: #000000;
-				margin-top: 34upx;
-				margin-left: 3.55%;
-			}
-			
-			.boxClass {
-				width: 100%;
-				// border: 1upx solid red;
+			.itemClass{
 				display: flex;
-				flex-direction: row; //column:纵向排列，row横向排列
+				flex-direction: row;
+				height: 100upx;
+				position: relative;
 			}
-			
-			.itemClass {
-				// border: 1upx solid black;
-				display: flex;
-				flex-direction: column; //column:纵向排列，row横向排列
-				padding-bottom: 30upx;
-				border-radius: 10upx;
+			.CKGLicon{
+				width: 40upx;
+				height: 39upx;
+				margin: 30upx 20upx;
 			}
-			
-			//图标样式开始
-			//第一排
-			.XXGLicon{
-				width: 50upx;
-				height: 54upx;
-				padding: 30upx 60upx 16upx 60upx;
-			}
-			
-			.ZDPZicon{
-				width: 48upx;
-				height: 50upx;
-				padding: 30upx 61upx 20upx 61upx;
-			}
-			
 			.WDTSicon{
-				width: 42upx;
-				height: 50upx;
-				padding: 30upx 64upx 20upx 64upx;
+				width: 35upx;
+				height: 40upx;
+				margin: 30upx 20upx;
 			}
-			
-			.JJLXRicon{
-				width: 45upx;
-				height: 50upx;
-				padding: 30upx 62upx 20upx 63upx;
-			}
-			
-			//第二排
-			.SMRZicon{
-				width: 44upx;
-				height: 50upx;
-				padding: 30upx 63upx 20upx 63upx;
-			}
-			
-			.GHSJHicon{
-				width: 38upx;
-				height: 50upx;
-				padding: 30upx 66upx 20upx 66upx;
-			}
-			
 			.DHKFicon{
-				width: 41upx;
-				height: 50upx;
-				padding: 30upx 64upx 20upx 65upx;
-			}
-			
+				width: 35upx;
+				height: 40upx;
+				margin: 30upx 20upx;
+			} 
 			.YJFKicon{
-				width: 41upx;
-				height: 50upx;
-				padding: 30upx 64upx 20upx 65upx;
-			}   
-			
-			//第三排
-			.QQKFicon{
-				width: 43upx;
-				height: 50upx;
-				padding: 30upx 63upx 20upx 64upx;
+				width: 35upx;
+				height: 40upx;
+				margin: 30upx 20upx;
 			}
-			
 			.ZXKFicon{
-				width: 45upx;
-				height: 50upx;
-				padding: 30upx 62upx 20upx 63upx;
+				width: 35upx;
+				height: 40upx;
+				margin: 30upx 20upx;
 			}
-			
-			//图标样式结束
-			
-			.btnClass {
-				width: 11upx;
-				height: 22upx;
-				position: absolute;
-				left: 610upx;
-				top: 43upx;
+			.QQKFicon{
+				width: 35upx;
+				height: 40upx;
+				margin: 30upx 20upx;
 			}
-			
-			.fontStyle {
-				font-size: 28upx;
+			.fontStyle{
 				color: #2C2D2D;
-				width: 100%;
-				text-align: center;
+				font-size: 30upx;
+				font-weight: 400;
+				margin-top: 28upx;
 			}
-			
-			.borderTop {
-				border-top: 1upx solid #EAEAEA;
-			}
-			
-			.mb {
-				margin-bottom: 10upx;
+			.imgClass{
+				width: 45upx;
+				height: 45upx;
+				position: absolute;
+				top: 28upx;
+				left: 93%;
 			}
 		}
 		
@@ -1008,7 +908,7 @@
 		.contactClass {
 			position: absolute;
 			width: 100%;
-			height: 140upx;
+			height: 100upx;
 			opacity: 0;
 		}
 		
