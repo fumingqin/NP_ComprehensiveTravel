@@ -303,17 +303,18 @@
 			uni.getStorage({
 				key: 'ticketDate',
 				success: function(data) {
-					that.ticketDetail = data.data; //车票数组
+					that.ticketDetail = data.data; //车票信息数组
 					that.totalPrice = data.data.fare; //价格
 					that.shuttleType = data.data.shuttleType; //班车类型
 					that.sepecialStartArray = data.data.starSiteArr;//班车起点数组
 					that.specialEndArray = data.data.endSiteArr;//班车终点数组
 					that.ordinaryBoarding = data.data.startStaion; //普通班车的起点数据
 					that.shuttleType = data.data.shuttleType; //班车类型
-					that.InsurePrice = that.ticketDetail.insurePrice; //保险价格
+					that.InsurePrice = data.data.insurePrice; //保险价格
 					console.log('选择车票的班次数据', that.ticketDetail);
 					that.calculateTotalPrice(); //执行计算价格
 					that.removal(that.ticketDetail);
+					that.getpickUpDate();
 				}
 			})
 			
@@ -328,6 +329,7 @@
 			//读取乘车人信息
 			this.userData();
 			this.getStationData();
+			
 		},
 		onReady() {
 
@@ -395,8 +397,26 @@
 						console.log('购票须知2',this.way)
 					}
 				})
-
 			},
+			
+			getpickUpDate:function(){
+				var pickUpDate = this.ticketDetail.setTime.replace('T', ' ');
+				console.log(pickUpDate)
+				// 请求是否有上门服务	
+				uni.request({
+					url: this.$ky_cpdg.KyInterface.GetIsPickUp.Url,
+					method: this.$ky_cpdg.KyInterface.GetIsPickUp.method,
+					data:{
+						SetOutTime : pickUpDate
+					},
+					success:(res)=>{
+						console.log('是否上门服务',res.data)
+						// this.pickUp_Display  = res.data;
+					}
+				})
+			},
+
+			
 			//-------------------------------时间转换-------------------------------
 			turnDate(date) {
 				if (date) {
