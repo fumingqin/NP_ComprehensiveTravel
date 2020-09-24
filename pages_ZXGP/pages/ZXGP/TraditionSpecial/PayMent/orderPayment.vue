@@ -816,8 +816,8 @@
 				});
 				timer = setInterval(function() {
 					uni.request({
-						url:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
-						method:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
+						url:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
+						method:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
 						// header:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.header,
 						data: {
 							orderNumber: orderNumber,

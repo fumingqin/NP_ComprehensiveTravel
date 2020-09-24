@@ -169,7 +169,7 @@
 			<view class="orderCommonClass">
 				<view style="display: flex; align-items: center;">
 					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">上门接客服务</view>
-					<view style="margin-left: 16upx;color:#19A0FF ; font-size:24upx; margin-top: 6upx;" @click="pickUpPoint">查看服务</view>
+					<view style="margin-left: 16upx;color:#01aaef ; font-size:24upx; margin-top: 6upx;" @click="pickUpPoint">查看服务</view>
 					<u-popup v-model="pickUp_popup" mode="bottom">
 						<view class="boxView">
 							<view class="titleView">
@@ -185,13 +185,16 @@
 				<view style="display: flex;margin-right: 41upx;align-items: center;">
 					<radio class="Mp_box" value="1" :color="'#01aaef'" :checked="pickUp_Status" @click="pickUpClick"></radio>
 				</view>
-				
 			</view>
-			<u-collapse :arrow="false" style="">
-				<u-collapse-item :open="pickUp_Status">
-					15864154761486
-				</u-collapse-item>
-			</u-collapse>
+			
+			<!-- 选择接送上车点 -->
+			<view class="orderCommonClass" :hidden="pickUp_Status == false" @click="pickUpAddress">
+				<view style="display: flex; align-items: center; margin-left: 41upx;">
+					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 28upx;" v-if="pickUp_Address !== '请选择接送上车点'">接送上车点：</view>
+					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #01aaef;font-size: 28upx;">{{pickUp_Address}}</view>
+				</view>
+			</view>
+			
 			<!-- 点击预订同意购票须知 -->
 			<view style="display: flex;font-size: 24upx;margin:0 46upx;color: #808080;margin-left: 16%;margin-bottom: 50upx;">点击立即预定表示已阅读并同意<view
 				 style="font-size: 24upx;color: #01aaef;" @tap="checkAttention"> 《购票须知》</view>
@@ -274,7 +277,7 @@
 				pickUp_Display : true, //接送服务是否显示
 				pickUp_Price : 4 ,//上门默认价格
 				pickUp_Status : false , //默认不开启
-				pickUp_Address : '' , //接送点
+				pickUp_Address : '请选择接送上车点' , //接送点
 				pickUp_Latitude : '' , //接送点纬度
 				pickUp_Longitude : '' , //接送点经度
 				StartStaion_Latitude : '',//始发站点纬度
@@ -500,6 +503,27 @@
 					this.pickUp_Status = false;
 				}
 			},
+			
+			//-------------------------------选择接送上车点-----------------------------
+			pickUpAddress: function() {
+				uni.chooseLocation({
+					success: (res) => {
+						// console.log(res)
+						if(res.name == ''){
+							uni.showToast({
+								title:'请确认相关上车点',
+								icon:'none'
+							})
+						}else{
+							this.pickUp_Address = res.name;  //选择的地名
+							this.pickUp_Latitude = res.latitude; //选择的纬度
+							this.pickUp_Longitude = res.longitude  //选择的经度
+						}
+						
+					}
+				})
+			},
+			
 			//-------------------------------查看须知-----------------------------
 			checkAttention() {
 				this.$refs.popup2.open()
@@ -691,6 +715,11 @@
 							title: '免童/儿童不可单独购票',
 							icon: 'none'
 						})
+					} else if (that.pickUp_Address == true && that.pickUp_Address !== '请选择接送上车点') {
+						uni.showToast({
+							title: '选择选择并确认接送服务的上车点',
+							icon: 'none'
+						})
 					} else {
 						that.jumpTo();
 					}
@@ -708,6 +737,11 @@
 					} else if (that.adultNum == 0) {
 						uni.showToast({
 							title: '免童/儿童不可单独购票',
+							icon: 'none'
+						})
+					} else if (that.pickUp_Address == true && that.pickUp_Address !== '请选择接送上车点') {
+						uni.showToast({
+							title: '选择选择并确认接送服务的上车点',
 							icon: 'none'
 						})
 					} else {
