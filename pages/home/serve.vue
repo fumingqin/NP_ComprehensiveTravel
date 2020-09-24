@@ -8,8 +8,8 @@
 			<view class="sv_title">出行</view>
 			<view style="display: flex; flex-wrap: wrap;padding: 0 14rpx;">
 				<view class="sv_view3" v-for="(item,index1) in ItemArr" :key="index1">
-					<view @click="natTo(item.clickURL)">
-						<image :class="item.style" :src="IsUse?item.ImageURL2:item.ImageURL1" lazy-load="true"></image>
+					<view @click="natTo(item)">
+						<image :class="item.style" :src="item.IsUse?item.ImageURL1:item.ImageURL2" lazy-load="true"></image>
 						<text class="sv_text">{{item.ItemTitle}}</text>
 					</view>
 				</view>
@@ -21,7 +21,7 @@
 			<view style="display: flex; flex-wrap: wrap;padding: 0 14rpx;">
 				<view class="sv_view3" v-for="(item,index) in ItemArr2" :key="index">
 					<view @click="natTo(item.clickURL)">
-						<image :class="item.style" :src="IsUse?item.ImageURL2:item.ImageURL1" lazy-load="true"></image>
+						<image :class="item.style" :src="item.IsUse?item.ImageURL1:item.ImageURL2" lazy-load="true"></image>
 						<text class="sv_text">{{item.ItemTitle}}</text>
 					</view>
 				</view>
@@ -42,15 +42,15 @@
 				}], //首页图片
 				ItemArr: [{
 						IsUse: true,
-						clickURL: "/pages_CTKY/pages/CTKY/TraditionSpecial/Home/ctkyIndex",
-						ImageURL1: "../../static/home/serve/hcpdinggou.png",//暗
-						ImageURL2: "../../static/home/serve/cpdinggou.png",//亮
+						clickURL: "/pages_ZXGP/pages/ZXGP/TraditionSpecial/Home/ctkyIndex",
+						ImageURL1: "../../static/home/serve/cpdinggou.png",//亮
+						ImageURL2: "../../static/home/serve/hcpdinggou.png",//暗
 						ItemTitle: "车票订购",
 						style:"sv_print",
 					},
 					{
 						IsUse: true,
-						clickURL: "../../pages_GJCX/pages/GJCX/busH5",
+						clickURL: "/pages_BUS/pages/Bus/BusQuery",
 						ImageURL1: "../../static/home/serve/gjchaxun.png",//亮
 						ImageURL2: "../../static/home/serve/hgjchaxun.png",//暗
 						ItemTitle: "公交查询",
@@ -58,41 +58,41 @@
 					},
 					{
 						IsUse: true,
-						clickURL:"",
-						ImageURL1: "../../static/home/serve/hbcfuwu.png",//暗
-						ImageURL2: "../../static/home/serve/bcfuwu.png",//亮
-						ItemTitle: "客运查询",
-						style:"sv_print",
-					},
-					{
-						IsUse: true,
-						clickURL: "",
-						ImageURL1: "../../static/home/serve/hxqzhuanxian.png",//暗
-						ImageURL2: "../../static/home/serve/xqzhuanxian.png",//亮
+						clickURL: "/pages_ZXGP/pages/ZXGP/SpecialBus/Home/zxgpHomePage",
+						ImageURL1: "../../static/home/serve/xqzhuanxian.png",//亮
+						ImageURL2: "../../static/home/serve/hxqzhuanxian.png",//暗
 						ItemTitle: "武夷新区",
 						style:"sv_print",
 					},
 					{
 						IsUse: false,
+						clickURL:"",
+						ImageURL1: "../../static/home/serve/bcfuwu.png",//亮
+						ImageURL2: "../../static/home/serve/hbcfuwu.png",//暗
+						ItemTitle: "客运查询",
+						style:"sv_print",
+					},
+					{
+						IsUse: false,
 						clickURL: "",
-						ImageURL1: "../../static/home/serve/hwlyueche.png",//暗
-						ImageURL2: "../../static/home/serve/wlyueche.png",//亮
+						ImageURL1: "../../static/home/serve/wlyueche.png",//亮
+						ImageURL2: "../../static/home/serve/hwlyueche.png",//暗
 						ItemTitle: "网络约车",
 						style:"sv_print",
 					},
 					{
 						IsUse: false,
 						clickURL: "",
-						ImageURL1: "../../static/home/serve/hxjkuaidi.png",//暗
-						ImageURL2: "../../static/home/serve/xjkuaidi.png",//亮
+						ImageURL1: "../../static/home/serve/xjkuaidi.png",//亮
+						ImageURL2: "../../static/home/serve/hxjkuaidi.png",//暗
 						ItemTitle: "小件快递",
 						style:"sv_print",
 					},
 					{
 						IsUse: false,
 						clickURL: "",
-						ImageURL1: "../../static/home/serve/hjcyuyue.png",//暗
-						ImageURL2: "../../static/home/serve/jcyuyue.png",//亮
+						ImageURL1: "../../static/home/serve/jcyuyue.png",//亮
+						ImageURL2: "../../static/home/serve/hjcyuyue.png",//暗
 						ItemTitle: "检测预约",
 						style:"sv_print",
 					},
@@ -128,51 +128,15 @@
 			})
 		},
 		methods: {
-			natTo: function(url) {
-				if (url == '/pages_GJCX/pages/GJCX/busH5') {
-					// #ifdef MP-WEIXIN
+			natTo: function(item) {
+				if (!item.IsUse) {
 					uni.showToast({
-						title: '公交查询仅支持公众号和APP',
-						icon: 'none'
-					})
-					// #endif
-					// #ifndef MP-WEIXIN
-					uni.navigateTo({
-						url: url
-					});
-					// #endif
-				}else if (url == '/pages_GJCX/pages/GJCX/hangban') {
-					// #ifdef MP-WEIXIN
-					uni.showToast({
-						title: '航班查询仅支持公众号和APP',
-						icon: 'none'
-					})
-					// #endif
-					// #ifndef MP-WEIXIN
-					uni.navigateTo({
-						url: url
-					});
-					// #endif
-				}else if (url == '/pages_GJCX/pages/GJCX/huoche') {
-					// #ifdef MP-WEIXIN
-					uni.showToast({
-						title: '火车查询仅支持公众号和APP',
-						icon: 'none'
-					})
-					// #endif
-					// #ifndef MP-WEIXIN
-					uni.navigateTo({
-						url: url
-					});
-					// #endif
-				} else if (url == "") {
-					uni.showToast({
-						title: '正在开发中，尽情期待..',
+						title: '敬请期待',
 						icon: 'none'
 					})
 				} else {
 					uni.navigateTo({
-						url: url,
+						url: item.clickURL,
 					});
 				}
 
