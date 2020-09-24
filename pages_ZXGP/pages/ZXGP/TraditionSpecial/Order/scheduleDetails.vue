@@ -166,7 +166,7 @@
 			</view>
 			
 			<!-- 上门服务 -->
-			<view class="orderCommonClass">
+			<view class="orderCommonClass" v-if="pickUp_Display == true">
 				<view style="display: flex; align-items: center;">
 					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">上门接客服务</view>
 					<view style="margin-left: 16upx;color:#01aaef ; font-size:24upx; margin-top: 6upx;" @click="pickUpPoint">查看服务</view>
@@ -278,10 +278,10 @@
 				pickUp_Price : 4 ,//上门默认价格
 				pickUp_Status : false , //默认不开启
 				pickUp_Address : '请选择接送上车点' , //接送点
-				pickUp_Latitude : '' , //接送点纬度
-				pickUp_Longitude : '' , //接送点经度
-				StartStaion_Latitude : '',//始发站点纬度
-				StartStaion_Longitude : '',//始发站经度
+				pickUp_Latitude : 0 , //接送点纬度
+				pickUp_Longitude : 0 , //接送点经度
+				StartStaion_Latitude : 0,//始发站点纬度
+				StartStaion_Longitude : 0,//始发站经度
 				
 				pickUp_popup : false, //弹出服务内容
 				
@@ -757,12 +757,20 @@
 				//请求成功之后跳转到支付页面,传是否选择保险1:选择 0:未选择
 				console.log(that.startStation)
 				console.log(that.endStation)
+				console.log(that.pickUp_Latitude)
+				console.log(that.pickUp_Longitude)
 				var array = {
 					isInsurance: that.isInsurance, //是否选择了保险
 					totalPrice: that.totalPrice, //总价格
 					shuttleType: that.shuttleType, //班车类型
 					getOnPoint: that.startStation, //起点
 					getOffPoint: that.endStation, //终点
+					pickUpStatus : that.pickUp_Status, //是否上门服务
+					PickUpAddress : that.pickUp_Address, //接送上车点
+					pickUpLatitude : that.pickUp_Latitude, //接送点纬度
+					pickUpLongitude :that.pickUp_Longitude, //接送点经度
+					StartStaionLatitude :that.ticketDetail.starSiteArr[0].Latitude, //始发站点纬度
+					StartStaionLongitude :that.ticketDetail.starSiteArr[0].Longitude, //始发站经度
 				}
 				console.log(array)
 				uni.navigateTo({
