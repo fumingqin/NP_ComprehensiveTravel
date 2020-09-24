@@ -277,7 +277,7 @@
 				pickUp_Display : true, //接送服务是否显示
 				pickUp_Price : 4 ,//上门默认价格
 				pickUp_Status : false , //默认不开启
-				pickUp_Address : '请选择接送上车点' , //接送点
+				pickUp_Address : '' , //接送点
 				pickUp_Latitude : 0 , //接送点纬度
 				pickUp_Longitude : 0 , //接送点经度
 				StartStaion_Latitude : 0,//始发站点纬度
@@ -519,8 +519,10 @@
 			pickUpClick: function() {
 				if (this.pickUp_Status == false) {
 					this.pickUp_Status = true;
+					this.pickUp_Address = '请选择接送上车点';
 				} else {
 					this.pickUp_Status = false;
+					this.pickUp_Address = '';
 				}
 			},
 			
@@ -727,7 +729,7 @@
 						})
 					} else if (that.passengerInfo.length == 0) {
 						uni.showToast({
-							title: '请选择乘车人',
+							title: '滴！请选择乘车人',
 							icon: 'none'
 						})
 					} else if (that.adultNum == 0) {
@@ -735,9 +737,9 @@
 							title: '免童/儿童不可单独购票',
 							icon: 'none'
 						})
-					} else if (that.pickUp_Address == true && that.pickUp_Address !== '请选择接送上车点') {
+					} else if (that.pickUp_Status == true && that.pickUp_Address == '请选择接送上车点') {
 						uni.showToast({
-							title: '选择选择并确认接送服务的上车点',
+							title: '你还没有选择接送服务的上车点哦~',
 							icon: 'none'
 						})
 					} else {
@@ -751,7 +753,7 @@
 						})
 					} else if (that.passengerInfo.length == 0) {
 						uni.showToast({
-							title: '请选择乘车人',
+							title: '滴！请选择乘车人',
 							icon: 'none'
 						})
 					} else if (that.adultNum == 0) {
@@ -759,9 +761,9 @@
 							title: '免童/儿童不可单独购票',
 							icon: 'none'
 						})
-					} else if (that.pickUp_Address == true && that.pickUp_Address !== '请选择接送上车点') {
+					} else if (that.pickUp_Status == true && that.pickUp_Address == '请选择接送上车点') {
 						uni.showToast({
-							title: '选择选择并确认接送服务的上车点',
+							title: '你还没有选择接送服务的上车点哦~',
 							icon: 'none'
 						})
 					} else {

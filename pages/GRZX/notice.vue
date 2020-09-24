@@ -1,11 +1,11 @@
 <template>
 	<view>
-		<view v-for="(item, index) in tweetArticle" :key="index" class="boxClass"> <!-- @click="selete(item)" -->
+		<view v-for="(item, index) in tweetArticle" :key="index" class="boxClass">
 			<view class="timeClass">{{formatTime(item.CreateTime)}}</view>
 			<view class="boxClass1" @click="selete(item)">
 				<view class="titleClass generalStyle">{{item.Title}}</view>
 				<view class="imgClass generalStyle">
-					<image :src="item.ShowImageURL" style="width: 100%;" mode="widthFix" role="img"></image>
+					<image :src="item.ImageUrl" style="width: 100%;" mode="widthFix" role="img"></image>
 				</view>
 				<!-- <view class="textClass generalStyle">{{item.ContentDetail}}</view> -->
 				<view class="detailClass generalStyle">
@@ -32,26 +32,24 @@
 		},
 		methods:{
 			//------------------加载通知----------------
-			// for(var i=0;i<res.data.data.length;i++){
-			// 	res.data.data[i].newsContent=res.data.data[i].newsContent.slice(6,30);
-			// 	that.tweetArticle.push(res.data.data[i]);
-			//}
-			loadData(){
-				var that=this;
-				that.tweetArticle=[];
+			loadData:function(){
+				var that = this;
 				uni.request({
-					url:that.$GrzxInter.Interface.GetNews.value,
-					method:that.$GrzxInter.Interface.GetNews.method,
-					data:{
-						SystemName:'南平综合出行',
+					url:this.$home.KyInterface.GetNews.Url,
+					method:this.$home.KyInterface.GetNews.method,
+					success:(res)=>{
+						// console.log('新闻资讯',res)
+						this.tweetArticle = res.data.data.filter(item =>{
+							return item.Type == '通知公告';
+						})
+						console.log(this.tweetArticle)
 					},
-					success(res) {
-						console.log(res)
-						for(var i=0;i<res.data.data.length;i++){
-							// res.data.data[i].newsContent=res.data.data[i].newsContent.slice(6,30);
-							that.tweetArticle.push(res.data.data[i]);
-						}
-						console.log(that.tweetArticle);
+					fail:function(err){
+						console.log(err)
+						uni.showToast({
+							title:'新闻资讯加载异常',
+							icon:'none'
+						})
 					}
 				})
 			},
@@ -63,8 +61,7 @@
 					data:e
 				})
 				uni.navigateTo({
-					//url:'/pages/GRZX/detailTweet'
-					url:this.$GrzxInter.Interface.GetNewsByAID.url,
+					url:'detailTweet'
 				})
 			},
 			

@@ -346,6 +346,7 @@
 		background: #FFFFFF; 
 		padding: 36upx; 
 		display: flex;
+		margin-bottom: 40upx;
 		.inf_image{
 			width: 146upx; 
 			height: 82upx;
