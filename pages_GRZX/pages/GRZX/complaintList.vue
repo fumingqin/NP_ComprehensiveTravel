@@ -172,7 +172,6 @@
 			z-index: 10;
 			position: sticky;
 			top: 0;
-			margin-top: 20upx;
 			.screenText {
 				flex: 1;
 				display: flex;

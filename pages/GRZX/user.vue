@@ -78,6 +78,7 @@
 				nickname: '', 	//昵称
 				port: '', 		//头像
 				advert: 'http://36.250.234.10:60032/UpLoadImages/广告/advert.png', 	//广告
+				// advert:'../../pages_GRZX/static/GRZX/advert.png',
 				userFeedbackHidden: true,  //是否隐藏弹框
 				focusType: false, 		   //是否获取input焦点
 				
