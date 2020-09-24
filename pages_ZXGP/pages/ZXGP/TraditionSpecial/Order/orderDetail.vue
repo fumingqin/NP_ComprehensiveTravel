@@ -64,7 +64,7 @@
 					</view>
 					
 					<view v-if="orderInfo.carType != '定制巴士'" style="color: #2C2D2D;font-size: 32rpx;font-weight: 300; padding-bottom: 10rpx;">
-						  取票号 {{getOneTicketNum(orderInfo.ticketNumber,index)}}
+						  取票号 {{orderInfo.ticketNumber}}
 					</view>
 					<!-- <view v-if="orderInfo.carType == '定制巴士'" style="width: 100%;text-overflow: ellipsis;white-space: nowrap;overflow: hidden; color: #2C2D2D;font-size: 32rpx;font-weight: 300; padding-bottom: 10rpx;">
 						  取票号 {{getSpecialOneTicketNum(specialCodeArray,index)}}
@@ -239,22 +239,22 @@
 				    }else if(that.orderState == '已退票'){
 				    	return '尚未支付'
 				    }else if(that.orderState == '支付正常') {
-				    	if(ticketNum) {
-				    		let a = ticketNum.indexOf(',')
-				    		if(a == -1) {
-				    			var array = ticketNum.split('-');
-				    			let ticketHeader = array[0];
-				    			this.seat = array[1];
-				    			return ticketHeader;
-				    		}else {
-				    			var array = ticketNum.split('-');
-				    			let ticketHeader = array[0];
-				    			var array2 = array[1];
-				    			var array3 = array2.split(',');
-				    			return ticketHeader;
-								// return ticketHeader + '-' + array3[index];
-				    		}
-				    	}
+				    // 	if(ticketNum) {
+				    // 		let a = ticketNum.indexOf(',')
+				    // 		if(a == -1) {
+				    // 			var array = ticketNum.split('-');
+				    // 			let ticketHeader = array[0];
+				    // 			this.seat = array[1];
+				    // 			return ticketHeader;
+				    // 		}else {
+				    // 			var array = ticketNum.split('-');
+				    // 			let ticketHeader = array[0];
+				    // 			var array2 = array[1];
+				    // 			var array3 = array2.split(',');
+				    // 			return ticketHeader;
+								// // return ticketHeader + '-' + array3[index];
+				    // 		}
+				    // 	}
 				    }else if(that.orderState == '已完成') {
 				    	if(ticketNum) {
 				    		let a = ticketNum.indexOf(',')

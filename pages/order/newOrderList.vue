@@ -21,7 +21,7 @@
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
-								<image class="at_icon" src="../../pages_ZXGP/static/ZXGP/keche.png" mode="aspectFill"></image>
+								<image class="at_icon" src="../../static/order/keche.png" mode="aspectFill"></image>
 								<view class="at_textView"><text class="at_title">{{item.startSiteName}}-{{item.endSiteName}}</text></view>
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
@@ -44,13 +44,11 @@
 								<!-- #ifndef MP-WEIXIN -->
 								<view class="at_button at_btDelete" v-if="item.state=='4'" @click="busLocation(item)">车辆位置</view>
 								<!-- #endif -->
-								<view class="at_button at_btDelete" v-if="item.state=='7'" @tap="open3(item.orderNumber,'2')">取消</view>
-								<view class="at_button at_btDelete" v-if="item.state=='4'" @tap="open2(item.orderNumber,'2')">退票</view>
+								<view class="at_button at_btDelete" v-if="item.state=='7'||item.state=='等待确认'" @tap="open3(item.orderNumber,'2')">取消</view>
+								<view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber,'2')">退票</view>
 								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
-								<view class="at_button at_btDelete" v-if="item.state=='支付正常' || item.state=='改签'" @tap="open2(item,'cs2tui')">退票</view>
-								<view class="at_button at_btDelete" v-if="item.state=='尚未支付'" @tap="open3(item.orderNumber,'cs2')">取消</view>
 								<view class="at_button at_btToPay" v-if="item.state=='7'" @tap="keYunPay(item,item.carType)">去支付</view>
-								<view class="at_button at_btToPay" v-if="item.state=='尚未支付'" @tap="keYunPay(item,item.carType)">去支付</view>	
+								<view class="at_button at_btToPay" v-if="item.state=='尚未支付'||item.state=='等待确认'" @tap="keYunPay(item,item.carType)">去支付</view>	
 								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
 							</view>
 						</view>
@@ -61,15 +59,15 @@
 
 
 			<!-- 已完成 -->
-			<view v-if="current === 1" style="margin-top: 20rpx; ">
+<!-- 			<view v-if="current === 1||" style="margin-top: 20rpx; ">
 				<view v-for="(item,index) in finishArr" :key="index">
 					<!-- （已完成）客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
-					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
+					<!-- <view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'"> -->
 						<!-- 预定日期 -->
-						<view class="pd_view">下单时间：{{item.bookTime}}</view>
+						<!-- <view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
-								<image class="at_icon" src="../../pages_ZXGP/static/ZXGP/keche.png" mode="aspectFill"></image>
+								<image class="at_icon" src="../../static/order/keche.png" mode="aspectFill"></image>
 								<view class="at_textView"><text class="at_title">{{item.startSiteName}}-{{item.endSiteName}}</text></view>
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
@@ -90,15 +88,15 @@
 							</view>
 							<view class="at_buttonView">
 								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
-								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
+								<!-- <view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
 							</view>
 						</view>
 					</view>
 				</view>
 				<empty-data :isShow="finishArr.length == 0" text="暂无数据" :image="noDataImage" textColor="#999999"></empty-data>
-			</view>
+			</view> -->
 			<!-- 进行中 -->
-			<view v-if="current === 2" style="margin-top: 20rpx;">
+			<view v-if="current === 1" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in goingArr" :key="index">
 					<!-- (进行中)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
 					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
@@ -106,7 +104,7 @@
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
-								<image class="at_icon" src="../../pages_ZXGP/static/ZXGP/keche.png" mode="aspectFill"></image>
+								<image class="at_icon" src="../../static/order/keche.png" mode="aspectFill"></image>
 								<view class="at_textView"><text class="at_title">{{item.startSiteName}}-{{item.endSiteName}}</text></view>
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
@@ -125,11 +123,10 @@
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>
 							<view class="at_buttonView">
-								<view class="at_button at_btDelete" v-if="item.carType=='普通班车' || item.carType=='定制班车'" @tap="open2(item.orderNumber,'2')">退票</view>
 								<!-- #ifndef MP-WEIXIN -->
 								<view class="at_button at_btDelete" v-if="item.state=='4'" @click="busLocation(item)">车辆位置</view>
 								<!-- #endif -->
-								<view class="at_button at_btDelete" v-if="item.carType=='定制巴士'" @tap="open2(item,'cs2tui')">退票</view>
+								<view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber,'2')">退票</view>
 								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
 								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
 								<!-- <view class="at_button at_btDelete" v-if="item.carType=='普通班车' || item.carType=='定制班车'" @tap="endorse(item)">改签</view> -->
@@ -142,7 +139,7 @@
 
 
 			<!-- 未支付 -->
-			<view v-if="current === 3" style="margin-top: 20rpx;">
+			<view v-if="current === 2" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in unfinishArr" :key="index">
 					<!-- (未支付)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
 					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
@@ -150,7 +147,7 @@
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
-								<image class="at_icon" src="../../pages_ZXGP/static/ZXGP/keche.png" mode="aspectFill"></image>
+								<image class="at_icon" src="../../static/order/keche.png" mode="aspectFill"></image>
 								<view class="at_textView"><text class="at_title">{{item.startSiteName}}-{{item.endSiteName}}</text></view>
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
@@ -171,7 +168,6 @@
 							<view class="at_buttonView">
 								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
 								<view class="at_button at_btDelete" v-if="item.carType=='普通班车' || item.carType=='定制班车'" @tap="open3(item.orderNumber,'2')">取消</view>
-								<view class="at_button at_btDelete" v-if="item.carType=='定制巴士'" @tap="open3(item.orderNumber,'cs2')">取消</view>
 								<view class="at_button at_btToPay" @tap="keYunPay(item,item.carType)">去支付</view>
 								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
 							</view>
@@ -182,7 +178,7 @@
 			</view>
 
 			<!-- 已取消 -->
-			<view v-if="current === 4" style="margin-top: 20rpx;">
+			<view v-if="current === 3" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in cancelArr" :key="index">
 					<!-- (已取消)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
 					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
@@ -190,7 +186,7 @@
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
-								<image class="at_icon" src="../../pages_ZXGP/static/ZXGP/keche.png" mode="aspectFill"></image>
+								<image class="at_icon" src="../../static/order/keche.png" mode="aspectFill"></image>
 								<view class="at_textView"><text class="at_title">{{item.startSiteName}}-{{item.endSiteName}}</text></view>
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
@@ -305,7 +301,7 @@
 			return {
 				TaxiCost: 0, //价格
 				countdown: 0,
-				items: ['全部', '已完成', '进行中', '未支付', '已取消'],
+				items: ['全部', '进行中', '未支付', '已取消'],
 				// carSelect : ['全部','普通班车','定制班车','出租车','专线车','顺风车','包车服务','旅游服务'],
 				carSelect : ['全部','客运购票'],
 				selector : '全部',
@@ -368,38 +364,38 @@
 					that.userInfo = data.data;
 				},
 				fail:function(){
-					// #ifdef H5
-					uni.showToast({
-						title: '请允许授权给公众号，即将为您返回主页！',
-						icon:'none'
-					})
-					uni.switchTab({
-						url:'/pages/Home/zy_zhcx'
-					})
-					// #endif
+					// // #ifdef H5
+					// uni.showToast({
+					// 	title: '请允许授权给公众号，即将为您返回主页！',
+					// 	icon:'none'
+					// })
+					// uni.switchTab({
+					// 	url:'/pages/Home/zy_zhcx'
+					// })
+					// // #endif
 					// #ifdef MP-WEIXIN
 					uni.showToast({
 						title: '请允许授权给小程序，即将跳转登录！'
 					})
 					uni.navigateTo({
-						url:'/pages/Home/wxAuthorize'
+						url:'/pages/home/wxAuthorize'
 					})
 					// #endif
-					// #ifdef APP-PLUS
-					uni.showToast({
-						title: '未登录账号，即将跳转登录！'
-					})
-					uni.navigateTo({
-						url:'/pages/GRZX/userLogin?urlData=1'
-					})
-					// #endif
+					// // #ifdef APP-PLUS
+					// uni.showToast({
+					// 	title: '未登录账号，即将跳转登录！'
+					// })
+					// uni.navigateTo({
+					// 	url:'/pages/GRZX/userLogin?urlData=1'
+					// })
+					// // #endif
 				}
 			})
 			if (this.ctkyOrderNum) {
 				this.getTicketPaymentInfo_ticketIssue(this.ctkyOrderNum);
 			}
 			this.getOpenID();
-			this.selectorChange();
+			// this.selectorChange();
 		},
 		onShow: function() {
 			//客运刷新状态
@@ -568,17 +564,20 @@
 							for (var i = 0; i < res.data.data.length; i++) {
 								that.info.push(res.data.data[i]);
 							}
+							console.log(res.data.data[1].state)
 							for (var i = 0; i < res.data.data.length; i++) {
 								if (res.data.data[i].state == '5') {
 									that.finishArr.push(res.data.data[i]);
-								} else if (res.data.data[i].state == '4') {
+								} else if (res.data.data[i].state == '尚未取票'||res.data.data[i].state == '已取票'||res.data.data[i].state == '等待确认') {
 									that.goingArr.push(res.data.data[i]);
-								} else if (res.data.data[i].state == '7') {
+								} else if (res.data.data[i].state == '未支付') {
 									that.unfinishArr.push(res.data.data[i]);
-								} else if (res.data.data[i].state == '6' || res.data.data[i].state == '9') {
+								} else if (res.data.data[i].state == '被撤销' || res.data.data[i].state == '联网退票') {
 									that.cancelArr.push(res.data.data[i]);
 								}
 							}
+							console.log(that.unfinishArr)
+							console.log(that.cancelArr)
 							uni.hideLoading();
 						} else if (res.data.status == false) {
 							uni.hideLoading();
@@ -594,66 +593,66 @@
 				})
 			},
 			//-------------------------请求定制巴士订单数据-------------------------
-			GetBookLogInfoByUserId(){
-				var that = this;
-				console.log(that.userInfo.userId)
-				uni.request({
-					url:$KyInterface.KyInterface.Cs_GetBookLogInfoByUserId.Url,
-					method:$KyInterface.KyInterface.Cs_GetBookLogInfoByUserId.method,
-					header:$KyInterface.KyInterface.Cs_GetBookLogInfoByUserId.header,
-					data:{
-						UserAID: that.userInfo.userId
-					},
-					success(res) {
-						uni.hideLoading();
-						uni.stopPullDownRefresh();
-						console.log('定制巴士订单数据',res)
-						if (res.data.Successed == true) {
-							var orderArray = [];
-							for(let i=0;i<res.data.bookLogs.length;i++) {
-								var array = {
-									carType:res.data.bookLogs[i].Rep_BookLogType,
-									bookTime:that.turnDate(res.data.bookLogs[i].BookTime),
-									startSiteName:res.data.bookLogs[i].getOnPoint,
-									endSiteName:res.data.bookLogs[i].getOffPoint,
-									state:res.data.bookLogs[i].Rep_BookLogState,
-									setOutTime:that.turnDate(res.data.bookLogs[i].SetoutTime),
-									totalPrice:res.data.bookLogs[i].TotalPrice,
-									iDNameType:res.data.bookLogs[i].iDNameType,
-									ticketNumber:res.data.bookLogs[i].GetTicketCode,
-									carryChild:res.data.bookLogs[i].Children,
-									fullTicket:res.data.bookLogs[i].Person,
-									halfTicket:0,
-									orderNumber:res.data.bookLogs[i].AID,
-									CheckInfoList:res.data.bookLogs[i].CheckInfoList,
-									driverName:res.data.bookLogs[i].driverName,
-									vehicleNumber:res.data.bookLogs[i].vehicleNumber,
-								};
-								orderArray.push(array);
-								that.info.push(array);
-								var state = res.data.bookLogs[i].Rep_BookLogState;
-								if (state == '已完成') {
-									that.finishArr.push(orderArray[i]);
-								} else if (state == '支付正常' || state == '改签') {
-									that.goingArr.push(orderArray[i]);
-								} else if (state == '尚未支付') {
-									that.unfinishArr.push(orderArray[i]);
-								} else if (state == '作废' || state == '已退票') {
-									that.cancelArr.push(orderArray[i]);
-								}
-							}
-						}else if(res.data.Successed == false) {
+			// GetBookLogInfoByUserId(){
+			// 	var that = this;
+			// 	console.log(that.userInfo.userId)
+			// 	uni.request({
+			// 		url:$KyInterface.KyInterface.Cs_GetBookLogInfoByUserId.Url,
+			// 		method:$KyInterface.KyInterface.Cs_GetBookLogInfoByUserId.method,
+			// 		header:$KyInterface.KyInterface.Cs_GetBookLogInfoByUserId.header,
+			// 		data:{
+			// 			UserAID: that.userInfo.userId
+			// 		},
+			// 		success(res) {
+			// 			uni.hideLoading();
+			// 			uni.stopPullDownRefresh();
+			// 			console.log('定制巴士订单数据',res)
+			// 			if (res.data.Successed == true) {
+			// 				var orderArray = [];
+			// 				for(let i=0;i<res.data.bookLogs.length;i++) {
+			// 					var array = {
+			// 						carType:res.data.bookLogs[i].Rep_BookLogType,
+			// 						bookTime:that.turnDate(res.data.bookLogs[i].BookTime),
+			// 						startSiteName:res.data.bookLogs[i].getOnPoint,
+			// 						endSiteName:res.data.bookLogs[i].getOffPoint,
+			// 						state:res.data.bookLogs[i].Rep_BookLogState,
+			// 						setOutTime:that.turnDate(res.data.bookLogs[i].SetoutTime),
+			// 						totalPrice:res.data.bookLogs[i].TotalPrice,
+			// 						iDNameType:res.data.bookLogs[i].iDNameType,
+			// 						ticketNumber:res.data.bookLogs[i].GetTicketCode,
+			// 						carryChild:res.data.bookLogs[i].Children,
+			// 						fullTicket:res.data.bookLogs[i].Person,
+			// 						halfTicket:0,
+			// 						orderNumber:res.data.bookLogs[i].AID,
+			// 						CheckInfoList:res.data.bookLogs[i].CheckInfoList,
+			// 						driverName:res.data.bookLogs[i].driverName,
+			// 						vehicleNumber:res.data.bookLogs[i].vehicleNumber,
+			// 					};
+			// 					orderArray.push(array);
+			// 					that.info.push(array);
+			// 					var state = res.data.bookLogs[i].Rep_BookLogState;
+			// 					if (state == '已完成') {
+			// 						that.finishArr.push(orderArray[i]);
+			// 					} else if (state == '支付正常' || state == '改签') {
+			// 						that.goingArr.push(orderArray[i]);
+			// 					} else if (state == '尚未支付') {
+			// 						that.unfinishArr.push(orderArray[i]);
+			// 					} else if (state == '作废' || state == '已退票') {
+			// 						that.cancelArr.push(orderArray[i]);
+			// 					}
+			// 				}
+			// 			}else if(res.data.Successed == false) {
 							
-						}
-					},
-					fail(res) {
-						uni.hideLoading();
-						uni.stopPullDownRefresh();
-						console.log(res)
-					}
-				})
+			// 			}
+			// 		},
+			// 		fail(res) {
+			// 			uni.hideLoading();
+			// 			uni.stopPullDownRefresh();
+			// 			console.log(res)
+			// 		}
+			// 	})
 				
-			},
+			// },
 			//-------------------------------时间转换-------------------------------
 			turnDate(date) {
 				if (date) {
@@ -749,8 +748,8 @@
 				});
 				timer = setInterval(function() {
 					uni.request({
-						url:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.Url,
-						method:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.method,
+						url:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
+						method:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
 						data: {
 							orderNumber: orderNumber,
 						},
@@ -837,7 +836,7 @@
 					},
 					success: (respones) => {
 						uni.hideLoading()
-						// console.log('退票结果', respones)
+						console.log('退票结果', respones)
 						if (respones.data.status == true) {
 							if(respones.data.msg == '退票成功'){
 								uni.showToast({
@@ -1325,7 +1324,7 @@
 									clearInterval(timer);
 									//未支付，客运支付
 									that.keYunPaymentData = JSON.parse(res.data.msg);
-									that.keYunPayment();
+									that.keYunPayment(orderNumber);
 								}
 							} else if (res.data.status == false) {
 								uni.hideLoading();
@@ -1353,7 +1352,7 @@
 				}, 3000)
 			},
 			//--------------------------调起支付--------------------------
-			keYunPayment: function() {
+			keYunPayment: function(e) {
 				// console.log('点击了支付');
 				var that = this;
 				if (that.isPayEnable == 0) {
@@ -1371,7 +1370,8 @@
 						"signType": that.keYunPaymentData.jsapi.SignType, //微信签名方式:MD5
 						"paySign": that.keYunPaymentData.jsapi.PaySign //微信签名
 					}, function(res) {
-						if (res.err_msg == "get_brand_wcpay_request:ok") {
+						console.log(res)
+						if (res.errMsg == "get_brand_wcpay_request:ok") {
 							//支付成功再进计时器查询状态
 							// location.href = "/Order/BaseCallback/" + flowID;
 							uni.showToast({
@@ -1462,7 +1462,7 @@
 							uni.showLoading({
 							    title: '加载中...'
 							});
-							that.getTicketPaymentInfo_ticketIssue(that.orderNum);
+							that.getTicketPaymentInfo_ticketIssue(e);
 						},
 						fail(res) {
 							console.log(res)
@@ -1608,16 +1608,17 @@
 				uni.showLoading({
 					title: '加载中...'
 				});
+				console.log(orderNumber);
 				timer = setInterval(function() {
 					uni.request({
-						url:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.Url,
-						method:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.method,
+						url:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
+						method:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
 						// header:$KyInterface.KyInterface.Ky_getTicketPaymentInfo.header,
 						data: {
 							orderNumber: orderNumber,
 						},
 						success: (res) => {
-							// console.log('支付参数返回数据', res);
+							console.log('支付参数返回数据', res);
 							uni.stopPullDownRefresh();
 							if (res.data.data == '订票成功') {
 								uni.hideLoading();
@@ -1626,9 +1627,7 @@
 									title: '出票成功',
 									icon: 'none',
 								})
-								uni.redirectTo({
-									url: './CTKYPaySuccess'
-								})
+								that.selectorChange();
 							}
 						},
 						fail(res) {
