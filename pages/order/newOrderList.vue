@@ -1,12 +1,12 @@
 <template>
 	<view>     
 		<view class="tab">
-			<view style="display: flex; margin-left: 40rpx; margin-bottom: 20rpx; font-size: 34rpx;">
+			<!-- <view style="display: flex; margin-left: 40rpx; margin-bottom: 20rpx; font-size: 34rpx;">
 				<text>订单类型：</text>
 				<picker @change="selectorChange" mode = "selector" :range="carSelect" name="carSelect">
 				      <view>{{selector}} ></view>
 				</picker>
-			</view>
+			</view> -->
 			<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" style-type="text" active-color="#3DABFC"></uni-segmented-control>
 		</view>
 		
@@ -16,9 +16,9 @@
 			<!-- 全部 -->
 			<view v-if="current === 0" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in info" :key="index">
-					<!-- （全部）客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
-					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
+					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
+						
 						<view class="at_view">
 							<view class="at_titleView">
 								<image class="at_icon" src="../../static/order/keche.png" mode="aspectFill"></image>
@@ -26,16 +26,13 @@
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
 							<view class="at_contentView" style="display: flex;">
-								
-									<view class="at_contentFrame">扫码上车</view>
-									<view class="at_contentFrame">线上购票</view>
-									<view class="at_contentFrame">{{item.carType}}</view>
-									
-								
+								<view class="at_contentFrame">扫码上车</view>
+								<view class="at_contentFrame">线上购票</view>
+								<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
 						 
-							<view class="at_contentView">							
+							<view class="at_contentView">
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
@@ -59,12 +56,12 @@
 
 
 			<!-- 已完成 -->
-<!-- 			<view v-if="current === 1||" style="margin-top: 20rpx; ">
+			<!--（已完成）客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
+			<!-- <view v-if="current === 1||" style="margin-top: 20rpx; ">
 				<view v-for="(item,index) in finishArr" :key="index">
-					<!-- （已完成）客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
-					<!-- <view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'"> -->
-						<!-- 预定日期 -->
-						<!-- <view class="pd_view">下单时间：{{item.bookTime}}</view>
+					
+					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
+						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
 								<image class="at_icon" src="../../static/order/keche.png" mode="aspectFill"></image>
@@ -87,20 +84,23 @@
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>
 							<view class="at_buttonView">
-								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
-								<!-- <view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
+								<view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view>
+								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
 							</view>
 						</view>
 					</view>
 				</view>
 				<empty-data :isShow="finishArr.length == 0" text="暂无数据" :image="noDataImage" textColor="#999999"></empty-data>
 			</view> -->
+			
+			
+			
 			<!-- 进行中 -->
-			<view v-if="current === 1" style="margin-top: 20rpx;">
+			<!-- (进行中)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
+			<!-- <view v-if="current === 1" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in goingArr" :key="index">
-					<!-- (进行中)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
+					
 					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
-						<!-- 预定日期 -->
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
@@ -122,20 +122,20 @@
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>
-							<view class="at_buttonView">
+							<view class="at_buttonView"> -->
 								<!-- #ifndef MP-WEIXIN -->
-								<view class="at_button at_btDelete" v-if="item.state=='4'" @click="busLocation(item)">车辆位置</view>
-								<!-- #endif -->
-								<view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber,'2')">退票</view>
-								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
+								<!-- <view class="at_button at_btDelete" v-if="item.state=='4'" @click="busLocation(item)">车辆位置</view> -->
+								 <!-- #endif -->
+								<!-- <view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber,'2')">退票</view>
+								 <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view>
 								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
-								<!-- <view class="at_button at_btDelete" v-if="item.carType=='普通班车' || item.carType=='定制班车'" @tap="endorse(item)">改签</view> -->
+								 <view class="at_button at_btDelete" v-if="item.carType=='普通班车' || item.carType=='定制班车'" @tap="endorse(item)">改签</view>
 							</view>
 						</view>
 					</view>
 				</view>
 				<empty-data :isShow="goingArr.length == 0" text="暂无数据" :image="noDataImage" textColor="#999999"></empty-data>
-			</view>
+			</view> -->
 
 
 			<!-- 未支付 -->
@@ -395,7 +395,6 @@
 				this.getTicketPaymentInfo_ticketIssue(this.ctkyOrderNum);
 			}
 			this.getOpenID();
-			// this.selectorChange();
 		},
 		onShow: function() {
 			//客运刷新状态
@@ -446,9 +445,9 @@
 				if(that.selectorIndex==0){
 					that.getUserInfo();//加载普通班车订单方法
 				}else if(that.selectorIndex==1){
-					that.getUserInfo();//加载传统客运订单方法
+					// that.getUserInfo();//加载传统客运订单方法
 				}else if(that.selectorIndex==2){
-					that.GetBookLogInfoByUserId();//加载定制巴士订单方法
+					// that.GetBookLogInfoByUserId();//加载定制巴士订单方法
 				}else if(that.selectorIndex==3){
 					// that.loadczcData();//加载出租车订单方法
 				}else if(that.selectorIndex==4){
@@ -554,30 +553,30 @@
 					// header: $KyInterface.KyInterface.searchOrder2.header,
 					data: {
 						clientID: that.userInfo.userId,
-						AppSystemName:'南平综合出行小程序',
+						AppSystemName:that.$oSit.Interface.address.appName,
+						AppSystemName:'交通在线小程序',
+						// AppSystemName:'南平综合出行小程序',
 					},
 					success: (res) => {
 						uni.stopPullDownRefresh();
 						console.log('客运订单数据', res.data);
 						that.ctkyOrderNum = res.data.orderNumber;
 						if (res.data.status == true) {
+							that.info = res.data.data;
+							console.log(that.info)
 							for (var i = 0; i < res.data.data.length; i++) {
-								that.info.push(res.data.data[i]);
-							}
-							console.log(res.data.data[1].state)
-							for (var i = 0; i < res.data.data.length; i++) {
-								if (res.data.data[i].state == '5') {
+								if (res.data.data[i].state == '已取票') {
 									that.finishArr.push(res.data.data[i]);
-								} else if (res.data.data[i].state == '尚未取票'||res.data.data[i].state == '已取票'||res.data.data[i].state == '等待确认') {
+								} else if (res.data.data[i].state == '尚未取票'){
 									that.goingArr.push(res.data.data[i]);
-								} else if (res.data.data[i].state == '未支付') {
+								} else if (res.data.data[i].state == '未支付' || res.data.data[i].state == '等待确认') {
 									that.unfinishArr.push(res.data.data[i]);
 								} else if (res.data.data[i].state == '被撤销' || res.data.data[i].state == '联网退票') {
 									that.cancelArr.push(res.data.data[i]);
 								}
 							}
-							console.log(that.unfinishArr)
-							console.log(that.cancelArr)
+							// console.log(that.unfinishArr)
+							// console.log(that.cancelArr)
 							uni.hideLoading();
 						} else if (res.data.status == false) {
 							uni.hideLoading();
@@ -702,30 +701,8 @@
 			},
 			//-------------------------跳转到详情页-------------------------
 			keYunDetail: function(res) {
-				console.log(res)
-				var orderInfo = {
-					lineName:res.lineName,
-					planScheduleCode:res.planScheduleCode,
-					orderNumber:res.orderNumber,
-					carType:res.carType,
-					state: res.state,
-					totalPrice: res.totalPrice,
-					startSiteName: res.getOnPoint,
-					endSiteName: res.getOffPoint,
-					fullTicket: res.fullTicket,
-					halfTicket: res.halfTicket,
-					carryChild: res.carryChild,
-					setOutTime: res.setOutTime,
-					driverName: res.driverName,
-					driverPhone: res.driverPhone,
-					vehicleNumber: res.vehicleNumber,
-					iDNameType: res.iDNameType,
-					ticketNumber: res.ticketNumber,
-					insured: res.insured,
-					CheckInfoList:res.CheckInfoList,
-				}
 				uni.navigateTo({
-					url: '../../pages_ZXGP/pages/ZXGP/TraditionSpecial/Order/orderDetail?orderInfo=' + JSON.stringify(orderInfo)
+					url: '../../pages_ZXGP/pages/ZXGP/TraditionSpecial/Order/orderDetail?orderInfo=' + JSON.stringify(res)
 				})
 			},
 			// -------------------------客运查看车辆位置-------------------------
@@ -1891,7 +1868,8 @@
 				if (this.current !== e.currentIndex) {
 					this.current = e.currentIndex
 				}
-			},		
+			},
+
 		}
 	}
 </script>
@@ -1938,7 +1916,8 @@
 		position: sticky;
 		top: 0upx;
 		background: #f5f5f5;
-		height: 140upx;
+		padding: 16upx 0;
+		height: 108upx;
 		z-index: 99999;
 
 	}
@@ -1963,7 +1942,7 @@
 		background: #FFFFFF;
 		border-radius: 12rpx;
 		padding: 40rpx 32upx;
-		padding-bottom: 132upx;
+		padding-bottom: 120upx;
 
 		.at_titleView {
 			position: relative;
@@ -2026,7 +2005,6 @@
 
 		//按钮区
 		.at_buttonView {
-			margin-top: 16upx;
 			display: flex;
 			float: right;
 

@@ -724,7 +724,7 @@
 				if (that.ticketDetail.starSiteArr.length > 2 || that.ticketDetail.endSiteArr.length > 2) {
 					if (that.startStation == '请选择上车点' && that.endStation == '请选择下车点') {
 						uni.showToast({
-							title: '未选择上下车点，请选择上下车点',
+							title: '滴！请选择上下车点',
 							icon: 'none'
 						})
 					} else if (that.passengerInfo.length == 0) {
@@ -748,7 +748,7 @@
 				} else {
 					if (that.endStation == '请选择下车点') {
 						uni.showToast({
-							title: '未选择下车点，请选择下车点',
+							title: '滴！请选择下车点',
 							icon: 'none'
 						})
 					} else if (that.passengerInfo.length == 0) {
