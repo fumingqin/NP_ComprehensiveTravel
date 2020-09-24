@@ -188,10 +188,17 @@
 
 			},
 			//---------------------------------互换起止地址---------------------------------
-			changeClick: function() {;
-				this.changeText = this.departure;
-				this.departure = this.destination;
-				this.destination = this.changeText;
+			changeClick: function() {
+				if(that.departure !== '选择上车点' || that.destination !== '选择下车点'){
+					this.changeText = this.departure;
+					this.departure = this.destination;
+					this.destination = this.changeText;
+				}else{
+					uni.showToast({
+						title: '请选择上下车点',
+						icon: 'none'
+					})
+				}
 			},
 			//---------------------------------清除历史---------------------------------
 			clickHistory: function() {

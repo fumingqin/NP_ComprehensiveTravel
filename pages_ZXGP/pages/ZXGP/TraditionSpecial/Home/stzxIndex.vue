@@ -53,7 +53,7 @@
 
 		data() {
 			return {
-				src: '/pages_ZXGP/static/ZXGP/banner.png',
+				src: '/pages_ZXGP/static/ZXGP/stzx.png',
 				departure: '', //终点
 				destination: '', //起点
 				datestring: '', //时间
@@ -72,6 +72,7 @@
 				},
 				state: '邵泰专线', //状态值
 				isNormal:0,//判断是普通购票还是定制班车默认是普通购票
+				historyLines2: [],
 			}
 		},
 
@@ -134,9 +135,16 @@
 
 			//---------------------------------互换起止地址---------------------------------
 			changeClick: function() {
-				this.changeText = this.departure;
-				this.departure = this.destination;
-				this.destination = this.changeText;
+				if(this.departure !== '选择上车点' || this.destination !== '选择下车点'){
+					this.changeText = this.departure;
+					this.departure = this.destination;
+					this.destination = this.changeText;
+				}else{
+					uni.showToast({
+						title: '请选择上下车点',
+						icon: 'none'
+					})
+				}
 			},
 
 			onSelected(e) { //选择
@@ -199,17 +207,17 @@
 					})
 				}else {
 					var station = this.departure + "-" + this.destination;
-					if(this.historyLines) {
-						for(let i = 0; i <= this.historyLines.length;i++){
-							if(station == this.historyLines[i]) {
-								this.historyLines.splice(i,1);
+					if(this.historyLines2) {
+						for(let i = 0; i <= this.historyLines2.length;i++){
+							if(station == this.historyLines2[i]) {
+								this.historyLines2.splice(i,1);
 							}
 						}
-						this.historyLines.unshift(this.departure + "-" + this.destination);
+						this.historyLines2.unshift(this.departure + "-" + this.destination);
 					}
 					uni.setStorage({
-						key:'historyLines',
-						data:this.historyLines,
+						key:'historyLines2',
+						data:this.historyLines2,
 					})
 					//页面传参通过地址后面添加参数 this.isNormal=0是普通购票1是定制班车
 					
@@ -295,13 +303,13 @@
 				display: flex;
 
 				.historyTitle {
-					font-size: 25rpx;
+					font-size: 28rpx;
 					color: #2C2D2D;
 					margin-left: 20rpx;
 				}
 
 				.clearHistory {
-					font-size: 25rpx;
+					font-size: 28rpx;
 					color: #2C2D2D;
 					margin-right: 20rpx;
 					float: right;

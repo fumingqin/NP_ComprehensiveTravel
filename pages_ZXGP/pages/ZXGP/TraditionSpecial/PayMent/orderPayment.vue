@@ -380,6 +380,12 @@
 				console.log('定制班车下车点： ',that.specialEndStation)
 				console.log('班次号： ',that.orderInfo.planScheduleCode)
 				console.log('线路名称： ',that.orderInfo.lineName)
+				console.log('是否上门接送： ',that.ticketInfo.pickUpStatus)
+				console.log('接送点： ',that.ticketInfo.PickUpAddress)
+				console.log('接送点纬度： ',that.ticketInfo.pickUpLatitude)
+				console.log('接送点经度： ',that.ticketInfo.pickUpLongitude)
+				console.log('始发站纬度： ',that.ticketInfo.StartStaionLatitude)
+				console.log('始发站经度： ',that.ticketInfo.StartStaionLongitude)
 				console.log('-------------------------结束---------------------------')
 				uni.request({
 					url:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.Url,
@@ -409,12 +415,12 @@
 						totalPrice: that.totalPrice, //总价格
 						setOutTime: setTime, //发车时间
 						
-						IsPickUp : false,//是否上门接送
-						PickUpAddress : '茶叶大厦', //接送点
-						PickUpLatitude : 0,//接送点纬度
-						PickUpLongitude : 0,//接送点经度
-						StartStaionLatitude : 0,//始发站点纬度
-						StartStaionLongitude : 0,//始发站经度
+						IsPickUp : that.ticketInfo.pickUpStatus,//是否上门接送
+						PickUpAddress : that.ticketInfo.PickUpAddress, //接送点
+						PickUpLatitude : that.ticketInfo.pickUpLatitude,//接送点纬度
+						PickUpLongitude : that.ticketInfo.pickUpLongitude,//接送点经度
+						StartStaionLatitude : that.ticketInfo.StartStaionLatitude,//始发站纬度
+						StartStaionLongitude : that.ticketInfo.StartStaionLongitude,//始发站经度
 						
 						payParameter: '', //不需要的参数，传空
 						getOnPoint: that.specialStartStation, //定制班车上车点
@@ -508,8 +514,8 @@
 													that.payment();
 												}else if(res.confirm == false) {
 													uni.request({
-														url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-														method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+														url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+														method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 														data: {
 															orderNumber: orderNumber,
 														},
@@ -575,8 +581,8 @@
 						that.getTicketPaymentInfo_ticketIssue(that.orderNum);
 					} else if (res.err_msg == "get_brand_wcpay_request:cancel") {
 						uni.request({
-							url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-							method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+							url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+							method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 							data: {
 								orderNumber: that.orderNum,
 							},
@@ -646,8 +652,8 @@
 							})
 						} else if (res.errMsg == 'requestPayment:fail canceled') { //用户取消
 							uni.request({
-								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+								url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 								data: {
 									orderNumber: that.orderNum,
 								},
@@ -678,8 +684,8 @@
 							})
 						} else if (res.errMsg == 'requestPayment:fail') { //用户取消
 							uni.request({
-								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+								url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 								data: {
 									orderNumber: that.orderNum,
 								},
@@ -736,8 +742,8 @@
 							},4000)
 						}else if (res.errMsg == "requestPayment:fail cancel") {
 							uni.request({
-								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+								url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 								data: {
 									orderNumber: that.orderNum,
 								},
@@ -766,8 +772,8 @@
 						console.log(res)
 						if (res.errMsg == "requestPayment:fail cancel") {
 							uni.request({
-								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+								url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 								data: {
 									orderNumber: that.orderNum,
 								},
@@ -818,7 +824,7 @@
 					uni.request({
 						url:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
 						method:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
-						// header:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.header,
+						// header:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.header,
 						data: {
 							orderNumber: orderNumber,
 						},
