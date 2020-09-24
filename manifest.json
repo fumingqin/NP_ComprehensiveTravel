@@ -1,5 +1,5 @@
 {
-    "name" : "南平综合出行",
+    "name" : "交通在线",
     "appid" : "__UNI__E0F63D1",
     "description" : "",
     "versionName" : "1.0.0",
@@ -123,14 +123,18 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxf64bf945b37a9939",
+        "appid" : "wxdf94dc8c9eb42f63",
         "setting" : {
             "urlCheck" : false,
             "postcss" : true,
             "minified" : true
         },
         "usingComponents" : true,
-        "permission" : {}
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "你的位置信息将用于小程序位置接口的效果展示"
+            }
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true

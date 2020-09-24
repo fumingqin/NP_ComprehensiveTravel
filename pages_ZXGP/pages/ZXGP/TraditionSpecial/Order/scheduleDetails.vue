@@ -156,11 +156,11 @@
 			<!-- 乘车险 -->
 			<view class="orderCommonClass">
 				<view style="display: flex; align-items: center;">
-					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">购买乘车险</view>
-					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:30upx ;">{{InsurePrice}}元</view>
+					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 28upx;">购买乘车险</view>
+					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:28upx ;">{{InsurePrice}}元</view>
 				</view>
 				<view style="display: flex;margin-right: 41upx;align-items: center;">
-					<view style="font-size: 30upx;color: #2C2D2D;">{{passengerNum}}份</view>
+					<view style="font-size: 28upx;color: #2C2D2D;">{{passengerNum}}份</view>
 					<radio class="Mp_box" value="1" :color="'#01aaef'" :checked="isInsurance===1 ? true : false" @click="insuranceTap"></radio>
 				</view>
 			</view>
@@ -168,7 +168,7 @@
 			<!-- 上门服务 -->
 			<view class="orderCommonClass" v-if="pickUp_Display == true">
 				<view style="display: flex; align-items: center;">
-					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">上门接客服务</view>
+					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 28upx;">上门接客服务</view>
 					<view style="margin-left: 16upx;color:#01aaef ; font-size:24upx; margin-top: 6upx;" @click="pickUpPoint">查看服务</view>
 					<u-popup v-model="pickUp_popup" mode="bottom">
 						<view class="boxView">
@@ -190,8 +190,8 @@
 			<!-- 选择接送上车点 -->
 			<view class="orderCommonClass" :hidden="pickUp_Status == false" @click="pickUpAddress">
 				<view style="display: flex; align-items: center; margin-left: 41upx;">
-					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 28upx;" v-if="pickUp_Address !== '请选择接送上车点'">接送上车点：</view>
-					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #01aaef;font-size: 28upx;">{{pickUp_Address}}</view>
+					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 26upx;" v-if="pickUp_Address !== '请选择接送上车点'">接送上车点：</view>
+					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #01aaef;font-size: 26upx;">{{pickUp_Address}}</view>
 				</view>
 			</view>
 			
@@ -303,17 +303,18 @@
 			uni.getStorage({
 				key: 'ticketDate',
 				success: function(data) {
-					that.ticketDetail = data.data; //车票数组
+					that.ticketDetail = data.data; //车票信息数组
 					that.totalPrice = data.data.fare; //价格
 					that.shuttleType = data.data.shuttleType; //班车类型
 					that.sepecialStartArray = data.data.starSiteArr;//班车起点数组
 					that.specialEndArray = data.data.endSiteArr;//班车终点数组
 					that.ordinaryBoarding = data.data.startStaion; //普通班车的起点数据
 					that.shuttleType = data.data.shuttleType; //班车类型
-					that.InsurePrice = that.ticketDetail.insurePrice; //保险价格
+					that.InsurePrice = data.data.insurePrice; //保险价格
 					console.log('选择车票的班次数据', that.ticketDetail);
 					that.calculateTotalPrice(); //执行计算价格
 					that.removal(that.ticketDetail);
+					that.getpickUpDate();
 				}
 			})
 			
@@ -328,6 +329,7 @@
 			//读取乘车人信息
 			this.userData();
 			this.getStationData();
+			
 		},
 		onReady() {
 
@@ -395,8 +397,26 @@
 						console.log('购票须知2',this.way)
 					}
 				})
-
 			},
+			
+			getpickUpDate:function(){
+				var pickUpDate = this.ticketDetail.setTime.replace('T', ' ');
+				console.log(pickUpDate)
+				// 请求是否有上门服务	
+				uni.request({
+					url: this.$ky_cpdg.KyInterface.GetIsPickUp.Url,
+					method: this.$ky_cpdg.KyInterface.GetIsPickUp.method,
+					data:{
+						SetOutTime : pickUpDate
+					},
+					success:(res)=>{
+						console.log('是否上门服务',res.data)
+						// this.pickUp_Display  = res.data;
+					}
+				})
+			},
+
+			
 			//-------------------------------时间转换-------------------------------
 			turnDate(date) {
 				if (date) {

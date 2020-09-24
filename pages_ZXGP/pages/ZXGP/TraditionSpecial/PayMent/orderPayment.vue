@@ -514,8 +514,8 @@
 													that.payment();
 												}else if(res.confirm == false) {
 													uni.request({
-														url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-														method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+														url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+														method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 														data: {
 															orderNumber: orderNumber,
 														},
@@ -581,8 +581,8 @@
 						that.getTicketPaymentInfo_ticketIssue(that.orderNum);
 					} else if (res.err_msg == "get_brand_wcpay_request:cancel") {
 						uni.request({
-							url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-							method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+							url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+							method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 							data: {
 								orderNumber: that.orderNum,
 							},
@@ -652,8 +652,8 @@
 							})
 						} else if (res.errMsg == 'requestPayment:fail canceled') { //用户取消
 							uni.request({
-								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+								url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 								data: {
 									orderNumber: that.orderNum,
 								},
@@ -684,8 +684,8 @@
 							})
 						} else if (res.errMsg == 'requestPayment:fail') { //用户取消
 							uni.request({
-								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+								url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 								data: {
 									orderNumber: that.orderNum,
 								},
@@ -742,8 +742,8 @@
 							},4000)
 						}else if (res.errMsg == "requestPayment:fail cancel") {
 							uni.request({
-								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+								url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 								data: {
 									orderNumber: that.orderNum,
 								},
@@ -772,8 +772,8 @@
 						console.log(res)
 						if (res.errMsg == "requestPayment:fail cancel") {
 							uni.request({
-								url: this.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-								method: this.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+								url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+								method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
 								data: {
 									orderNumber: that.orderNum,
 								},
@@ -824,7 +824,7 @@
 					uni.request({
 						url:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
 						method:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
-						// header:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.header,
+						// header:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.header,
 						data: {
 							orderNumber: orderNumber,
 						},

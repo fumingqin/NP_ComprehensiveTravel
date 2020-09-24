@@ -4,6 +4,19 @@
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"pages": [
+		//-------------------交通在线首页---------------------
+		{
+			"path": "pages/home/h_jtzx_home",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"animationType": "fade-in", // 设置fade-in淡入动画，为最合理的动画类型
+					"background": "transparent", // 背景透明
+					"backgroundColor": "rgba(0,0,0,0)", // 背景透明
+					"popGesture": "none" // 关闭IOS屏幕左边滑动关闭当前页面的功能
+				}
+			}
+		},
 		//-------------------南平综合出行首页---------------------
 		{
 			"path": "pages/home/h_np_home",
@@ -17,6 +30,7 @@
 				}
 			}
 		},
+		
 		
 		//----------------------------个人中心模块开始----------------------------
 		//--------------------微信授权登录--------------------
@@ -93,6 +107,12 @@
 				"navigationStyle": "custom",
 				// #endif
 				"navigationBarTitleText": "通知"
+			}
+		},
+		{
+			"path": "pages/GRZX/detailTweet", //推文通知
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		}
 		//----------------------------个人中心模块结束----------------------------
@@ -178,7 +198,7 @@
 				{
 					"path": "pages/ZXGP/SpecialBus/Home/zxgpHomePage",
 					"style": {
-						"navigationBarTitleText": "专线订购",
+						"navigationBarTitleText": "武夷新区直达",
 						"navigationBarBackgroundColor": "#ffad29"
 					}
 				},
@@ -204,7 +224,7 @@
 				{
 					"path": "pages/ZXGP/TraditionSpecial/Home/ctkyIndex",
 					"style": {
-						"navigationBarTitleText": "客运"
+						"navigationBarTitleText": "车票订购"
 					}
 				}
 				, {
@@ -215,6 +235,7 @@
 				}, {
 					"path": "pages/ZXGP/TraditionSpecial/Order/selectTickets",
 					"style": {
+						"enablePullDownRefresh":true,
 						"navigationBarTitleText": "班次列表"
 					}
 				}, {
@@ -296,7 +317,9 @@
 				},
 				{
 				    "path" : "pages/ZXGP/TraditionSpecial/Home/stzxIndex",
-				    "style" : {}
+				    "style" : {
+						"navigationBarTitleText": "邵泰专线"
+					}
 				}
 			]
 		},
@@ -372,17 +395,17 @@
 		"fontSize": "16px",
 		//#endif
 		"list": [{
-				"pagePath": "pages/home/h_np_home",
+				"pagePath": "pages/home/h_jtzx_home",
 				"text": "首页"
 			},
 			{
 				"pagePath": "pages/GRZX/notice",
 				"text": "通知"
 			},
-			{
-				"pagePath": "pages/home/serve",
-				"text": "服务"
-			},
+			// {
+			// 	"pagePath": "pages/home/serve",
+			// 	"text": "服务"
+			// },
 			{
 				"pagePath": "pages/order/newOrderList",
 				"text": "订单"
