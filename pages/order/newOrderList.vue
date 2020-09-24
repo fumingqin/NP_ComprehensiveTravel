@@ -553,11 +553,12 @@
 			getKeYunOrderInfo: function() {
 				var that = this;
 				uni.request({
-					url: $KyInterface.KyInterface.Ky_getKeYunOrderInfo.Url,
-					method: $KyInterface.KyInterface.Ky_getKeYunOrderInfo.method,
-					header: $KyInterface.KyInterface.Ky_getKeYunOrderInfo.header,
+					url: $KyInterface.KyInterface.searchOrder2.Url, 
+					method: $KyInterface.KyInterface.searchOrder2.method,
+					// header: $KyInterface.KyInterface.searchOrder2.header,
 					data: {
 						clientID: that.userInfo.userId,
+						AppSystemName:'南平综合出行',
 					},
 					success: (res) => {
 						uni.stopPullDownRefresh();

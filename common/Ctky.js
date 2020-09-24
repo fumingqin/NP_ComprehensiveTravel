@@ -368,6 +368,14 @@ const KyInterface = {
 		name:'模糊查询',
 		method:'GET',
 	},
+	//--------------------------------------获取专线列表数据--------------------------------------
+	searchOrder2:{
+		Url: Url2 + '/api/KY/searchOrder',
+		name:'获取专线列表数据',
+		method:'GET',
+		header:{'content-type': 'application/json'},
+	},
+	
 }
 
 const InterfaceAddress = [
