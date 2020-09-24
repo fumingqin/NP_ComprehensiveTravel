@@ -178,7 +178,8 @@
 				{
 					"path": "pages/ZXGP/SpecialBus/Home/zxgpHomePage",
 					"style": {
-						"navigationBarTitleText": "专线订购"
+						"navigationBarTitleText": "专线订购",
+						"navigationBarBackgroundColor": "#ffad29"
 					}
 				},
 				{
@@ -292,6 +293,10 @@
 					"style": {
 			
 					}
+				},
+				{
+				    "path" : "pages/ZXGP/TraditionSpecial/Home/stzxIndex",
+				    "style" : {}
 				}
 			]
 		},

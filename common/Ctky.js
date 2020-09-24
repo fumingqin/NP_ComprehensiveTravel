@@ -27,6 +27,9 @@ const npUrl = 'http://27.148.155.9:9055';
 const Url2 = 'http://36.250.234.10:60032';
 
 const systemName = '南平综合出行';
+const systemName2 = '八闽出行';
+const systemName3 = '邵泰专线';
+const systemName4 = '武夷新区专线';
 
 //接口对象
 const KyInterface = {
@@ -357,6 +360,12 @@ const KyInterface = {
 	SellTicket_Flow:{
 		Url: Url2 + '/api/KY/SellTicket_Flow',
 		name:'查询订单状态',
+		method:'GET',
+	},
+	//--------------------------------------模糊查询--------------------------------------
+	GetLineNameByKey:{
+		Url: Url2 + '/api/KY/GetLineNameByKey',
+		name:'模糊查询',
 		method:'GET',
 	},
 }
