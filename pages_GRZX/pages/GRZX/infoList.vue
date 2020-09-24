@@ -1,7 +1,7 @@
 <template>
 	<view>	
 		<!-- 常用乘车人 -->
-		<view v-if="state==1" class="mt">
+		<view v-if="state==1&&show" class="mt">
 			<view class="boxClass" v-for="(item, index) in passengerList" :key="index" @click="editPassenger(item)">  <!--个人中心页面进入 -->
 				<view class="nameClass">{{item.userName}}</view>
 				<view class="sexClass">{{item.userSex}}</view>
@@ -23,7 +23,7 @@
 			<button @click="addPassenger" class="btnAdd btn_background btn_fontColor">+添加乘客</button>
 		</view>	
 		
-		<view v-if="state==2" class="mt">
+		<view v-if="state==2&&show" class="mt">
 			<view class="boxClass" v-for="(item, index) in passengerList" :key="index" @click="selete(item)">  <!--个人中心页面进入 -->
 				<view class="nameClass">{{item.userName}}</view>
 				<view class="sexClass">{{item.userSex}}</view>
@@ -46,6 +46,10 @@
 		</view>
 		<view v-if="state==2" class="btnBox">
 			<button @click="deletePassenger" class="btnAdd btn_background btn_fontColor">删除</button>
+		</view>
+		
+		<view v-if="!show" class="noneData">
+			<u-empty text="暂无乘车人" mode="list"></u-empty>
 		</view>
 		
 		<view class="topClass">
@@ -73,6 +77,7 @@
 				addressList:[],		//地址列表
 				
 				userId:'',			//用户信息
+				show:false,		//是否显示
 			}
 	    },
 		onLoad(){
@@ -146,6 +151,7 @@
 									icon:'none',
 								});
 								if(res1.data.status){
+									that.show = true;
 									var  obj = new Object();
 									for (let item of res1.data.data){
 										var index = list.indexOf(item.PassengerId);
@@ -178,6 +184,8 @@
 									that.passengerList=defaultList;
 									uni.stopPullDownRefresh();
 									uni.setStorageSync('passengerList',list1);
+								}else{
+									that.show = false;
 								}
 							},
 							fail() {
@@ -306,10 +314,7 @@
 			
 			// --------------------------------返回按钮--------------------------------
 			returnClick(){
-				uni.switchTab({
-					//url:'/pages/GRZX/user',
-					url:this.$GrzxInter.Route.user.url,
-				})
+				uni.navigateBack();
 			},
 			
 			// --------------------------------点击管理--------------------------------
@@ -657,5 +662,12 @@
 		position: absolute;
 		left: 88%;
 		top:115upx;
+	}
+	
+	.noneData{
+		color: #5a5a5b;
+		display: flex; 
+		justify-content: center;
+		margin-top: 500upx;
 	}
 </style>
