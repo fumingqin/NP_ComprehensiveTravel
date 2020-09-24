@@ -107,28 +107,12 @@
 								4. 修复键盘组件在微信小程序上遮罩无效的问题
 								`,
 				quickEntryData : [{
-					start : '延平',
-					end : '建瓯',
+					start : '泰宁',
+					end : '邵武',
 					image : '../../static/home/temporary/xianlu.png' 
 				},{
-					start : '延平',
-					end : '建阳',
-					image : '../../static/home/temporary/xianlu.png'
-				},{
-					start : '建阳',
-					end : '新区',
-					image : '../../static/home/temporary/xianlu.png'
-				},{
-					start : '建瓯',
-					end : '延平',
-					image : '../../static/home/temporary/xianlu.png'
-				},{
-					start : '建阳',
-					end : '延平',
-					image : '../../static/home/temporary/xianlu.png'
-				},{
-					start : '新区',
-					end : '建阳',
+					start : '邵武',
+					end : '泰宁',
 					image : '../../static/home/temporary/xianlu.png'
 				}], //快捷入口数据
 				functionArray: [
