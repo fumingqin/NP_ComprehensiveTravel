@@ -384,7 +384,7 @@
 				uni.request({
 					url:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.Url,
 					method:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.method,
-					// header:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.header,
+					header:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.header,
 					
 					data: {
 						carType: that.orderInfo.shuttleType, //班车类型
@@ -410,11 +410,11 @@
 						setOutTime: setTime, //发车时间
 						
 						IsPickUp : false,//是否上门接送
-						PickUpAddress : '', //接送点
-						PickUpLatitude : '',//接送点纬度
-						PickUpLongitude : '',//接送点经度
-						StartStaionLatitude : '',//始发站点纬度
-						StartStaionLongitude : '',//始发站经度
+						PickUpAddress : '茶叶大厦', //接送点
+						PickUpLatitude : 0,//接送点纬度
+						PickUpLongitude : 0,//接送点经度
+						StartStaionLatitude : 0,//始发站点纬度
+						StartStaionLongitude : 0,//始发站经度
 						
 						payParameter: '', //不需要的参数，传空
 						getOnPoint: that.specialStartStation, //定制班车上车点
@@ -476,9 +476,9 @@
 				that.timer = timer;
 				timer = setInterval(function() {
 					uni.request({
-						url:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
-						method:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
-						// header:this.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.header,
+						url:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
+						method:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
+						// header:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.header,
 						data: {
 							//订单编号
 							orderNumber: orderNumber

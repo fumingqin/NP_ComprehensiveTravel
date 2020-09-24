@@ -13,6 +13,8 @@ const Interface = {
 		// #endif
 		
 		Url2:"http://36.250.234.10:60032", //定制客运
+		Url3:"http://appdl.xmjdt.cn:60032", //定制客运
+		
 	},
 	
 	system:{

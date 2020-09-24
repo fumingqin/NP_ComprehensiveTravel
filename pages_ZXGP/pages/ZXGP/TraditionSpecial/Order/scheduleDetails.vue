@@ -165,53 +165,45 @@
 				</view>
 			</view>
 			
-			
-			<!-- <view class="orderCommonClass">
-				<view style="display: flex; align-items: center;">
-					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">上门接客服务</view>
-					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:30upx ;">{{InsurePrice}}元</view>
-				</view>
-				<view style="display: flex;margin-right: 41upx;align-items: center;">
-					<view style="font-size: 30upx;color: #2C2D2D;">{{passengerNum}}份</view>
-					<radio class="Mp_box" value="1" :color="'#01aaef'" :checked="isInsurance===1 ? true : false" @click="insuranceTap"></radio>
-				</view>
-			</view>
-			 -->
-			
-			
-			<!-- 购票须知 -->
+			<!-- 上门服务 -->
 			<view class="orderCommonClass">
 				<view style="display: flex; align-items: center;">
-					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">同意购票须知</view>
-					<view @tap="checkAttention" style="margin-left: 16upx;color:#19A0FF ; font-size:24upx; margin-top: 6upx;">点击查看须知</view>
-				</view>
-				<!-- 查看须知popup -->
-				<popup ref="popup2" type="bottom">
-					<view class="boxView">
-						<view class="titleView">
-							<text class="Nb_text1">用户须知</text>
-							<text class="Nb_text2 jdticon icon-fork " @click="close(2)"></text>
+					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">上门接客服务</view>
+					<view style="margin-left: 16upx;color:#19A0FF ; font-size:24upx; margin-top: 6upx;" @click="pickUpPoint">查看服务</view>
+					<u-popup v-model="pickUp_popup" mode="bottom">
+						<view class="boxView">
+							<view class="titleView">
+								<text class="Nb_text1">用户须知</text>
+								<text class="Nb_text2 jdticon icon-fork " @click="close(2)"></text>
+							</view>
+							<scroll-view class="noticeBox" scroll-y="ture">
+								<rich-text class="Nb_text4" :nodes="way"></rich-text>
+							</scroll-view>
 						</view>
-						<scroll-view class="noticeBox" scroll-y="ture">
-							<rich-text class="Nb_text4" :nodes="way"></rich-text>
-						</scroll-view>
-					</view>
-				</popup>
-
-				<view style="display: flex;margin-right: 41upx;align-items: center;">
-					<radio class="Mp_box" value="1" :color="'#01aaef'" :checked="selectedValue===1 ? true : false" @click="Selection"></radio>
+					</u-popup>
 				</view>
+				<view style="display: flex;margin-right: 41upx;align-items: center;">
+					<radio class="Mp_box" value="1" :color="'#01aaef'" :checked="pickUp_Status" @click="pickUpClick"></radio>
+				</view>
+				
 			</view>
+			<u-collapse :arrow="false" style="">
+				<u-collapse-item :open="pickUp_Status">
+					15864154761486
+				</u-collapse-item>
+			</u-collapse>
+			<!-- 点击预订同意购票须知 -->
 			<view style="display: flex;font-size: 24upx;margin:0 46upx;color: #808080;margin-left: 16%;margin-bottom: 50upx;">点击立即预定表示已阅读并同意<view
 				 style="font-size: 24upx;color: #01aaef;" @tap="checkAttention"> 《购票须知》</view>
 			</view>
+			
 		</scroll-view>
 		<view class="toPayClass">
 			<view style="display: flex;align-items: center;margin-left: 32upx;">
 				<text style="font-size: 38upx;color: #FC4646;padding: 0;">￥{{totalPrice}}</text>
 				<text style="font-size: 28upx;margin-left: 9upx;font-family:SourceHanSansSC-Light; font-weight: lighter;color: #666666;padding: 0;">共{{passengerNum}}人</text>
 			</view>
-			<view @tap="reserveTap" class="orderReserve" :class="{tapColor:selectedValue == 1}">立即预定</view>
+			<view @tap="reserveTap" class="orderReserve" :class="{tapColor:totalPrice !== 0}">立即预定</view>
 		</view>
 
 		<!-- 查看须知popup -->
@@ -259,7 +251,6 @@
 				}],
 				couponIndex: '请选择优惠券', //优惠券默认内容
 				couponColor: '', //优惠券couponID，大于等于0触发价格判断事件
-				selectedValue: 0, //同意须知的选中值
 				couponCondition: '', //优惠券的满足条件值
 				isInsurance: 1, //默认选择乘车险
 				maskState: 0, //优惠券面板显示状态
@@ -288,6 +279,8 @@
 				pickUp_Longitude : '' , //接送点经度
 				StartStaion_Latitude : '',//始发站点纬度
 				StartStaion_Longitude : '',//始发站经度
+				
+				pickUp_popup : false, //弹出服务内容
 				
 			}
 		},
@@ -489,13 +482,6 @@
 				// this.numberChange();
 				// this.toggleMask();
 			},
-			Selection: function() {
-				if (this.selectedValue == 0) {
-					this.selectedValue = 1;
-				} else {
-					this.selectedValue = 0;
-				}
-			},
 			//-------------------------------选择保险-----------------------------
 			insuranceTap: function() {
 				if (this.isInsurance == 0) {
@@ -504,6 +490,14 @@
 				} else {
 					this.isInsurance = 0;
 					this.calculateTotalPrice();
+				}
+			},
+			//-------------------------------选择保险-----------------------------
+			pickUpClick: function() {
+				if (this.pickUp_Status == false) {
+					this.pickUp_Status = true;
+				} else {
+					this.pickUp_Status = false;
 				}
 			},
 			//-------------------------------查看须知-----------------------------
@@ -520,6 +514,10 @@
 
 			close2(e) {
 				this.$refs.popup3.close()
+			},
+			
+			pickUpPoint:function(){
+				this.pickUp_popup = true;
 			},
 			//-------------------------------跳转到地图标点-----------------------------
 			checkLocation() {
@@ -693,11 +691,6 @@
 							title: '免童/儿童不可单独购票',
 							icon: 'none'
 						})
-					} else if (that.selectedValue == 0) {
-						uni.showToast({
-							title: '请同意购买须知',
-							icon: 'none'
-						})
 					} else {
 						that.jumpTo();
 					}
@@ -715,11 +708,6 @@
 					} else if (that.adultNum == 0) {
 						uni.showToast({
 							title: '免童/儿童不可单独购票',
-							icon: 'none'
-						})
-					} else if (that.selectedValue == 0) {
-						uni.showToast({
-							title: '请同意购买须知',
 							icon: 'none'
 						})
 					} else {
