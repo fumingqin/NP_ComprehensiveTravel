@@ -160,6 +160,15 @@
 				// this.getDeparture();
 			}
 		},
+		
+		onPullDownRefresh:function(){
+			uni.showToast({
+				title: '查询班次中...',
+				icon: 'none'
+			})
+			this.getTicketInfo(this.date);
+		},
+		
 		methods: {
 			getOpenID() {
 				var that = this;
@@ -212,6 +221,7 @@
 						date: date,
 					},
 					success: (res) => {
+						uni.stopPullDownRefresh();
 						console.log('111',res)
 						uni.hideLoading();
 						var a=res.data;

@@ -228,6 +228,7 @@
 				}, {
 					"path": "pages/ZXGP/TraditionSpecial/Order/selectTickets",
 					"style": {
+						"enablePullDownRefresh":true,
 						"navigationBarTitleText": "班次列表"
 					}
 				}, {

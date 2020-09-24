@@ -15,9 +15,9 @@ const KyInterface = {
 		systemName:'南平综合出行',
 		
 		// 用于南平综合出行 - 车票订购小程序使用
-		systemNameApp:'南平综合出行APP',
-		systemNameH5:'南平综合出行H5',
-		systemNameWeiXin:'南平综合出行小程序',
+		// systemNameApp:'南平综合出行APP',
+		// systemNameH5:'南平综合出行H5',
+		// systemNameWeiXin:'南平综合出行小程序',
 		
 		// 用于兴业银行 - 专线购票小程序使用
 		// systemNameApp:'专线购票APP',
@@ -25,9 +25,9 @@ const KyInterface = {
 		// systemNameWeiXin:'专线购票小程序',
 		
 		// 用于邵泰专线 - 专线购票小程序使用
-		// systemNameApp:'交通出行APP',
-		// systemNameH5:'交通出行H5',
-		// systemNameWeiXin:'交通出行小程序',
+		systemNameApp:'交通出行APP',
+		systemNameH5:'交通出行H5',
+		systemNameWeiXin:'交通在线小程序',
 	},
 	//--------------------------------------查询班次--------------------------------------
 	getListSchedulesInfo:{
