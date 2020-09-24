@@ -190,7 +190,7 @@
 			<!-- 选择接送上车点 -->
 			<view class="orderCommonClass" :hidden="pickUp_Status == false" @click="pickUpAddress">
 				<view style="display: flex; align-items: center; margin-left: 41upx;">
-					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 26upx;" v-if="pickUp_Address !== '请选择接送上车点'">接送上车点：</view>
+					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 26upx;" >接送上车点：</view>
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #01aaef;font-size: 26upx;">{{pickUp_Address}}</view>
 				</view>
 			</view>
@@ -276,8 +276,8 @@
 				
 				pickUp_Display : true, //接送服务是否显示
 				pickUp_Price : 4 ,//上门默认价格
-				pickUp_Status : false , //默认不开启
-				pickUp_Address : '' , //接送点
+				pickUp_Status : true , //默认不开启
+				pickUp_Address : '请选择接送上车点' , //接送点
 				pickUp_Latitude : 0 , //接送点纬度
 				pickUp_Longitude : 0 , //接送点经度
 				StartStaion_Latitude : 0,//始发站点纬度
@@ -530,7 +530,7 @@
 			pickUpAddress: function() {
 				uni.chooseLocation({
 					success: (res) => {
-						// console.log(res)
+						console.log('选择后的上车点数据',res)
 						if(res.name == ''){
 							uni.showToast({
 								title:'请确认相关上车点',

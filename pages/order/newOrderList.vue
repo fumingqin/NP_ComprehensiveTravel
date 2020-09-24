@@ -34,6 +34,7 @@
 						 
 							<view class="at_contentView">
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
+								<text class="at_contentText" v-if="item.carType == '定制班车'">上车点：&nbsp;{{item.getOnPoint}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>		

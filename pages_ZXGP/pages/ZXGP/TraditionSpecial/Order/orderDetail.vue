@@ -23,15 +23,15 @@
 				<view class="passageInfo u-f-ac" v-for="(item,index) in passageInfo" :key="index">
 					<!-- 标题 -->
 					<view class="title">
-						<view style="display: flex;">出行人<text class="detailInfo2">{{item.userName}}</text></view>
-						<view style="display: flex;">身份证<text class="detailInfo2">{{userCodeNumChange(item.userCodeNum)}}</text></view>
-						<view style="display: flex;">座位号<text class="detailInfo2">{{seat}}</text></view>
+						<view style="display: flex;">出行人：<text class="detailInfo2">{{item.userName}}</text></view>
+						<view style="display: flex;">身份证：<text class="detailInfo2">{{userCodeNumChange(item.userCodeNum)}}</text></view>
+						<view style="display: flex;">座位号：<text class="detailInfo2">{{seat}}</text></view>
 					</view>
 				</view>
 				<view class="passageInfo u-f-ac">
 					<view class="title">
-						<view style="display: flex;">退改规则<text class="detailInfo2">{{role}}</text></view>
-						<view style="display: flex;">附加保险<text class="detailInfo2">{{isInsured(orderInfo.insured)}}</text></view>
+						<view style="display: flex;">退改规则：<text class="detailInfo2">{{role}}</text></view>
+						<view style="display: flex;">附加保险：<text class="detailInfo2">{{isInsured(orderInfo.insured)}}</text></view>
 					</view>
 				</view>
 				<!-- 二维码 -->
@@ -46,11 +46,11 @@
 				<view class="passageInfo u-f-ac">
 					<!-- 标题 -->
 					<view class="title">
-						<view style="display: flex;">接送上车点<text class="detailInfo2">{{ispickupData.PickUpAddress}}</text></view>
-						<view style="display: flex;">接送状态<text class="detailInfo2">{{getState(ispickupData.PickUpAddress)}}</text></view>
-						<view style="display: flex;">车辆状态<text class="detailInfo2">{{getIsSend(ispickupData.IsSend)}}</text></view>
-						<view style="display: flex;">司机姓名<text class="detailInfo2">{{ispickupData.DriverName}}</text></view>
-						<view style="display: flex;">司机手机号<text class="detailInfo2">{{ispickupData.DriverPhone}}</text></view>
+						<view style="display: flex;">接送上车点：<text class="detailInfo2">{{ispickupData.PickUpAddress}}</text></view>
+						<view style="display: flex;">接送状态：<text class="detailInfo2">{{getState(ispickupData.PickUpAddress)}}</text></view>
+						<view style="display: flex;">车辆状态：<text class="detailInfo2">{{getIsSend(ispickupData.IsSend)}}</text></view>
+						<view style="display: flex;">司机姓名：<text class="detailInfo2">{{ispickupData.DriverName}}</text></view>
+						<view style="display: flex;">司机手机号：<text class="detailInfo2">{{ispickupData.DriverPhone}}</text></view>
 					</view>
 				</view>
 			</view>
@@ -400,7 +400,7 @@
 		display: flex;
 		padding: 10rpx 20rpx;
 		font-size: 28rpx;
-		color: #666666;
+		/* color: #666666; */
 		font-weight: 300;
 	}
 

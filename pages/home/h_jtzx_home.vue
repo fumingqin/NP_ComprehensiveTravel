@@ -95,7 +95,7 @@
 			return {
 				rotationChart: ['',''], //轮播图
 				advertisingMap: ['','',''], //广告图
-				information : ['南平综合出行来啦！9月25日试运行！快来体验吧！'], //新闻列表
+				information : ['邵泰专线来啦！9月28日试运行！快来体验吧！'], //新闻列表
 				information2 : ['',''], //新闻列表
 				protocolStatus : false, //隐藏弹出层，f为不弹，t为弹
 				upgradeStatus : false, //升级弹出层，f为不弹，t为弹

@@ -14,7 +14,10 @@
 					<view class="MP_title">发车时间</view>
 					<text class="MP_text">{{turnDate(orderInfo.setTime)}}</text>
 				</view>
-
+				<view class="MP_selectionDate" v-if="ticketInfo.pickUpStatus == true">
+					<view class="MP_title">接送服务</view>
+					<text class="MP_text">接送上车点：{{ticketInfo.PickUpAddress}}</text>
+				</view>
 				<view class="MP_selectionDate" :hidden="hiddenValues==0">
 					<view class="MP_title">乘客信息</view>
 					<view class="MP_userInformation" v-for="(item,index) in passengerInfo" :key="index">
