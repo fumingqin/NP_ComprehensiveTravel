@@ -32,7 +32,8 @@
 		</view>
 		
 		<view class="noneData" v-if="!show">
-			您当前暂无反馈
+			<!-- 您当前暂无反馈 -->
+			<u-empty text="您当前暂无反馈" mode="list"></u-empty>
 		</view>
 		
 		<view class="boxClass">
@@ -87,6 +88,8 @@
 						console.log(res);
 						if(res.data.data.length > 0){
 							this.show = true;
+						}else{
+							this.show = false;
 						}
 						this.feedList = res.data.data;
 					},

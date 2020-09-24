@@ -3,10 +3,10 @@ import $oSit from '@/common/overallSituation.js'; //引入公共js文件
 
 //接口域名
 // #ifdef H5
-	const Url=$oSit.Interface.address.Url2;
+	const Url=$oSit.Interface.address.Url3;
 // #endif
 // #ifndef H5
-	const Url=$oSit.Interface.address.Url2;
+	const Url=$oSit.Interface.address.Url3;
 // #endif
 
 //接口对象
@@ -40,6 +40,12 @@ const KyInterface = {
 		Url: Url + '/api/ShowContent/GetAggrement',
 		name:'购票须知',
 		method:'POST',
+	},
+	//--------------------------------------请求否有上门服务--------------------------------------
+	GetIsPickUp:{
+		Url: Url + '/api/KY/GetIsPickUp',
+		name:'是否有上门服务',
+		method:'GET',
 	},
 	
 	//--------------------------------------客运下单--------------------------------------

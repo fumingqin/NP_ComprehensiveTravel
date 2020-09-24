@@ -553,11 +553,12 @@
 			getKeYunOrderInfo: function() {
 				var that = this;
 				uni.request({
-					url: $KyInterface.KyInterface.Ky_getKeYunOrderInfo.Url,
-					method: $KyInterface.KyInterface.Ky_getKeYunOrderInfo.method,
-					header: $KyInterface.KyInterface.Ky_getKeYunOrderInfo.header,
+					url: $KyInterface.KyInterface.searchOrder2.Url, 
+					method: $KyInterface.KyInterface.searchOrder2.method,
+					// header: $KyInterface.KyInterface.searchOrder2.header,
 					data: {
 						clientID: that.userInfo.userId,
+						AppSystemName:'南平综合出行小程序',
 					},
 					success: (res) => {
 						uni.stopPullDownRefresh();
@@ -1144,14 +1145,9 @@
 				// var orderInfo = this.info[index];
 				var that = this;
 				console.log(item.orderNumber,carType,item.totalPrice);
-				if(carType == '定制巴士') {
-					that.ky_currentType = '定制巴士支付';
-					this.Cs_CheckPayState(item.orderNumber,item.totalPrice)
-				}else {
 					this.ky_currentType = '';
 					this.ky_orderStatus = '客运支付订单检索';
 					this.getTicketPaymentInfo(item.orderNumber);
-				}
 			},
 			
 			//--------------------------检测订单支付状态--------------------------
@@ -1304,9 +1300,8 @@
 				})
 				timer = setInterval(function() {
 					uni.request({
-						url: $KyInterface.KyInterface.Ky_getTicketPaymentInfo.Url,
-						method: $KyInterface.KyInterface.Ky_getTicketPaymentInfo.method,
-						// header: $KyInterface.KyInterface.Ky_getTicketPaymentInfo.header,
+						url:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.Url,
+						method:that.$ky_cpdg.KyInterface.Ky_getTicketPaymentInfo.method,
 						data: {
 							orderNumber: orderNumber,
 						},
@@ -1653,7 +1648,7 @@
 			KyComplain:function(item){
 				console.log(item)
 					uni.navigateTo({
-						url:'/pages_GRZX/pages/GRZX/complaint?driverID=' +item.driverPhone+'&driverName=' + item.driverName +'&orderID=' +item.driverPhone
+						url:'/pages_GRZX/pages/GRZX/complaint?driverID=' +item.driverPhone+'&driverName=' + item.driverName +'&orderID=' +item.orderNumber
 					})
 			},
 			onchange(e){

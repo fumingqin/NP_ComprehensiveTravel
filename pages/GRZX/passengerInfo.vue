@@ -1,6 +1,6 @@
 <template>
 	<view class="content">	
-		<view class="passengerList">
+		<view class="passengerList" v-if="show">
 			<view class="boxClass" v-for="(item, index) in passengerList" :key="index" @click="choosePassenger(item)">  <!--非个人中心页面进入 -->
 				<view class="nameClass">{{item.userName}}</view>
 				<view class="sexClass" name="userSex">{{item.userSex}}</view>
@@ -20,6 +20,9 @@
 				</view>
 			</view>
 		</view>	
+		<view v-if="!show" class="noneData">
+			<u-empty text="暂无乘车人" mode="list"></u-empty>
+		</view>
 		<view class="btnBox"> 
 			<button type="warn" @click="addPassenger" class="btnAdd1">+添加乘客</button>
 			<button type="primary" @click="definite" class="btnDefinite">确定</button>
@@ -37,6 +40,7 @@
 			return{
 				limt:'', //限制的人数
 				passengerList:[], //乘客列表
+				show:false,		//是否显示
 			}
 		},
 		onLoad(options){
@@ -106,6 +110,7 @@
 								success(res1) {
 									console.log(res1,'乘车人列表')
 									if(res1.data.status){
+										that.show = true;
 										var  obj = new Object();
 										for (let item of res1.data.data){
 											var index = list.indexOf(item.PassengerId);
@@ -123,16 +128,19 @@
 											}
 											array.push(obj);
 										}
-									}
-									var defaultList=[];
-									for(var n=0;n<array.length;n++){
-										if(array[n].hiddenIndex==1){
-											defaultList.unshift(array[n]);
-										}else{
-											defaultList.push(array[n]);
+										var defaultList=[];
+										for(var n=0;n<array.length;n++){
+											if(array[n].hiddenIndex==1){
+												defaultList.unshift(array[n]);
+											}else{
+												defaultList.push(array[n]);
+											}
 										}
+										that.passengerList=defaultList;
+									}else{
+										that.show = false;
 									}
-									that.passengerList=defaultList;
+									
 								}
 							})
 						}
@@ -401,5 +409,12 @@
 		border: 1upx solid #ff0000;
 		border-radius: 10upx;
 		text-align: center;
+	}
+	
+	.noneData{
+		color: #5a5a5b;
+		display: flex; 
+		justify-content: center;
+		margin-top: 500upx;
 	}
 </style>

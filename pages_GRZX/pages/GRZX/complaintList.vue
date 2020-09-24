@@ -27,7 +27,8 @@
 		</view>
 		
 		<view class="noneData" v-if="!show">
-			您当前暂无投诉
+			<!-- 您当前暂无投诉 -->
+			<u-empty text="您当前暂无投诉" mode="list"></u-empty>
 		</view>
 	</view>
 </template>
