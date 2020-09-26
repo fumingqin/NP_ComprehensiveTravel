@@ -49,7 +49,7 @@
 			<!-- 上下车点选择,0是普通购票不显示上下车点选择 -->
 			<!-- v-if="ticketDetail.shuttleType == '定制班车'" -->
 			<view class="stationContentView" v-if="ticketDetail.shuttleType == '普通班车'">
-				<view class="boarding" @tap="endStationTap2">
+				<view class="boarding" @tap="stationTap">
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">下车点</view>
 					<view style="display: flex;align-items: center;">
 						<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;text-align: right;">{{endStation}}</view>
@@ -61,14 +61,14 @@
 			<!-- 上下车点选择,0是普通购票不显示上下车点选择 -->
 			<!-- v-if="ticketDetail.shuttleType == '定制班车'" -->
 			<view class="stationContentView" v-if="ticketDetail.shuttleType == '定制班车'">
-				<view class="boarding" style="border-bottom:#EAEAEA solid 1px;" @tap="startStationTap">
+				<view class="boarding" style="border-bottom:#EAEAEA solid 1px;" @tap="stationTap">
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">上车点</view>
 					<view style="display: flex;align-items: center;">
 						<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;text-align: right;">{{startStation}}</view>
 						<image src="../../../../static/ZXGP/right.png" style="width: 11upx;height: 21upx;margin-left: 10upx;"></image>
 					</view>
 				</view>
-				<view class="boarding" @tap="endStationTap">
+				<view class="boarding" @tap="stationTap">
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">下车点</view>
 					<view style="display: flex;align-items: center;">
 						<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;text-align: right;">{{endStation}}</view>
@@ -323,11 +323,10 @@
 					console.log('success');
 				}
 			})
-			if(this.ticketDetail.shuttleType == '普通班车'){
-				this.endStationTap2();
-			}else{
-				this.endStationTap();
-			}
+			uni.showLoading({
+				title:'跳转中...'
+			})
+			this.stationTap();
 			
 			
 		},
@@ -433,52 +432,10 @@
 				}
 			},
 			//-------------------------------点击定制班车上车点-----------------------------
-			startStationTap() {
-				var that = this;
-				var stationArray = {
-					startStaionIndex: that.startStaionIndex,
-					endStationIndex: that.endStationIndex,
-					specialStartArray: that.sepecialStartArray,
-					specialEndArray: that.specialEndArray,
-					// specialStartArray: that.approachPoint2,
-					// specialEndArray: that.approachPoint1,
-					shuttleType: that.shuttleType,
-				}
+			stationTap:function() {
 				//跳转到选择上车点页面
 				uni.navigateTo({
-					url: '../stationPicker/selectStation?stationArray=' + JSON.stringify(stationArray)
-				})
-			},
-			//-------------------------------点击定制班车下车点-----------------------------
-			endStationTap() {
-				var that = this;
-				var stationArray = {
-					startStaionIndex: that.startStaionIndex,
-					endStationIndex: that.endStationIndex,
-					specialStartArray: that.sepecialStartArray,
-					specialEndArray: that.specialEndArray,
-					// specialStartArray: that.approachPoint2,
-					// specialEndArray: that.approachPoint1,
-					shuttleType: that.shuttleType,
-				}
-				//跳转到选择下车点页面
-				uni.navigateTo({
-					url: '../stationPicker/selectStation?stationArray=' + JSON.stringify(stationArray)
-				})
-			},
-			
-			//-------------------------------普通班车下车点-----------------------------
-			endStationTap2() {
-				var that = this;
-				var stationArray = {
-					endStationIndex: that.endStationIndex,
-					specialEndArray: that.selectRoutePoint,
-					specialStartArray: that.ordinaryBoarding,
-					shuttleType: that.shuttleType,
-				}
-				//跳转到选择下车点页面
-				uni.navigateTo({
-					url: '../stationPicker/selectStation?stationArray=' + JSON.stringify(stationArray)
+					url: '../stationPicker/selectStation'
 				})
 			},
 			
@@ -812,73 +769,6 @@
 			
 			//------------------------计算途径点----------------------------------
 			removal: function(e) {
-				// //****用于本页面的查看所有途径站点****//
-				// var arr1 = [];
-				// var arr2 = [];
-				// //去重
-				// var arr1 = e.starSiteArr;
-				// var arr2 = e.endSiteArr;
-				// arr1.push(...arr2)
-				// console.log('去重复', arr1)
-				// let arr3 = Array.from(new Set(arr1))
-				// for (var i = 0; i < arr3.length; i++) {
-				// 	var a = this.mainArray.filter(item => {
-				// 		return item == arr3[i].SiteName;
-				// 	})
-				// 	if (a == '') {
-				// 		var SiteName = arr3[i].SiteName
-				// 		this.mainArray.push(SiteName);
-				// 		// console.log('去重复',this.mainArray)
-				// 	}
-				// }
-				
-				// //****途径点去重(用于后期路线规划)****//
-				// var approachPoint = [];
-				// approachPoint = arr3;
-				// for (var i = 0; i < arr3.length; i++) {
-				// 	if (arr3[i].SiteName == approachPoint[i].SiteName && arr3[i].Latitude==0 && arr3[i].Longitude==0) {
-				// 		arr3.splice(i, 1);
-				// 		i = i - 1;
-				// 	}
-				// }
-				// console.log('途径点去重', approachPoint)
-				
-				// //****用于选择上下车点（approachPoint1是上车点，approachPoint2是下车点）****//
-				// var c =[];
-				// var obj={};
-				// let arr4 = Array.from(new Set(arr1))
-				// for(var i =0; i<arr4.length; i++){
-				// 	if(!obj[arr4[i].SiteName]){
-				// 		c.push(arr4[i])
-				// 		obj[arr4[i].SiteName] = true;
-				// 	}
-				// }
-				// console.log('途径点去重2', c)
-				// var a = [];
-				// a = c.slice();
-				// // a = c;
-				// this.approachPoint1 = a; //终点
-				// // this.approachPoint1.shift();
-				// for (var i = 0; i < a.length; i++) {
-				// 	if (a[i].SiteName == this.ticketDetail.startStaion) {
-				// 		a.splice(i, 1);
-				// 		i = i - 1;
-				// 	}
-				// }
-				// var b = [];
-				// b = c.slice();
-				// // b = c;
-				// this.approachPoint2 = b; //起点
-				// for (var i = 0; i < b.length; i++) {
-				// 	if (b[i].SiteName == this.ticketDetail.endStation) {
-				// 		b.splice(i, 1);
-				// 		i = i - 1;
-				// 	}
-				// }
-				// // this.approachPoint2.pop();
-				// console.log('终点', this.approachPoint1)
-				// console.log('起点', this.approachPoint2)
-				
 				//****途径站点(用于查询所有途径点)****//
 				var routeSite = e.lineViaSiteDesc.split(",");
 				this.routeSite=routeSite

@@ -63,68 +63,82 @@
 				default:'',
 				startStation:'',//上车点
 				endStation:'',//下车点
-				stationArray:[]
+				stationArray:[],
+				routeSite:[],
+				selectRoutePoint:[],
 			}
 		},
-		onLoad(param) {
+		onLoad:function(param) {
 			var that = this;
-			//接收上个页面传过来的定制班车站点数据
-			var stationArray = JSON.parse(param.stationArray);
-			that.stationArray = stationArray;
-			console.log(that.stationArray)
-			if(stationArray.shuttleType=='定制班车'){
-				//保存上车点数组
-				that.startStationList = that.arrayDistinct(stationArray.specialStartArray);
-				//保存下车点数组
-				that.endStationList = that.arrayDistinct(stationArray.specialEndArray);
-				that.default = that.endStationList.length-1;
-				console.log(that.default)
-				if(stationArray.startStaionIndex == "" && stationArray.endStationIndex == "") {
-					//定位已选择的上车点
-					that.startSelectIndex = 0;
-					//定位已选择的下车点
-					that.endSelectIndex = that.default;
-				}else {
-					//定位已选择的上车点
-					that.startSelectIndex = stationArray.startStaionIndex;
-					//定位已选择的下车点
-					that.endSelectIndex = stationArray.endStationIndex;
+			//---------------------读取班次数据-----------------
+			uni.getStorage({
+				key: 'ticketDate',
+				success: function(data) {
+					uni.hideLoading();
+					that.stationArray = data.data;
+					console.log(that.stationArray)
+					//****途径站点(用于查询所有途径点)****//
+					var routeSite = that.stationArray.lineViaSiteDesc.split(",");
+					// console.log(routeSite)
+					//筛选普通班车下车点途径站点
+					var d = [];
+					d = routeSite.slice();
+					console.log(d)
+					// a = c;
+					that.selectRoutePoint = d; //终点
+					// this.approachPoint1.shift();
+					for (var i = 0; i < that.selectRoutePoint.length; i++) {
+						if (that.selectRoutePoint[i]== that.stationArray.startStaion) {
+							that.selectRoutePoint.splice(i, 1);
+							i = i - 1;
+						}
+						console.log(that.selectRoutePoint)
+					}
+					that.data();
 				}
-			}else if(stationArray.shuttleType=='普通班车'){
-				//保存上车点数组
-				that.startStationList = that.stationArray.specialStartArray;
-				//保存下车点数组
-				that.endStationList2 = stationArray.specialEndArray;
-				console.log(that.endStationList2)
-				if(stationArray.endStationIndex == "") {
-					//定位已选择的下车点
-					that.endSelectIndex = 0;
-				}else {
-					//定位已选择的下车点
-					that.endSelectIndex = stationArray.endStationIndex;
-				}
-			}
+			})
+			
 		},
 		methods: {
+			//-------------------------执行方法-------------------------------
+			data:function(){
+				var that = this;
+				//接收上个页面传过来的定制班车站点数据
+				if(that.stationArray.shuttleType == '定制班车'){
+					//保存上车点数组
+					that.startStationList = that.arrayDistinct(that.stationArray.starSiteArr);
+					//保存下车点数组
+					that.endStationList = that.arrayDistinct(that.stationArray.endSiteArr);
+					that.default = that.endStationList.length-1;
+					// console.log(that.default)
+				}else if(that.stationArray.shuttleType == '普通班车'){
+					//保存上车点数组
+					that.startStationList = that.stationArray.starSiteArr;
+					//保存下车点数组
+					that.endStationList2 = that.selectRoutePoint;
+					// console.log('22222222222',that.endStationList2)
+				}
+			},
+			
 			//--------------------------选中上车点--------------------------
 			startStationClick(e){
 				var that = this;
 				//给选择的下标赋值
 				that.startSelectIndex = e;
-				console.log('上车点下标赋值',that.startSelectIndex)
+				// console.log('上车点下标赋值',that.startSelectIndex)
 				//取出上车站点
 				that.startStation = that.startStationList[e].SiteName;
-				console.log('上车点取出上车站点',that.startStation)
+				// console.log('上车点取出上车站点',that.startStation)
 			},
 			//--------------------------选中下车点---------------------------
 			endStationClick(e){
 				var that = this;
 				//给选择的下标赋值
 				that.endSelectIndex = e;
-				console.log('下车点下标赋值',that.endSelectIndex)
+				// console.log('下车点下标赋值',that.endSelectIndex)
 				//取出下车站点
 				that.endStation = that.endStationList[e].SiteName;
-				console.log('下车点取出下车站点',that.endStation)	
+				// console.log('下车点取出下车站点',that.endStation)
 			},
 			
 			//--------------------------普通班车选中下车点---------------------------
@@ -132,10 +146,10 @@
 				var that = this;
 				//给选择的下标赋值
 				that.endSelectIndex = e;
-				console.log('下车点下标赋值',that.endSelectIndex)
+				// console.log('下车点下标赋值',that.endSelectIndex)
 				//取出下车站点
 				that.endStation = that.endStationList2[e];
-				console.log('下车点取出下车站点',that.endStation)	
+				// console.log('下车点取出下车站点',that.endStation)	
 			},
 			//--------------------------数组去重---------------------------
 			arrayDistinct:function(array){
