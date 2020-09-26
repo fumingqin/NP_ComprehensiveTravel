@@ -151,8 +151,8 @@
 			//加载数据
 			loadData : function(){
 				uni.request({
-					url:'http://appdl.xmjdt.cn:60032/api/BasicImage/GetRotationChart',
-					method:'POST',
+					url: this.$home.KyInterface.GetRotationChart.Url,
+					method:this.$home.KyInterface.GetRotationChart.method,
 					success:(res)=>{
 						// console.log('轮播区',res)
 						this.rotationChart = res.data.data;
@@ -167,10 +167,10 @@
 				})
 				
 				uni.request({
-					url:'http://appdl.xmjdt.cn:60032/api/News/GetNews',
-					method:'POST',
+					url: this.$home.KyInterface.GetNews.Url,
+					method:this.$home.KyInterface.GetNews.method,
 					success:(res)=>{
-						console.log('新闻资讯',res)
+						// console.log('新闻资讯',res)
 						this.information2 = res.data.data;
 						// console.log(this.rotationChart)
 					},
@@ -183,8 +183,8 @@
 				})
 				
 				uni.request({
-					url:'http://appdl.xmjdt.cn:60032/api/BasicImage/GetHomeStyle',
-					method:'POST',
+					url: this.$home.KyInterface.GetHomeStyle.Url,
+					method:this.$home.KyInterface.GetHomeStyle.method,
 					success:(res)=>{
 						// console.log('广告区',res)
 						this.advertisingMap = [];

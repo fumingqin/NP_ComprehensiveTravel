@@ -188,7 +188,7 @@
 			</view>
 			
 			<!-- 选择接送上车点 -->
-			<view class="orderCommonClass" :hidden="pickUp_Status == false" @click="pickUpAddress">
+			<view class="orderCommonClass" v-if="pickUp_Display == true" :hidden="pickUp_Status == false" @click="pickUpAddress">
 				<view style="display: flex; align-items: center; margin-left: 41upx;">
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 26upx;" >接送上车点：</view>
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #01aaef;font-size: 26upx;">{{pickUp_Address}}</view>
@@ -284,7 +284,6 @@
 				StartStaion_Longitude : 0,//始发站经度
 				
 				pickUp_popup : false, //弹出服务内容
-				
 			}
 		},
 
@@ -407,11 +406,12 @@
 					url: this.$ky_cpdg.KyInterface.GetIsPickUp.Url,
 					method: this.$ky_cpdg.KyInterface.GetIsPickUp.method,
 					data:{
-						SetOutTime : pickUpDate
+						SetOutTime : pickUpDate,
+						StartSiteName : this.ticketDetail.startStaion,
 					},
 					success:(res)=>{
-						console.log('是否上门服务',res.data)
-						// this.pickUp_Display  = res.data;
+						console.log('是否上门服务',res)
+						this.pickUp_Display  = res.data;
 					}
 				})
 			},
@@ -781,6 +781,9 @@
 				console.log(that.endStation)
 				console.log(that.pickUp_Latitude)
 				console.log(that.pickUp_Longitude)
+				if(that.pickUp_Status == false){
+					that.pickUp_Address = ''
+				}
 				var array = {
 					isInsurance: that.isInsurance, //是否选择了保险
 					totalPrice: that.totalPrice, //总价格

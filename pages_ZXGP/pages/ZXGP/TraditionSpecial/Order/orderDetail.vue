@@ -400,7 +400,7 @@
 		display: flex;
 		padding: 10rpx 20rpx;
 		font-size: 28rpx;
-		/* color: #666666; */
+		color: #666666;
 		font-weight: 300;
 	}
 
