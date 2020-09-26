@@ -91,7 +91,7 @@
 			
 			<!-- 进行中 -->
 			<!-- (进行中)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
-			<view v-if="current === 1" style="margin-top: 20rpx;">
+			<view v-if="current === 2" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in goingArr" :key="index">
 					
 					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
@@ -132,7 +132,7 @@
 
 
 			<!-- 未支付 -->
-			<view v-if="current === 1" style="margin-top: 20rpx;">
+			<view v-if="current === 3" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in unfinishArr" :key="index">
 					<!-- (未支付)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
 					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
@@ -172,7 +172,7 @@
 			</view>
 
 			<!-- 已取消 -->
-			<view v-if="current === 2" style="margin-top: 20rpx;">
+			<view v-if="current === 4" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in cancelArr" :key="index">
 					<!-- (已取消)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
 					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
@@ -272,7 +272,7 @@
 			return {
 				TaxiCost: 0, //价格
 				countdown: 0,
-				items: ['全部', '未支付', '已取消'],
+				items: ['全部', '已完成', '进行中', '未支付', '已取消'],
 				selector : '全部',
 				current: 0,
 				index: 1,
