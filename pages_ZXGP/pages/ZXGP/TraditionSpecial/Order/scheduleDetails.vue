@@ -157,7 +157,7 @@
 			<view class="orderCommonClass">
 				<view style="display: flex; align-items: center;">
 					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 28upx;">购买乘车险</view>
-					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:28upx ;">{{InsurePrice}}元</view>
+					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:24upx ;">{{InsurePrice}}元</view>
 				</view>
 				<view style="display: flex;margin-right: 41upx;align-items: center;">
 					<view style="font-size: 28upx;color: #2C2D2D;">{{passengerNum}}份</view>
@@ -169,6 +169,7 @@
 			<view class="orderCommonClass" v-if="pickUp_Display == true">
 				<view style="display: flex; align-items: center;">
 					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 28upx;">上门接客服务</view>
+					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:24upx; margin-top: 6upx;">{{pickUp_Price}}元</view>
 					<view style="margin-left: 16upx;color:#01aaef ; font-size:24upx; margin-top: 6upx;" @click="pickUpPoint">查看服务</view>
 					<u-popup v-model="pickUp_popup" mode="bottom">
 						<view class="boxView">
@@ -275,8 +276,9 @@
 				appName:'',
 				
 				pickUp_Display : true, //接送服务是否显示
-				pickUp_Price : 4 ,//上门默认价格
-				pickUp_Status : true , //默认不开启
+				pickUp_Price : 4 ,//上门默认价格，用于显示
+				pickUpPersonPrice : 0, //用于算法和传值的价格
+				pickUp_Status : true , //默认开启
 				pickUp_Address : '请选择接送上车点' , //接送点
 				pickUp_Latitude : 0 , //接送点纬度
 				pickUp_Longitude : 0 , //接送点经度
@@ -413,11 +415,12 @@
 					method: this.$ky_cpdg.KyInterface.GetIsPickUp.method,
 					data:{
 						SetOutTime : pickUpDate,
-						StartSiteName : this.ticketDetail.startStaion,
+						LineName : this.ticketDetail.lineName,
 					},
 					success:(res)=>{
 						console.log('是否上门服务',res)
-						this.pickUp_Display  = res.data;
+						this.pickUp_Display  = res.data.data.IsPickUp;
+						this.pickUp_Price  = res.data.data.Price;
 					}
 				})
 			},
@@ -484,9 +487,11 @@
 				if (this.pickUp_Status == false) {
 					this.pickUp_Status = true;
 					this.pickUp_Address = '请选择接送上车点';
+					this.calculateTotalPrice();
 				} else {
 					this.pickUp_Status = false;
 					this.pickUp_Address = '';
+					this.calculateTotalPrice();
 				}
 			},
 			
@@ -649,6 +654,14 @@
 				let price = that.ticketDetail.fare;
 				//半价票单价
 				let halfPrice = that.ticketDetail.halfTicket;
+				//接送服务单价
+				if(that.pickUp_Status == true){
+					that.pickUpPersonPrice = that.pickUp_Price;
+				}else{
+					that.pickUpPersonPrice = 0;
+				}
+				
+				// console.log(pickUpPersonPrice)
 				let insurePrice = that.InsurePrice;
 				if (that.isInsurance == 0) { //不选择保险
 					insurePrice = 0;
@@ -670,10 +683,10 @@
 						}
 					}
 					//计算总价
-					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum
+					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum + Number(that.pickUpPersonPrice) * adultNum + Number(that.pickUpPersonPrice) * childNum
 				} else {
 					//计算总价
-					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum
+					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum + Number(that.pickUpPersonPrice) * adultNum + Number(that.pickUpPersonPrice) * childNum
 				}
 			},
 
@@ -755,6 +768,7 @@
 					getOnPoint: that.startStation, //起点
 					getOffPoint: that.endStation, //终点
 					pickUpStatus : that.pickUp_Status, //是否上门服务
+					pickUpPersonPrice : that.pickUpPersonPrice, //接送价格
 					PickUpAddress : that.pickUp_Address, //接送上车点
 					pickUpLatitude : that.pickUp_Latitude, //接送点纬度
 					pickUpLongitude :that.pickUp_Longitude, //接送点经度

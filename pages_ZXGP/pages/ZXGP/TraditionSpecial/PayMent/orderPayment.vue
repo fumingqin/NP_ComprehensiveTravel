@@ -6,7 +6,7 @@
 		<view class="cover-container">
 			<view class="MP_information1">
 				<view class="MP_title">{{orderInfo.startStaion}} - {{orderInfo.endStation}}</view>
-				<text class="MP_text">费用包含：车票 {{insurance}}</text>
+				<text class="MP_text">费用包含：车票 {{insurance}}&nbsp;{{ticketInfo.pickUpStatus == true ? '上门接送' : ''}}</text>
 				<text class="MP_text" v-if="orderInfo.shuttleType=='定制班车'">上车点: {{specialStartStation}}</text>
 				<text class="MP_text" v-if="orderInfo.shuttleType=='定制班车'">下车点: {{specialEndStation}}</text>
 				<text class="MP_text" v-if="orderInfo.shuttleType=='普通班车'">下车点: {{specialEndStation}}</text>
@@ -57,7 +57,14 @@
 						<text class="MP_number">×{{ticketNum}}</text>
 						<text class="MP_total">¥{{orderInfo.insurePrice}}</text>
 					</view>
-
+					
+					<!-- 保险 -->
+					<view class="MP_cost" v-if="ticketInfo.pickUpStatus == true ">
+						<text>上门接送服务</text>
+						<text class="MP_number">×{{ticketNum}}</text>
+						<text class="MP_total">¥{{ticketInfo.pickUpPersonPrice}}</text>
+					</view>
+					
 					<!-- 优惠券 -->
 					<!-- <view class="MP_cost" v-if="orderInfo[0].couponPrice>0" v-if="false">
 						<text>{{orderInfo[0].couponTitle}}</text>
@@ -65,9 +72,9 @@
 						<text class="MP_total">-&nbsp;¥{{orderInfo[0].couponPrice}}</text>
 					</view> -->
 
-					<!-- <view class="MP_cost">
-						<text class="MP_total">共计&nbsp;¥{{orderInfo[0].orderActualPayment}}</text>
-					</view> -->
+					<view class="MP_cost">
+						<text class="MP_total">共计&nbsp;¥{{ticketInfo.totalPrice}}</text>
+					</view>
 
 				</view>
 
