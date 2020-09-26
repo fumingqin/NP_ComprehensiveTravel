@@ -287,7 +287,7 @@
 			}
 		},
 
-		onLoad(e) {
+		onLoad:function(e) {
 			var that = this;
 			//加载应用名称
 			that.applyName = that.$oSit.Interface.system.applyName;
@@ -323,6 +323,13 @@
 					console.log('success');
 				}
 			})
+			if(this.ticketDetail.shuttleType == '普通班车'){
+				this.endStationTap2();
+			}else{
+				this.endStationTap();
+			}
+			
+			
 		},
 		onShow() {
 			//读取乘车人信息

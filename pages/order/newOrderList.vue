@@ -1,7 +1,6 @@
 <template>
 	<view>     
 		<view class="tab">
-
 			<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" style-type="text" active-color="#3DABFC"></uni-segmented-control>
 		</view>
 		
@@ -53,7 +52,7 @@
 
 			<!-- 已完成 -->
 			<!--（已完成）客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
-			<view v-if="current === 1||" style="margin-top: 20rpx; ">
+			<view v-if="current === 1 " style="margin-top: 20rpx; ">
 				<view v-for="(item,index) in finishArr" :key="index">
 					
 					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
@@ -66,14 +65,15 @@
 							</view>
 							<view class="at_contentView" style="display: flex;">
 								
-									<view class="at_contentFrame">扫码上车</view>
-									<view class="at_contentFrame">线上购票</view>
-									<view class="at_contentFrame">{{item.carType}}</view>
+								<view class="at_contentFrame">扫码上车</view>
+								<view class="at_contentFrame">线上购票</view>
+								<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
 						 
 							<view class="at_contentView">							
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
+								<text class="at_contentText" v-if="item.carType == '定制班车'">上车点：&nbsp;{{item.getOnPoint}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>
@@ -111,6 +111,7 @@
 						 
 							<view class="at_contentView">							
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
+								<text class="at_contentText" v-if="item.carType == '定制班车'">上车点：&nbsp;{{item.getOnPoint}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>
@@ -154,6 +155,7 @@
 						 
 							<view class="at_contentView">							
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
+								<text class="at_contentText" v-if="item.carType == '定制班车'">上车点：&nbsp;{{item.getOnPoint}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>
@@ -194,6 +196,7 @@
 						 
 							<view class="at_contentView">							
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
+								<text class="at_contentText" v-if="item.carType == '定制班车'">上车点：&nbsp;{{item.getOnPoint}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>
