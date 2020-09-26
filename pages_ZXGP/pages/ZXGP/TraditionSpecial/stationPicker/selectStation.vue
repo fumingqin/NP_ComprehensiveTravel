@@ -66,10 +66,12 @@
 				stationArray:[],
 				routeSite:[],
 				selectRoutePoint:[],
+				CTKYStationList:[],
 			}
 		},
 		onLoad:function(param) {
 			var that = this;
+			
 			//---------------------读取班次数据-----------------
 			uni.getStorage({
 				key: 'ticketDate',
@@ -95,11 +97,29 @@
 						console.log(that.selectRoutePoint)
 					}
 					that.data();
+					that.bc_xz();
+					
 				}
 			})
-			
 		},
 		methods: {
+			bc_xz:function(){
+				uni.getStorage({
+					key: 'CTKYStationList',
+					success:(res)=>{
+						console.log(res)
+						if(this.stationArray.shuttleType == '普通班车'){
+							this.endSelectIndex = res.data.endStationIndex;
+						}else{
+							this.startSelectIndex = res.data.startStationIndex;
+							this.endSelectIndex = res.data.endStationIndex;
+						}
+					},
+					fail:function(err){
+						
+					}
+				})
+			},
 			//-------------------------执行方法-------------------------------
 			data:function(){
 				var that = this;
@@ -202,8 +222,6 @@
 						//下车点名称和下标
 						endStation:that.endStation,
 						endStationIndex:endSelectIndex,
-						//上车点名称和下标
-						startStation:that.startStationList,
 					}
 				}
 				//将上下车点数组保存到缓存
