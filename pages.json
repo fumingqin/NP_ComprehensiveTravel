@@ -123,6 +123,10 @@
             "path" : "pages/ZXDT/zxdt_information",
             "style" : {}
         }
+        ,{
+            "path" : "pages/order/aaa",
+            "style" : {}
+        }
     ],
 	
 	"subPackages":[

@@ -1,12 +1,7 @@
 <template>
 	<view>     
 		<view class="tab">
-			<!-- <view style="display: flex; margin-left: 40rpx; margin-bottom: 20rpx; font-size: 34rpx;">
-				<text>订单类型：</text>
-				<picker @change="selectorChange" mode = "selector" :range="carSelect" name="carSelect">
-				      <view>{{selector}} ></view>
-				</picker>
-			</view> -->
+
 			<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" style-type="text" active-color="#3DABFC"></uni-segmented-control>
 		</view>
 		
@@ -42,8 +37,8 @@
 								<!-- #ifndef MP-WEIXIN -->
 								<view class="at_button at_btDelete" v-if="item.state=='4'" @click="busLocation(item)">车辆位置</view>
 								<!-- #endif -->
-								<view class="at_button at_btDelete" v-if="item.state=='7'||item.state=='等待确认'" @tap="open3(item.orderNumber,'2')">取消</view>
-								<view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber,'2')">退票</view>
+								<view class="at_button at_btDelete" v-if="item.state=='7'||item.state=='等待确认'" @tap="open3(item.orderNumber)">取消</view>
+								<view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber)">退票</view>
 								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
 								<view class="at_button at_btToPay" v-if="item.state=='7'" @tap="keYunPay(item,item.carType)">去支付</view>
 								<view class="at_button at_btToPay" v-if="item.state=='尚未支付'||item.state=='等待确认'" @tap="keYunPay(item,item.carType)">去支付</view>	
@@ -58,10 +53,10 @@
 
 			<!-- 已完成 -->
 			<!--（已完成）客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
-			<!-- <view v-if="current === 1||" style="margin-top: 20rpx; ">
+			<view v-if="current === 1||" style="margin-top: 20rpx; ">
 				<view v-for="(item,index) in finishArr" :key="index">
 					
-					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
+					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
@@ -74,8 +69,6 @@
 									<view class="at_contentFrame">扫码上车</view>
 									<view class="at_contentFrame">线上购票</view>
 									<view class="at_contentFrame">{{item.carType}}</view>
-									
-								
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
 						 
@@ -92,16 +85,16 @@
 					</view>
 				</view>
 				<empty-data :isShow="finishArr.length == 0" text="暂无数据" :image="noDataImage" textColor="#999999"></empty-data>
-			</view> -->
+			</view>
 			
 			
 			
 			<!-- 进行中 -->
 			<!-- (进行中)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
-			<!-- <view v-if="current === 1" style="margin-top: 20rpx;">
+			<view v-if="current === 1" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in goingArr" :key="index">
 					
-					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
+					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
 							<view class="at_titleView">
@@ -110,11 +103,9 @@
 								<text class="at_status">{{getCtkyOrderStatus(item.state)}}</text>
 							</view>
 							<view class="at_contentView" style="display: flex;">
-								
 									<view class="at_contentFrame">扫码上车</view>
 									<view class="at_contentFrame">线上购票</view>
 									<view class="at_contentFrame">{{item.carType}}</view>
-								
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
 						 
@@ -123,11 +114,11 @@
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>
-							<view class="at_buttonView"> -->
+							<view class="at_buttonView">
 								<!-- #ifndef MP-WEIXIN -->
 								<!-- <view class="at_button at_btDelete" v-if="item.state=='4'" @click="busLocation(item)">车辆位置</view> -->
 								 <!-- #endif -->
-								<!-- <view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber,'2')">退票</view>
+								<view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber,'2')">退票</view>
 								 <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view>
 								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
 								 <view class="at_button at_btDelete" v-if="item.carType=='普通班车' || item.carType=='定制班车'" @tap="endorse(item)">改签</view>
@@ -136,14 +127,14 @@
 					</view>
 				</view>
 				<empty-data :isShow="goingArr.length == 0" text="暂无数据" :image="noDataImage" textColor="#999999"></empty-data>
-			</view> -->
+			</view>
 
 
 			<!-- 未支付 -->
-			<view v-if="current === 2" style="margin-top: 20rpx;">
+			<view v-if="current === 1" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in unfinishArr" :key="index">
 					<!-- (未支付)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
-					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
+					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
 						<!-- 预定日期 -->
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
@@ -168,7 +159,7 @@
 							</view>
 							<view class="at_buttonView">
 								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
-								<view class="at_button at_btDelete" v-if="item.carType=='普通班车' || item.carType=='定制班车'" @tap="open3(item.orderNumber,'2')">取消</view>
+								<view class="at_button at_btDelete" v-if="item.carType=='普通班车' || item.carType=='定制班车'" @tap="open3(item.orderNumber)">取消</view>
 								<view class="at_button at_btToPay" @tap="keYunPay(item,item.carType)">去支付</view>
 								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
 							</view>
@@ -179,10 +170,10 @@
 			</view>
 
 			<!-- 已取消 -->
-			<view v-if="current === 3" style="margin-top: 20rpx;">
+			<view v-if="current === 2" style="margin-top: 20rpx;">
 				<view v-for="(item,index) in cancelArr" :key="index">
 					<!-- (已取消)客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车客车 -->
-					<view v-if="item.carType=='普通班车' || item.carType=='定制班车' ||item.carType=='定制巴士'">
+					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
 						<!-- 预定日期 -->
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						<view class="at_view">
@@ -216,28 +207,6 @@
 				<empty-data :isShow="cancelArr.length == 0" text="暂无数据" :image="noDataImage" textColor="#999999"></empty-data>
 			</view>
 		</view>
-
-		<!-- 客运二维码弹框代码 -->
-		<uni-popup2 type="bottom" ref="popup">
-			<swiper style="width: 100%;height: 500rpx;">
-				<swiper-item v-for="(item,index) in QRCodeArray" :key="index">
-					<view class="u-f-ac" style="border-top-right-radius: 20rpx;border-top-left-radius: 20rpx; width: 100%; background: #FFFFFF;display: block; text-align: center;">
-						<!-- 显示二维码 -->
-						<!-- 检票口/座位号 -->
-						<view style="display: flex; align-items: center;justify-content: space-between; font-size: 32rpx;color: #2C2D2D; padding: 20rpx 80rpx;font-weight: 300;">
-							<view>检票口：{{item.checkPlace}}</view>
-							<view>座位号：{{item.seatNum}}</view>
-						</view>
-
-						<!-- 发车时间/车牌号 -->
-						<view style="display: flex; align-items: center;justify-content: space-between;font-size: 32rpx;color: #2C2D2D; padding: 0 80rpx;padding-bottom: 60rpx;">
-							<view>发车时间：{{item.lunchTime}}</view>
-							<view>车牌号：{{item.carNum}}</view>
-						</view>
-					</view>
-				</swiper-item>
-			</swiper>
-		</uni-popup2>
 		<!-- 退票弹框 -->
 		<uni-popup2 ref="popup2" type="bottom">
 			<view class="box_Vlew">
@@ -257,7 +226,6 @@
 				</view>
 			</view>
 		</uni-popup2>
-
 		<!-- 取消弹框 -->
 		<uni-popup2 ref="popup3" type="bottom">
 			<view class="box_Vlew">
@@ -287,7 +255,6 @@
 	import uniIcons from "@/components/Order/uni-icons/uni-icons.vue";
 	import uniPopup2 from "@/components/Order/uni-popup/uni-popup2.vue";
 	import emptyData from "@/components/Order/emptyData/emptyData.vue"; //无数据时显示内容
-	import uQRCode from "@/common/uqrcode.js"
 	import $KyInterface from "@/common/Ctky.js"
 	export default {
 		components: {
@@ -302,19 +269,10 @@
 			return {
 				TaxiCost: 0, //价格
 				countdown: 0,
-				items: ['全部', '进行中', '未支付', '已取消'],
-				// carSelect : ['全部','普通班车','定制班车','出租车','专线车','顺风车','包车服务','旅游服务'],
-				carSelect : ['全部','客运购票'],
+				items: ['全部', '未支付', '已取消'],
 				selector : '全部',
-				selectorIndex : 0,//模块筛选值
 				current: 0,
 				index: 1,
-				QRCodeArray: [{
-					checkPlace: 'A5',
-					seatNum: 'E1',
-					lunchTime: '18:00',
-					carNum: '闽C12345'
-				}],
 				info: [],//请求服务器订单列表
 				userInfo: '', //个人信息
 				finishArr: [],
@@ -327,27 +285,10 @@
 				totalPrice: 32.5,
 				ctkyOrderNum: '', //普通班车订单号（退票需要）
 				ky_currentType:'',
-				ky_orderStatus:'',//判断是否需要检测当前订单状态
-				
+				ky_orderStatus:'',//判断是否需要检测当前订单状态	
 				ctkyOpenID:'',
 				csRefundInfo:[],//定制巴士退票
-				payType: [{
-						typeName: '微信',
-						typeColor: '#00C805',
-						// iconPath: '../../static/CZC/Wechatpay.png',
-						value: 'wxpay',
-						checked: true,
-					},
-					{
-						typeName: '支付宝',
-						typeColor: '#0EBDFF',
-						// iconPath: '../../static/CZC/Alipay.png',
-						value: 'alipay',
-						checked: false
-					}
-				],
 				specialLineInfo: '',
-
 				noDataImage:'',//客运弹框背景图
 				textareaValue:"",
 				
@@ -403,8 +344,7 @@
 				this.getTicketPaymentInfo_ticketIssue(this.ctkyOrderNum);
 			}
 			this.getOpenID();
-			this.selectorChange();
-			
+			this.selectorChange();		
 			//接收current
 			var that=this;
 			uni.getStorage({
@@ -433,33 +373,13 @@
 				uni.showLoading({
 					title:'加载中...'
 				})
-				if(e !== undefined){
-					this.selector = this.carSelect[e.target.value];//赋值
-					this.selectorIndex = e.target.value;
-				}
 				//进行订单数组初始化
 				that.info = [];
 				that.finishArr = [];
 				that.goingArr = [];
 				that.unfinishArr = [];
 				that.cancelArr = [];
-				if(that.selectorIndex==0){
 					that.getUserInfo();//加载普通班车订单方法
-				}else if(that.selectorIndex==1){
-					// that.getUserInfo();//加载传统客运订单方法
-				}else if(that.selectorIndex==2){
-					// that.GetBookLogInfoByUserId();//加载定制巴士订单方法
-				}else if(that.selectorIndex==3){
-					// that.loadczcData();//加载出租车订单方法
-				}else if(that.selectorIndex==4){
-					// that.getOrderList();//加载出租车-专线车订单方法
-				}else if(that.selectorIndex==5){
-					// that.getSfcOrderList();//加载出租车-顺风车订单方法
-				}else if(that.selectorIndex==6){
-					// that.getArrayInfo();//加载包车服务方法
-				}else if(that.selectorIndex==7){
-					// that.toFinished();//加载景区订单方法
-				}
 			},
 		changeTime: function(value) { //时间格式转换
 				var date = new Date(value + "+08:00");
@@ -512,9 +432,6 @@
 					header: $KyInterface.KyInterface.Ky_AddPicture.header,
 					data: {
 					model: 0,
-					// type: 'banner',
-					// systemtype: 'XCX',//APP,XCX,H5
-					// companyid: '南平综合出行',//公司名
 					},
 					success(res) {
 						console.log(res)
@@ -551,12 +468,10 @@
 				uni.request({
 					url: $KyInterface.KyInterface.searchOrder2.Url, 
 					method: $KyInterface.KyInterface.searchOrder2.method,
-					// header: $KyInterface.KyInterface.searchOrder2.header,
 					data: {
 						clientID: that.userInfo.userId,
 						AppSystemName:that.$oSit.Interface.address.appName,
 						AppSystemName:'交通在线小程序',
-						// AppSystemName:'南平综合出行小程序',
 					},
 					success: (res) => {
 						uni.stopPullDownRefresh();
@@ -570,7 +485,7 @@
 									that.finishArr.push(res.data.data[i]);
 								} else if (res.data.data[i].state == '尚未取票'){
 									that.goingArr.push(res.data.data[i]);
-								} else if (res.data.data[i].state == '未支付' || res.data.data[i].state == '等待确认') {
+								} else if (res.data.data[i].state == '等待确认') {
 									that.unfinishArr.push(res.data.data[i]);
 								} else if (res.data.data[i].state == '被撤销' || res.data.data[i].state == '联网退票') {
 									that.cancelArr.push(res.data.data[i]);
@@ -592,67 +507,6 @@
 					}
 				})
 			},
-			//-------------------------请求定制巴士订单数据-------------------------
-			// GetBookLogInfoByUserId(){
-			// 	var that = this;
-			// 	console.log(that.userInfo.userId)
-			// 	uni.request({
-			// 		url:$KyInterface.KyInterface.Cs_GetBookLogInfoByUserId.Url,
-			// 		method:$KyInterface.KyInterface.Cs_GetBookLogInfoByUserId.method,
-			// 		header:$KyInterface.KyInterface.Cs_GetBookLogInfoByUserId.header,
-			// 		data:{
-			// 			UserAID: that.userInfo.userId
-			// 		},
-			// 		success(res) {
-			// 			uni.hideLoading();
-			// 			uni.stopPullDownRefresh();
-			// 			console.log('定制巴士订单数据',res)
-			// 			if (res.data.Successed == true) {
-			// 				var orderArray = [];
-			// 				for(let i=0;i<res.data.bookLogs.length;i++) {
-			// 					var array = {
-			// 						carType:res.data.bookLogs[i].Rep_BookLogType,
-			// 						bookTime:that.turnDate(res.data.bookLogs[i].BookTime),
-			// 						startSiteName:res.data.bookLogs[i].getOnPoint,
-			// 						endSiteName:res.data.bookLogs[i].getOffPoint,
-			// 						state:res.data.bookLogs[i].Rep_BookLogState,
-			// 						setOutTime:that.turnDate(res.data.bookLogs[i].SetoutTime),
-			// 						totalPrice:res.data.bookLogs[i].TotalPrice,
-			// 						iDNameType:res.data.bookLogs[i].iDNameType,
-			// 						ticketNumber:res.data.bookLogs[i].GetTicketCode,
-			// 						carryChild:res.data.bookLogs[i].Children,
-			// 						fullTicket:res.data.bookLogs[i].Person,
-			// 						halfTicket:0,
-			// 						orderNumber:res.data.bookLogs[i].AID,
-			// 						CheckInfoList:res.data.bookLogs[i].CheckInfoList,
-			// 						driverName:res.data.bookLogs[i].driverName,
-			// 						vehicleNumber:res.data.bookLogs[i].vehicleNumber,
-			// 					};
-			// 					orderArray.push(array);
-			// 					that.info.push(array);
-			// 					var state = res.data.bookLogs[i].Rep_BookLogState;
-			// 					if (state == '已完成') {
-			// 						that.finishArr.push(orderArray[i]);
-			// 					} else if (state == '支付正常' || state == '改签') {
-			// 						that.goingArr.push(orderArray[i]);
-			// 					} else if (state == '尚未支付') {
-			// 						that.unfinishArr.push(orderArray[i]);
-			// 					} else if (state == '作废' || state == '已退票') {
-			// 						that.cancelArr.push(orderArray[i]);
-			// 					}
-			// 				}
-			// 			}else if(res.data.Successed == false) {
-							
-			// 			}
-			// 		},
-			// 		fail(res) {
-			// 			uni.hideLoading();
-			// 			uni.stopPullDownRefresh();
-			// 			console.log(res)
-			// 		}
-			// 	})
-				
-			// },
 			//-------------------------------时间转换-------------------------------
 			turnDate(date) {
 				if (date) {
@@ -695,9 +549,8 @@
 					// }
 				}
 			},
-			open3(e, exitindex) {
+			open3(e) {
 				this.ticketOrderNumber = e;
-				this.exitindex = exitindex;
 				this.$refs.popup3.open()
 			},
 			//-------------------------跳转到详情页-------------------------
@@ -858,166 +711,15 @@
 					}
 				})
 			},
-			//-------------------------景区门票-打开退票弹框-------------------------
-			open2: function(e, exitindex) {
-				// console.log(e)
-				// console.log(exitindex)
+			//-------------------------打开退票弹框-------------------------
+			open2: function(e) {
 				var that = this;
-				if(exitindex == 'cs2tui') {
-					// console.log(e)
-					that.csRefundInfo = e;
-					that.exitindex = exitindex;
-					that.$refs.popup2.open()
-				}else {
 					that.ticketOrderNumber = e;
-					that.exitindex = exitindex;
 					that.$refs.popup2.open()
-				}
-				
-				// console.log(this.ticketOrderNumber)
-				// console.log(this.exitindex)
-				
 			},
-			//-------------------------景区门票-关闭退票弹框-------------------------
+			//-------------------------关闭退票弹框-------------------------
 			close2() {
 				this.$refs.popup2.close()
-			},
-			// -------------------------定制巴士退票/退款 先退票再退款-------------------------
-			cs_refundStateCheck:function(item){
-				var that = this;
-				that.ky_currentType = '定制巴士退票';
-				//退票
-				// that.csRefundTicket(item);
-				//检测支付状态
-				that.Cs_CheckPayState(item);
-			},
-			
-			//退票
-			csRefundTicket:function(item){
-				var that = this;
-				uni.request({
-					url: $KyInterface.KyInterface.Cs_Refund.Url,
-					method: $KyInterface.KyInterface.Cs_Refund.method,
-					header: $KyInterface.KyInterface.Cs_Refund.header,
-					data: {
-						bookID: item.orderNumber,
-					},
-					success: (respones) => {
-						console.log('退票结果',respones)
-						if (respones.data.Successed == true) {
-							uni.hideLoading()
-							uni.showToast({
-								title: respones.data.BookResult.Message,
-								complete() {
-									that.Cs_BouncePay(item);
-									that.$refs.popup2.close()
-								}
-							})
-						} else {
-							uni.hideLoading()
-							uni.showToast({
-								title: respones.data.FaildMessage,
-								icon: 'none',
-								complete() {
-									this.$refs.popup2.close()
-								}
-							})
-						}
-					},
-					fail: (respones) => {
-						uni.hideLoading()
-						uni.showToast({
-							title: '服务器异常，请联系客服'
-						})
-					}
-				})
-			},
-			//退款
-			Cs_BouncePay:function(item){
-				var that = this;
-				var payType = $KyInterface.KyInterface.payType.payType;
-				uni.request({
-					url: $KyInterface.KyInterface.Cs_BouncePay.Url,
-					method: $KyInterface.KyInterface.Cs_BouncePay.method,
-					data: {
-						orderNumber: item.orderNumber,
-						payType: payType,
-						price: item.totalPrice
-					},
-					success: (respones) => {
-						console.log('退款结果',respones)
-						if (respones.data.status == true) {
-							uni.showToast({
-								title: respones.data.msg,
-								complete() {
-									// console.log('退票成功，开始刷新');
-									uni.startPullDownRefresh();
-								}
-							})
-						} else if (respones.data.status == false){
-							uni.showToast({
-								title: respones.data.msg,
-								icon: 'none',
-								complete() {
-									uni.startPullDownRefresh();
-								}
-							})
-						}
-					},
-					fail: (respones) => {
-						uni.hideLoading()
-						console.log(respones)
-						uni.showToast({
-							title: '服务器异常，请联系客服'
-						})
-					}
-				})
-			},
-			// -------------------------定制巴士取消-------------------------
-			Cs_cancelStateCheck:function(orderNumber){
-				var that = this;
-				that.ky_currentType = '定制巴士取消';
-				that.Cs_CheckPayState(orderNumber);
-			},
-			Cs_cancelTicket:function(orderNumber){
-				var that = this;
-				uni.request({
-					url: $KyInterface.KyInterface.Cs_Cancel.Url,
-					method: $KyInterface.KyInterface.Cs_Cancel.method,
-					
-					data: {
-						bookID: orderNumber,
-					},
-					success: (respones) => {
-						console.log('取消结果', respones)
-						if (respones.data.Successed == true) {
-							uni.hideLoading()
-							uni.showToast({
-								title: '取消成功'
-							})
-							this.$refs.popup3.close()
-							uni.startPullDownRefresh();
-							this.selectorChange();
-						} else {
-							uni.hideLoading()
-							uni.showToast({
-								title: '取消失败',
-								icon: 'none'
-							})
-							this.$refs.popup3.close()
-							uni.startPullDownRefresh();
-						}
-					},
-					fail: (respones) => {
-						// alert(respones.data.msg)
-						uni.hideLoading()
-						console.log(respones)
-						uni.showToast({
-							title: '服务器异常，请联系客服'
-						})
-						this.$refs.popup3.close()
-					}
-				})
 			},
 			//--------------------------客运取消之前获取车票支付参数--------------------------
 			cancel_getTicketPaymentInfo: function(orderNumber) {
@@ -1132,12 +834,7 @@
 				var that = this;
 				var payType = $KyInterface.KyInterface.SellTicket_Flow.payType;
 				console.log('检测订单支付状态',orderNumber,payType)
-				var number = '';
-				if(that.ky_currentType == '定制巴士退票'){
-					number = orderNumber;
-				}else {
-					number = orderNumber.orderNumber;
-				}
+				var number = orderNumber.orderNumber;
 				uni.request({
 					url:$KyInterface.KyInterface.SellTicket_Flow.Url,
 					method:$KyInterface.KyInterface.SellTicket_Flow.method,
@@ -1148,25 +845,7 @@
 					success(res) {
 						console.log('支付状态',res)
 						console.log('ky_currentType',that.ky_currentType)
-						if(that.ky_currentType == '定制巴士取消') {
-							if(res.data.msg == '支付成功') {
-								uni.showToast({
-									title:'订单已支付',
-									icon:'none'
-								})
-							}else {
-								that.Cs_cancelTicket(orderNumber)
-							}
-						}
-						if(res.data.msg == '不存在该订单，请输入正确订单号'){
-							if(that.ky_currentType == '定制巴士退票'){
-								// that.csRefundTicket(orderNumber);
-							}else if(that.ky_currentType == '定制巴士支付'){
-								that.getSpecialBusPaymentInfo(orderNumber,totalPrice);
-							}
-						}else if(res.data.msg == '获取二维码尚未支付'){
-							
-						}else if(res.data.msg == '支付成功'){
+						 if(res.data.msg == '支付成功'){
 							uni.showToast({
 								title:'订单已支付',
 								icon:'none'
@@ -1192,79 +871,6 @@
 						console.log(res)
 					}
 				})
-			},
-			//--------------------------定制巴士支付成功后请求--------------------------
-			Cs_paySuccess:function(bookID){
-				var that = this;
-				uni.request({
-					url:$KyInterface.KyInterface.Cs_Confirm.Url,
-					method:$KyInterface.KyInterface.Cs_Confirm.method,
-					header:$KyInterface.KyInterface.Cs_Confirm.header,
-					data:{
-						bookID:bookID
-					},
-					success(res) {
-						console.log('支付成功后调接口',res)
-						uni.startPullDownRefresh()
-					},
-					fail(res) {
-						console.log('支付失败后调接口',res)
-					}
-				})
-			},
-			//--------------------------获取定制巴士支付参数--------------------------
-			getSpecialBusPaymentInfo:function(orderNumber,totalPrice){
-				var that = this;
-				uni.showLoading({
-					title:'加载中...'
-				})
-				var payType = $KyInterface.KyInterface.payType.payType;
-				var timer = null;
-				that.timer = timer;
-				timer = setInterval(function() {
-					uni.request({
-						url:$KyInterface.KyInterface.commonPayment.Url,
-						method:$KyInterface.KyInterface.commonPayment.method,
-						data: {
-							//订单编号
-							orderNumber: orderNumber,
-							payType:payType,
-							openId:that.ctkyOpenID,
-							billDescript:'定制巴士订单服务费',
-							goodsName:'定制巴士服务',
-							price:totalPrice,
-							// price:0.1,
-						},
-						success: (res) => {
-							uni.hideLoading();
-							if(res.data.status == true) {
-								that.paymentData = res.data.data;
-								clearInterval(timer);
-								uni.showModal({
-									content:'请尽快支付',
-									success(res) {
-										if(res.confirm) {
-											that.Cs_payment();
-										}
-									}
-								})
-							}else if(res.data.status == false) {
-								uni.hideLoading();
-								clearInterval(timer);
-								uni.showToast({
-									title: res.data.msg,
-									icon:'none'
-								})
-							}
-						},
-						fail(res) {
-							uni.hideLoading();
-							console.log('失败');
-							//回调失败，取消定时器
-							clearInterval(timer);
-						}
-					})
-				}, 3000)
 			},
 			//--------------------------获取车票支付参数--------------------------
 			getTicketPaymentInfo: function(orderNumber) {
@@ -1456,128 +1062,6 @@
 					// #endif
 				}
 			},
-			//--------------------------调起定制巴士支付--------------------------
-			Cs_payment: function() {
-				var that = this;
-				// #ifdef H5
-				uni.hideLoading()
-				WeixinJSBridge.invoke('getBrandWCPayRequest', {
-					"appId": that.paymentData.appId, //公众号名称，由商户传入
-					"timeStamp": that.paymentData.timeStamp, //时间戳
-					"nonceStr": that.paymentData.nonceStr, //随机串
-					"package": that.paymentData.package, //扩展包
-					"signType": that.paymentData.signType, //微信签名方式:MD5
-					"paySign": that.paymentData.paySign //微信签名
-				}, function(res) {
-					if (res.err_msg == "get_brand_wcpay_request:ok") {
-						alert("支付成功");
-						uni.showLoading({
-						    title: '加载中...'
-						});
-						// that.getTicketPaymentInfo_ticketIssue(that.orderNum);
-						that.Cs_paySuccess(that.orderNum);
-					} else if (res.err_msg == "get_brand_wcpay_request:cancel") {
-						// alert("您取消了支付，请重新支付");
-						uni.showToast({
-							title: '您取消了支付，请重新支付',
-							icon: 'none'
-						})
-					} else if (res.err_msg == "get_brand_wcpay_request:faile") {
-						// alert("支付失败，请重新支付");
-						uni.showToast({
-							title: '支付失败，请重新支付',
-							icon: 'none'
-						})
-			
-					} else {
-						// location.href = "/Coach/GetCoach";
-					}
-				});
-				// #endif
-			
-			
-				// #ifdef APP-PLUS
-				uni.hideLoading()
-				uni.requestPayment({
-					provider: 'wxpay',
-					orderInfo: {
-						appid: that.paymentData.appId,
-						timestamp: that.paymentData.timeStamp,
-						noncestr: that.paymentData.nonceStr,
-						package: 'Sign=WXPay',
-						sign: that.paymentData.signType,
-						partnerid: that.paymentData.PartnerId,
-						prepayid: that.paymentData.PrepayId,
-					},
-					success: function(res) {
-						uni.showModal({
-							title: '提示',
-							content: res,
-							showCancel: false
-						})
-						if (res.errCode == 0) { //成功
-							alert("支付成功");
-							uni.showLoading({
-							    title: '加载中...'
-							});
-							// that.getTicketPaymentInfo_ticketIssue(that.orderNum);
-							that.Cs_paySuccess(that.orderNum);
-						} else if (res.errCode == -1) { //错误
-							that.showToast("支付失败，请重新支付")
-						} else if (res.errCode == -2) { //用户取消
-							that.showToast("您取消了支付")
-						}
-					},
-					fail: function(ee) {
-						uni.showToast({
-							title: '拉起支付失败，请检查网络后重试',
-							icon: 'none',
-							duration: 3000
-						})
-					}
-				});
-				// #endif
-				
-				// #ifdef MP-WEIXIN
-				uni.hideLoading()
-				uni.requestPayment({
-					// provider: 'wxpay',
-					timeStamp:that.paymentData.timeStamp,
-					nonceStr:that.paymentData.nonceStr,
-					package:that.paymentData.package,
-					signType:that.paymentData.signType,
-					paySign:that.paymentData.paySign,
-					success(res) {
-						console.log(res)
-						uni.showToast({
-							title: '支付成功',
-							icon: 'none'
-						})
-						uni.showLoading({
-						    title: '加载中...'
-						});
-						// that.getTicketPaymentInfo_ticketIssue(that.orderNum);
-						that.Cs_paySuccess(that.orderNum);
-					},
-					fail(res) {
-						console.log(res)
-						if (res.errMsg == "requestPayment:fail canceled") {
-							setTimeout(function() {
-								that.showToast("支付失败，请重新支付")
-							}, 1000)
-						} else {
-							that.showToast("支付失败")
-						}
-					}
-				});
-				// #endif
-			},
-			showToast: function(msg, icon = 'none') {
-				uni.showToast({
-					title: msg,
-					icon: icon
-				})
-			},
 			//--------------------------客运成功之后重新获取车票支付参数--------------------------
 			getTicketPaymentInfo_ticketIssue: function(orderNumber) {
 				var that = this;
@@ -1617,10 +1101,6 @@
 					})
 				}, 3000)
 			},
-			//-------------------------客运二维码弹框-------------------------
-			QRCodeTap: function() {
-				this.$refs.popup.open()
-			},
 			//-------------------------客运投诉-------------------------
 			KyComplain:function(item){
 				console.log(item)
@@ -1638,231 +1118,21 @@
 				    this.rSelect.splice(this.rSelect.indexOf(e), 1); //取消
 				}
 			},
-			//-------------------------景区门票-退票-------------------------
+			//-------------------------退票-------------------------
 			refund: function() {
 				uni.showLoading({
 					title: '请求退票中...'
 				})
 				var that = this
-				if (this.exitindex == '2') {
-					//请求费率
-					// this.GetBounceChargeByOrderNumber(that.ticketOrderNumber)
-					// that.ky_currentType = '客运退票';
-					//先查询订单状态-->执行费率查询-->执行退票
 					that.refund_getTicketPaymentInfo(that.ticketOrderNumber)
-				} else if(this.exitindex == 'cs2tui'){
-					//先检测订单支付状态再执行退票操作
-					this.cs_refundStateCheck(that.csRefundInfo)
-				}else if (that.exitindex == '3') {
-					console.log('景区门票')
-					console.log(this.exitindex)
-					uni.request({
-						url: $lyfw.Interface.spt_BounceTickets.value,
-						method: $lyfw.Interface.spt_BounceTickets.method,
-						data: {
-							orderNumber: that.ticketOrderNumber,
-						},
-						header: {
-							'content-type': 'application/json'
-						},
-						success: (e) => {
-							console.log(e)
-							if(e.data.status==false){
-								uni.hideLoading()
-								uni.showToast({
-									title: '退票失败，服务器异常，请联系客服！',
-									icon: 'none',
-								})
-							}else if(e.data.status==true){
-								uni.hideLoading()
-								uni.showToast({
-									title: '退票成功',
-								})
-								this.close2()
-								this.toFinished();
-								this.selectorChange();
-							}
-							
-						},
-						fail: function() {
-							uni.showToast({
-								title: '退票失败，网络异常',
-								icon: 'none',
-							})
-							this.selectorChange();
-							uni.hideLoading()
-						}
-					})
-				}else if (this.exitindex == '5'){
-					console.log('旅游产品')
-					uni.request({
-						url: $lyfw.Interface.lyky_BounceTickets.value,
-						method: $lyfw.Interface.lyky_BounceTickets.method,
-						data: {
-							orderNumber: that.ticketOrderNumber,
-						},
-						header: {
-							'content-type': 'application/json'
-						},
-						success: (e) => {
-							console.log(e)
-							if(e.data.status==false){
-								uni.hideLoading()
-								uni.showToast({
-									title: '退票失败，服务器异常，请联系客服！',
-									icon: 'none',
-								})
-							}else if(e.data.status==true){
-								uni.hideLoading()
-								uni.showToast({
-									title: '退票成功',
-								})
-								this.close2()
-								this.toFinished();
-								this.selectorChange();
-							}
-							
-						},
-						fail: function() {
-							uni.showToast({
-								title: '退票失败，网络异常',
-								icon: 'none',
-							})
-							this.selectorChange();
-							uni.hideLoading()
-						}
-					})
-				}
 			},
-			//-------------------------景区门票-打开取消弹框-------------------------
-			// open3(e, exitindex) {
-			// 	this.ticketOrderNumber = e;
-			// 	this.exitindex = exitindex;
-			// 	this.$refs.popup3.open()
-			// },
-			//-------------------------景区门票-关闭取消弹框-------------------------
+			//-------------------------关闭取消弹框-------------------------
 			close3() {
 				this.$refs.popup3.close()
 			},
-			//-------------------------景区门票-取消-------------------------
+			//-------------------------取消-------------------------
 			cancel: function() {
-				if (this.exitindex == '3') {
-					uni.request({
-						url: $lyfw.Interface.spt_CancelTickets.value,
-						method: $lyfw.Interface.spt_CancelTickets.method,
-						data: {
-							orderNumber: this.ticketOrderNumber
-						},
-						header: {
-							'content-type': 'application/json'
-						},
-						success: (e) => {
-							// console.log(e)
-							if (e.data.msg == '订单取消成功') {
-								uni.showToast({
-									title: '订单取消成功',
-									icon: 'none'
-								})
-								this.close3();
-								this.selectorChange();
-							} else if (e.data.msg == '订单取消失败') {
-								uni.showToast({
-									title: '订单取消失败',
-									icon: 'none'
-								})
-								this.close3();
-								this.toFinished();
-							}
-						},
-						fail() {
-							uni.showToast({
-								title: '取消失败！请检查网络状态',
-								icon: 'none',
-								duration: 1500,
-							})
-						}
-					})
-				} else if (this.exitindex == '4') {
-					console.log(this.ticketOrderNumber);
-					uni.request({
-						url: $bcfw.Interface.spt_CancelTickets.value,
-						method: $bcfw.Interface.spt_CancelTickets.method,
-						data: {
-							or_number: this.ticketOrderNumber
-						},
-						header: {
-							'content-type': 'application/json'
-						},
-						success: (e) => {
-							console.log(e)
-							if (e.data.status == true) {
-								uni.showToast({
-									title: '订单取消成功',
-									icon: 'none'
-								})
-								this.close3();
-								this.toFinished();
-							} else if (e.data.status == false) {
-								uni.showToast({
-									title: '订单取消失败',
-									icon: 'none'
-								})
-								this.close3();
-								this.toFinished();
-							}
-						},
-						fail() {
-							uni.showToast({
-								title: '取消失败！请检查网络状态',
-								icon: 'none',
-								duration: 1500,
-							})
-						}
-					})
-				} else if (this.exitindex == '2') {//客运取消
-					// this.keYunCancelTicket(this.ticketOrderNumber);
-					//客运取消之前先检测当前车票状态
 					this.cancel_getTicketPaymentInfo(this.ticketOrderNumber);
-				}else if (this.exitindex == 'cs2') {//定制巴士取消
-					this.Cs_cancelStateCheck(this.ticketOrderNumber);
-				}else if (this.exitindex == '5') {
-					uni.request({
-						url: $lyfw.Interface.lyky_CancelTickets.value,
-						method: $lyfw.Interface.lyky_CancelTickets.method,
-						data: {
-							orderNumber: this.ticketOrderNumber
-						},
-						header: {
-							'content-type': 'application/json'
-						},
-						success: (e) => {
-							// console.log(e)
-							if (e.data.msg == '订单取消成功') {
-								uni.showToast({
-									title: '订单取消成功',
-									icon: 'none'
-								})
-								this.close3();
-								this.toFinished();
-								this.selectorChange();
-							} else if (e.data.msg == '订单取消失败') {
-								uni.showToast({
-									title: '订单取消失败',
-									icon: 'none'
-								})
-								this.close3();
-								this.toFinished();
-							}
-						},
-						fail() {
-							uni.showToast({
-								title: '取消失败！请检查网络状态',
-								icon: 'none',
-								duration: 1500,
-							})
-						}
-					})
-				}
 			},
 			//------------------------------------------------客运结束------------------------------------------------
 			onClickItem(e) { //tab点击事件
@@ -1890,29 +1160,29 @@
 		align-items: center;
 		/* 设置内容中心点对齐 */
 	}
-
+	
 	.u-f-jc {
 		justify-content: center;
 	}
-
+	
 	.u-f-jsb {
 		justify-content: space-between;
 		/* 设置左右两边靠边布局 */
 	}
-
+	
 	page {
 		width: 100%;
 		height: 100%;
 		background-color: #F5F5F5;
 		padding-bottom: 48upx;
 	}
-
+	
 	.pageView {
 		/* #ifdef H5 */
 		padding-bottom: 112upx;
 		/* #endif */
 	}
-
+	
 	.tab {
 		position: sticky;
 		top: 0upx;
@@ -1920,9 +1190,9 @@
 		padding: 16upx 0;
 		height: 108upx;
 		z-index: 99999;
-
+	
 	}
-
+	
 	// 购买时间
 	.pd_view {
 		width: 400upx;
@@ -1935,7 +1205,7 @@
 		font-size: 25upx;
 		color: #FFFFFF;
 	}
-
+	
 	//门票列表内容
 	.at_view {
 		margin: 0rpx 28rpx;
@@ -1944,11 +1214,11 @@
 		border-radius: 12rpx;
 		padding: 40rpx 32upx;
 		padding-bottom: 120upx;
-
+	
 		.at_titleView {
 			position: relative;
 			display: flex;
-
+	
 			.at_icon {
 				position: relative;
 				top: 6upx;
@@ -1963,8 +1233,6 @@
 					
 				}
 			}
-			
-
 			.at_status {
 				position: absolute;
 				right: 0;
@@ -1972,13 +1240,13 @@
 				top: 6upx;
 			}
 		}
-
+	
 		//内容区
 		.at_contentView {
 			position: relative;
 			margin: 24upx 0;
 			margin-left: 60upx;
-
+	
 			.at_contentFrame {
 				padding: 8upx 20upx;
 				margin-right: 16upx;
@@ -1988,14 +1256,14 @@
 				border-radius: 8upx;
 				border: 1upx solid #3AC596;
 			}
-
+	
 			.at_contentPrice {
 				position: absolute;
 				right: 0;
 				font-size: 30upx;
 				color: #f85e52;
 			}
-
+	
 			.at_contentText {
 				display: block;
 				margin-top: 24upx;
@@ -2003,19 +1271,19 @@
 				color: #888;
 			}
 		}
-
+	
 		//按钮区
 		.at_buttonView {
 			display: flex;
 			float: right;
-
+	
 			// 按钮
 			.at_button {
 				padding: 18upx 32upx;
 				font-size: 30upx;
 				border-radius: 40upx;
 			}
-
+	
 			// 详情 - 实心蓝
 			.at_btDetails {
 				background: #3EABFC;
@@ -2023,21 +1291,13 @@
 				color: #FFFFFF;
 				
 			}
-
-			//二维码/再次购买 - 实心橙
-			.at_btQrCode {
-				background: #FF6600;
-				border: 1upx solid #FF6600;
-				color: #FFFFFF;
-			}
-
 			//删除/退票 - 空心灰
 			.at_btDelete {
 				border: 1upx solid #888;
 				color: #888;
 				margin-right: 24upx;
 			}
-
+	
 			//去支付 - 实心绿
 			.at_btToPay {
 				background: #02c501;
@@ -2047,32 +1307,26 @@
 			}
 		}
 	}
-		//二维码
-		.QRCode {
-			background-color: #06B4FD;
-			color: #06B4FD;
-		}
-
 		// 退款弹框
 		.box_refundView {
 			margin: 24upx 0upx;
-
+	
 			.box_refundText {
 				display: block;
 				margin-top: 24upx;
 				font-size: 28upx;
 				color: #333;
 			}
-
+	
 			//确认退票
 			.box_refundContentView {
 				margin-top: 64upx;
 				text-align: center;
-
+	
 				.box_refundContentTitle {
 					font-weight: bold;
 				}
-
+	
 				.box_refundContentText {
 					margin-top: 24upx;
 					display: block;
@@ -2080,11 +1334,11 @@
 					color: #888;
 				}
 			}
-
+	
 			.box_refundButtonView {
 				text-align: center;
 				margin: 56upx 0;
-
+	
 				//确认按钮
 				.box_refundButton {
 					color: #FFFFFF;
@@ -2094,31 +1348,4 @@
 				}
 			}
 		}
-		//须知弹框
-		.box_Vlew {
-			padding: 16upx 40upx;
-			padding-bottom: 24upx;
-			background: #FFFFFF;
-		
-			.box_titleView {
-				margin: 24upx 0;
-		
-				//弹框标题
-				.box_title {
-					position: relative;
-					font-size: 38upx;
-					font-weight: bold;
-					top: 8upx;
-					margin-bottom: 16upx;
-				}
-		
-				//弹框关闭按钮
-				.box_icon {
-					margin-top: 8upx;
-					float: right;
-					color: #333;
-					font-size: 32upx;
-				}
-			}
-			}
 </style>
