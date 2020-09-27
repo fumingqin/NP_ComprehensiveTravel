@@ -395,6 +395,8 @@
 						that.startStaionIndex = res.data.startStationIndex;
 						that.endStation = res.data.endStation;
 						that.endStationIndex = res.data.endStationIndex;
+						console.log(that.startStation)
+						console.log(that.startStaionIndex)
 						if (that.startStation == '') {
 							that.startStation = "请选择上车点"
 						}

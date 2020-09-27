@@ -21,7 +21,7 @@
 							</view>
 							<view class="at_contentView" style="display: flex;">
 								<view class="at_contentFrame">扫码上车</view>
-								<view class="at_contentFrame" v-if="item.insured=='ture'">上门接送</view>
+								<view class="at_contentFrame" v-if="item.IsPickUp=='ture'">上门接送</view>
 								<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
@@ -66,7 +66,7 @@
 							<view class="at_contentView" style="display: flex;">
 								
 								<view class="at_contentFrame">扫码上车</view>
-								<view class="at_contentFrame">线上购票</view>
+								<view class="at_contentFrame" v-if="item.IsPickUp=='ture'">上门接送</view>
 								<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
@@ -104,7 +104,7 @@
 							</view>
 							<view class="at_contentView" style="display: flex;">
 									<view class="at_contentFrame">扫码上车</view>
-									<view class="at_contentFrame">线上购票</view>
+									<view class="at_contentFrame" v-if="item.IsPickUp=='ture'">上门接送</view>
 									<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
@@ -146,7 +146,7 @@
 							<view class="at_contentView" style="display: flex;">
 								
 									<view class="at_contentFrame">扫码上车</view>
-									<view class="at_contentFrame">线上购票</view>
+									<view class="at_contentFrame" v-if="item.IsPickUp=='ture'">上门接送</view>
 									<view class="at_contentFrame">{{item.carType}}</view>
 								
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
@@ -185,7 +185,7 @@
 							<view class="at_contentView" style="display: flex;">
 								
 									<view class="at_contentFrame">扫码上车</view>
-									<view class="at_contentFrame">线上购票</view>
+									<view class="at_contentFrame" v-if="item.IsPickUp=='ture'">上门接送</view>
 									<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
@@ -295,7 +295,7 @@
 			var that = this;
 			//获取客运弹框图片
 			that.getPicture();
-			//读取用户ID
+			// 读取用户ID
 			uni.getStorage({
 				key: 'userInfo',
 				success: function(data) {
@@ -431,13 +431,14 @@
 			//-------------------------请求客运订单数据-------------------------
 			getKeYunOrderInfo: function() {
 				var that = this;
+				console.log(that.userInfo.userId)
 				uni.request({
 					url: $KyInterface.KyInterface.searchOrder2.Url, 
 					method: $KyInterface.KyInterface.searchOrder2.method,
 					data: {
 						clientID: that.userInfo.userId,
-						AppSystemName:that.$oSit.Interface.address.appName,
-						AppSystemName:'交通在线小程序',
+						AppSystemName:that.$oSit.Interface.system.appName,
+						// AppSystemName:'交通在线小程序',
 					},
 					success: (res) => {
 						uni.stopPullDownRefresh();
@@ -512,8 +513,22 @@
 			//-------------------------跳转到详情页-------------------------
 			keYunDetail: function(res) {
 				console.log(res)
-				uni.navigateTo({
-					url: '../../pages_ZXGP/pages/ZXGP/TraditionSpecial/Order/orderDetail?orderInfo=' + JSON.stringify(res)
+			uni.setStorage({
+					key:'keYunDetailinfo',
+					data:res,
+					success: (res) => {
+						console.log(res)
+						uni.navigateTo({
+							url: '/pages_ZXGP/pages/ZXGP/TraditionSpecial/Order/orderDetail'
+						});
+					},
+					fail:function(res){
+						console.log(res)
+						uni.showToast({
+							title:'网络异常',
+							icon:'none'
+						})
+					},
 				})
 			},
 			// -------------------------客运查看车辆位置-------------------------
@@ -641,6 +656,7 @@
 									title: respones.data.msg
 								})
 								uni.startPullDownRefresh();
+								this.selectorChange();
 							}
 						} else if (respones.data.status == false){
 							uni.hideLoading()
@@ -654,6 +670,7 @@
 									title: '退票失败',
 									icon: 'none'
 								})
+								this.selectorChange();
 							}
 							this.$refs.popup2.close()
 							uni.startPullDownRefresh();
@@ -1197,97 +1214,6 @@
 				top: 6upx;
 			}
 		}
-		//须知弹框
-		.box_Vlew {
-			padding: 16upx 40upx;
-			padding-bottom: 24upx;
-			background: #FFFFFF;
-		
-			.box_titleView {
-				margin: 24upx 0;
-		
-				//弹框标题
-				.box_title {
-					position: relative;
-					font-size: 38upx;
-					font-weight: bold;
-					top: 8upx;
-					margin-bottom: 16upx;
-				}
-		
-				//弹框关闭按钮
-				.box_icon {
-					margin-top: 8upx;
-					float: right;
-					color: #333;
-					font-size: 32upx;
-				}
-			}
-		
-			// 二维码弹框
-			.box_qrCodeView {
-				margin: 24upx 0upx;
-				text-align: center;
-		
-				.box_qrCodeImage {
-					margin-top: 24upx;
-					width: 320upx;
-					height: 320upx;
-				}
-		
-				.box_qrCodeTextView {
-					text-align: center;
-		
-					.box_qrCodeText {
-						margin-top: 16upx;
-						display: block;
-						font-size: 30upx;
-					}
-				}
-			}
-		
-			// 退款弹框
-			.box_refundView {
-				margin: 24upx 0upx;
-		
-				.box_refundText {
-					display: block;
-					margin-top: 24upx;
-					font-size: 28upx;
-					color: #333;
-				}
-		
-				//确认退票
-				.box_refundContentView {
-					margin-top: 64upx;
-					text-align: center;
-		
-					.box_refundContentTitle {
-						font-weight: bold;
-					}
-		
-					.box_refundContentText {
-						margin-top: 24upx;
-						display: block;
-						font-size: 28upx;
-						color: #888;
-					}
-				}
-		
-				.box_refundButtonView {
-					text-align: center;
-					margin: 56upx 0;
-		
-					//确认按钮
-					.box_refundButton {
-						color: #FFFFFF;
-						border-radius: 56upx;
-						background: #FF6600;
-						padding: 24upx 160upx;
-					}
-				}
-			}
-		}
 	
 		//内容区
 		.at_contentView {
@@ -1355,6 +1281,55 @@
 			}
 		}
 	}
+	//须知弹框
+	.box_Vlew {
+		padding: 16upx 40upx;
+		padding-bottom: 24upx;
+		background: #FFFFFF;
+	
+		.box_titleView {
+			margin: 24upx 0;
+	
+			//弹框标题
+			.box_title {
+				position: relative;
+				font-size: 38upx;
+				font-weight: bold;
+				top: 8upx;
+				margin-bottom: 16upx;
+			}
+	
+			//弹框关闭按钮
+			.box_icon {
+				margin-top: 8upx;
+				float: right;
+				color: #333;
+				font-size: 32upx;
+			}
+		}
+	
+		// 二维码弹框
+		.box_qrCodeView {
+			margin: 24upx 0upx;
+			text-align: center;
+	
+			.box_qrCodeImage {
+				margin-top: 24upx;
+				width: 320upx;
+				height: 320upx;
+			}
+	
+			.box_qrCodeTextView {
+				text-align: center;
+	
+				.box_qrCodeText {
+					margin-top: 16upx;
+					display: block;
+					font-size: 30upx;
+				}
+			}
+		}
+	
 		// 退款弹框
 		.box_refundView {
 			margin: 24upx 0upx;
@@ -1396,4 +1371,6 @@
 				}
 			}
 		}
+	}
+
 </style>
