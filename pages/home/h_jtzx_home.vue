@@ -155,7 +155,9 @@
 					method:this.$home.KyInterface.GetRotationChart.method,
 					success:(res)=>{
 						console.log('轮播区',res)
-						this.rotationChart = res.data.data;
+						this.rotationChart = res.data.data.filter(item => {
+							return item.Type == '首页轮播图';
+						})
 						// console.log(this.rotationChart)
 					},
 					fail:function(){

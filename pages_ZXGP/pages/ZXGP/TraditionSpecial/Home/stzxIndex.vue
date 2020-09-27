@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-image width="100%" height="400rpx" :src="src" mode="aspectFill">
+		<u-image width="100%" height="400rpx" :src="background[0].ImageURL" mode="aspectFill">
 			<u-loading slot="loading"></u-loading>
 			<view slot="error" style="font-size: 24rpx;">加载失败</view>
 		</u-image>
@@ -73,6 +73,9 @@
 				state: '邵泰专线', //状态值
 				isNormal:0,//判断是普通购票还是定制班车默认是普通购票
 				historyLines2: [],
+				background:[{
+					ImageURL: '',
+				}],
 			}
 		},
 
@@ -97,9 +100,32 @@
 			
 			//获取当前日期
 			that.getTodayDate();
+			that.loadData();
 		},
 
 		methods: {
+			//加载数据
+			loadData : function(){
+				uni.request({
+					url: this.$home.KyInterface.GetRotationChart.Url,
+					method:this.$home.KyInterface.GetRotationChart.method,
+					success:(res)=>{
+						console.log('轮播区',res)
+						this.rotationChart = res.data.data;
+						this.background = res.data.data.filter(item => {
+							return item.Type == '客运首页';
+						})
+						console.log('轮播区',this.background[0].ImageURL)
+					},
+					fail:function(){
+						uni.showToast({
+							title:'首页轮播图网络加载异常',
+							icon:'none'
+						})
+					}
+				})
+			},
+			
 			//---------------------------------点击起点站---------------------------------
 			setOutStationTap() {
 				var that = this;

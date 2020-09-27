@@ -4,7 +4,7 @@
 		<u-tabs :list="headList" :is-scroll="false" :current="headCurrent" @change="headChange" height="104"></u-tabs>
 		
 		<!-- 资讯列表 -->
-		<view class="infor_view"  v-for="(item,index) in informationList" :key="index">
+		<view class="infor_view"  v-for="(item,index) in informationList" :key="index" @click="detailsClick(item.AID)">
 			<view class="view_titleView">
 				<text class="tv_view">
 					<text class="tv_label">{{labelVariety(item.Type)}}</text>
@@ -14,7 +14,7 @@
 			</view>
 			
 			<view class="view_contentView">
-				<text>中国社电</text>
+				<text>邵泰官方</text>
 				<text class="cont_text">{{item.ViewCount}}人看过</text>
 				<text class="cont_text">{{informationDate(item.CreateTime)}}</text>
 				<u-icon class="cont_icon" name="more-dot-fill"></u-icon>
@@ -58,7 +58,7 @@
 					url: this.$home.KyInterface.GetNews.Url,
 					method:this.$home.KyInterface.GetNews.method,
 					success:(res)=>{
-						console.log(e)
+						console.log(res)
 						if(e == 0){
 							this.informationList = res.data.data.filter(item =>{
 								return item.Type == '通知公告';
@@ -77,11 +77,17 @@
 								return item.Type !== '通知公告' && item.Type !== '车站新讯' && item.Type !== '每日南平';
 							})
 						}
-						console.log(this.informationList.length)
+						// console.log(this.informationList.length)
 						this.listStatusIndex = this.informationList.length;
 						
 						
 					}
+				})
+			},
+			
+			detailsClick:function(e){
+				uni.navigateTo({
+					url:'infor_details?AID=' +e
 				})
 			},
 			
