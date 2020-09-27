@@ -49,8 +49,8 @@
 						<view style="display: flex;">接送上车点：<text class="detailInfo2">{{ispickupData.PickUpAddress}}</text></view>
 						<view style="display: flex;">接送状态：<text class="detailInfo2">{{getState(ispickupData.State)}}</text></view>
 						<view style="display: flex;">车辆状态：<text class="detailInfo2">{{getIsSend(ispickupData.IsSend)}}</text></view>
-						<view style="display: flex;">司机姓名：<text class="detailInfo2">{{ispickupData.DriverName}}</text></view>
-						<view style="display: flex;">司机手机号：<text class="detailInfo2">{{ispickupData.DriverPhone}}</text></view>
+						<view style="display: flex;">司机姓名：<text class="detailInfo2">{{getName_Phone(ispickupData.DriverName)}}</text></view>
+						<view style="display: flex;">司机手机号：<text class="detailInfo2">{{getName_Phone(ispickupData.DriverPhone)}}</text></view>
 					</view>
 				</view>
 			</view>
@@ -338,6 +338,14 @@
 					return '已上车'
 				}
 			},
+			getName_Phone:function(e){
+				console.log(e)
+				if(e == null){
+					return '暂未指派司机'
+				}else{
+					return e
+				}
+			}
 		}
 	}
 </script>
