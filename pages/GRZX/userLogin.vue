@@ -616,7 +616,7 @@
 							that.textCode = "获取验证码";
 							clearInterval(timer);
 							uni.showToast({
-								title: "今日验证码发送次数已上限!",
+								title: "验证码获取失败!",
 								icon: "none"
 							})
 						} else { //成功发送验证码

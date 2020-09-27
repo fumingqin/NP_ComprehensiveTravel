@@ -58,11 +58,11 @@
 						<text class="MP_total">¥{{orderInfo.insurePrice}}</text>
 					</view>
 					
-					<!-- 保险 -->
+					<!-- 接送费用 -->
 					<view class="MP_cost" v-if="ticketInfo.pickUpStatus == true ">
 						<text>上门接送服务</text>
 						<text class="MP_number">×{{ticketNum}}</text>
-						<text class="MP_total">¥{{ticketInfo.pickUpPersonPrice}}</text>
+						<text class="MP_total">¥{{ticketInfo.PickUpPrice}}</text>
 					</view>
 					
 					<!-- 优惠券 -->
@@ -392,6 +392,7 @@
 				console.log('线路名称： ',that.orderInfo.lineName)
 				console.log('是否上门接送： ',that.ticketInfo.pickUpStatus)
 				console.log('接送点： ',that.ticketInfo.PickUpAddress)
+				console.log('接送价格： ',that.ticketInfo.PickUpPrice)
 				console.log('接送点纬度： ',that.ticketInfo.pickUpLatitude)
 				console.log('接送点经度： ',that.ticketInfo.pickUpLongitude)
 				console.log('始发站纬度： ',that.ticketInfo.StartStaionLatitude)
@@ -426,6 +427,7 @@
 						setOutTime: setTime, //发车时间
 						
 						IsPickUp : that.ticketInfo.pickUpStatus,//是否上门接送
+						PickUpPrice : that.ticketInfo.PickUpPrice,//上门接送费用
 						PickUpAddress : that.ticketInfo.PickUpAddress, //接送点
 						PickUpLatitude : that.ticketInfo.pickUpLatitude,//接送点纬度
 						PickUpLongitude : that.ticketInfo.pickUpLongitude,//接送点经度

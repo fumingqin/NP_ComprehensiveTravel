@@ -9,7 +9,7 @@
 
 			<!-- 全部 -->
 			<view v-if="current === 0" style="margin-top: 20rpx;">
-				<view v-for="(item,index) in info" :key="index">
+				<view v-for="(item,index) in info" :key="index"> 
 					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						
@@ -21,7 +21,7 @@
 							</view>
 							<view class="at_contentView" style="display: flex;">
 								<view class="at_contentFrame">扫码上车</view>
-								<view class="at_contentFrame">线上购票</view>
+								<view class="at_contentFrame" v-if="item.insured=='ture'">上门接送</view>
 								<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
@@ -38,7 +38,7 @@
 								<!-- #endif -->
 								<view class="at_button at_btDelete" v-if="item.state=='7'||item.state=='等待确认'" @tap="open3(item.orderNumber)">取消</view>
 								<view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber)">退票</view>
-								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
+								<view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='已取票'" @click="KyComplain(item)">投诉</view>
 								<view class="at_button at_btToPay" v-if="item.state=='7'" @tap="keYunPay(item,item.carType)">去支付</view>
 								<view class="at_button at_btToPay" v-if="item.state=='尚未支付'||item.state=='等待确认'" @tap="keYunPay(item,item.carType)">去支付</view>	
 								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
@@ -122,7 +122,6 @@
 								<view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber,'2')">退票</view>
 								 <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view>
 								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
-								 <view class="at_button at_btDelete" v-if="item.carType=='普通班车' || item.carType=='定制班车'" @tap="endorse(item)">改签</view>
 							</view>
 						</view>
 					</view>
@@ -160,7 +159,6 @@
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>
 							<view class="at_buttonView">
-								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
 								<view class="at_button at_btDelete" v-if="item.carType=='普通班车' || item.carType=='定制班车'" @tap="open3(item.orderNumber)">取消</view>
 								<view class="at_button at_btToPay" @tap="keYunPay(item,item.carType)">去支付</view>
 								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
@@ -199,7 +197,6 @@
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
 							</view>
 							<view class="at_buttonView">
-								<!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
 								<view class="at_button at_btDetails" @tap="keYunDetail(item)">详情</view>
 							</view>
 						</view>
@@ -514,6 +511,7 @@
 			},
 			//-------------------------跳转到详情页-------------------------
 			keYunDetail: function(res) {
+				console.log(res)
 				uni.navigateTo({
 					url: '../../pages_ZXGP/pages/ZXGP/TraditionSpecial/Order/orderDetail?orderInfo=' + JSON.stringify(res)
 				})
@@ -1197,6 +1195,97 @@
 				right: 0;
 				font-size: 30upx;
 				top: 6upx;
+			}
+		}
+		//须知弹框
+		.box_Vlew {
+			padding: 16upx 40upx;
+			padding-bottom: 24upx;
+			background: #FFFFFF;
+		
+			.box_titleView {
+				margin: 24upx 0;
+		
+				//弹框标题
+				.box_title {
+					position: relative;
+					font-size: 38upx;
+					font-weight: bold;
+					top: 8upx;
+					margin-bottom: 16upx;
+				}
+		
+				//弹框关闭按钮
+				.box_icon {
+					margin-top: 8upx;
+					float: right;
+					color: #333;
+					font-size: 32upx;
+				}
+			}
+		
+			// 二维码弹框
+			.box_qrCodeView {
+				margin: 24upx 0upx;
+				text-align: center;
+		
+				.box_qrCodeImage {
+					margin-top: 24upx;
+					width: 320upx;
+					height: 320upx;
+				}
+		
+				.box_qrCodeTextView {
+					text-align: center;
+		
+					.box_qrCodeText {
+						margin-top: 16upx;
+						display: block;
+						font-size: 30upx;
+					}
+				}
+			}
+		
+			// 退款弹框
+			.box_refundView {
+				margin: 24upx 0upx;
+		
+				.box_refundText {
+					display: block;
+					margin-top: 24upx;
+					font-size: 28upx;
+					color: #333;
+				}
+		
+				//确认退票
+				.box_refundContentView {
+					margin-top: 64upx;
+					text-align: center;
+		
+					.box_refundContentTitle {
+						font-weight: bold;
+					}
+		
+					.box_refundContentText {
+						margin-top: 24upx;
+						display: block;
+						font-size: 28upx;
+						color: #888;
+					}
+				}
+		
+				.box_refundButtonView {
+					text-align: center;
+					margin: 56upx 0;
+		
+					//确认按钮
+					.box_refundButton {
+						color: #FFFFFF;
+						border-radius: 56upx;
+						background: #FF6600;
+						padding: 24upx 160upx;
+					}
+				}
 			}
 		}
 	

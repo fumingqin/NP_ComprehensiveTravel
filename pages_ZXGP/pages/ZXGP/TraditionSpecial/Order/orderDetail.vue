@@ -47,7 +47,7 @@
 					<!-- 标题 -->
 					<view class="title">
 						<view style="display: flex;">接送上车点：<text class="detailInfo2">{{ispickupData.PickUpAddress}}</text></view>
-						<view style="display: flex;">接送状态：<text class="detailInfo2">{{getState(ispickupData.PickUpAddress)}}</text></view>
+						<view style="display: flex;">接送状态：<text class="detailInfo2">{{getState(ispickupData.State)}}</text></view>
 						<view style="display: flex;">车辆状态：<text class="detailInfo2">{{getIsSend(ispickupData.IsSend)}}</text></view>
 						<view style="display: flex;">司机姓名：<text class="detailInfo2">{{ispickupData.DriverName}}</text></view>
 						<view style="display: flex;">司机手机号：<text class="detailInfo2">{{ispickupData.DriverPhone}}</text></view>
