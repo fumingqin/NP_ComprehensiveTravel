@@ -175,7 +175,6 @@
 						<view class="boxView">
 							<view class="titleView">
 								<text class="Nb_text1">用户须知</text>
-								<text class="Nb_text2 jdticon icon-fork " @click="close(2)"></text>
 							</view>
 							<scroll-view class="noticeBox" scroll-y="ture">
 								<rich-text class="Nb_text4" :nodes="way"></rich-text>
@@ -209,6 +208,18 @@
 			</view>
 			<view @tap="reserveTap" class="orderReserve" :class="{tapColor:totalPrice !== 0}">立即预定</view>
 		</view>
+		
+		<!-- 旅客须知 -->
+		<u-popup v-model="notice_popup" mode="bottom">
+			<view class="boxView">
+				<view class="titleView">
+					<text class="Nb_text1">用户须知</text>
+				</view>
+				<scroll-view class="noticeBox" scroll-y="ture">
+					<rich-text class="Nb_text4" :nodes="way"></rich-text>
+				</scroll-view>
+			</view>
+		</u-popup>
 
 		<!-- 查看须知popup -->
 		<popup ref="popup3" type="center">
@@ -284,8 +295,13 @@
 				pickUp_Longitude : 0 , //接送点经度
 				StartStaion_Latitude : 0,//始发站点纬度
 				StartStaion_Longitude : 0,//始发站经度
+				PickUpCenter : '',//中心经纬度地名
+				PickUpCenterLat : 0,//中心经度
+				PickUpCenterLon : 0,//中心纬度
+				PickUpRange : 0,//半径范围
 				
 				pickUp_popup : false, //弹出服务内容
+				notice_popup : false, //弹出服务内容
 			}
 		},
 
@@ -424,9 +440,17 @@
 							this.pickUp_Price  = res.data.data.Price;
 							this.pickUp_Status = false;
 							this.pickUp_Address = '';
+							this.PickUpCenter = res.data.data.PickUpCenter;
+							this.PickUpCenterLat = res.data.data.PickUpCenterLat;
+							this.PickUpCenterLon =  res.data.data.PickUpCenterLon;
+							this.PickUpRange =  res.data.data.PickUpRange;
 						}else{
 							this.pickUp_Display  = res.data.data.IsPickUp;
 							this.pickUp_Price  = res.data.data.Price;
+							this.PickUpCenter = res.data.data.PickUpCenter;
+							this.PickUpCenterLat = res.data.data.PickUpCenterLat;
+							this.PickUpCenterLon =  res.data.data.PickUpCenterLon;
+							this.PickUpRange =  res.data.data.PickUpRange;
 						}
 						
 						
@@ -511,13 +535,39 @@
 						console.log('选择后的上车点数据',res)
 						if(res.name == ''){
 							uni.showToast({
-								title:'请确认相关上车点',
+								title:'请选择并确认相关上车点',
 								icon:'none'
 							})
 						}else{
-							this.pickUp_Address = res.name;  //选择的地名
-							this.pickUp_Latitude = res.latitude; //选择的纬度
-							this.pickUp_Longitude = res.longitude  //选择的经度
+							console.log(res.latitude)
+							console.log(res.longitude)
+							console.log(this.PickUpCenterLat)
+							console.log(this.PickUpCenterLon)
+							var a = this.$ky_cpdg.mathLonLatToDistance(res.latitude,res.longitude,this.PickUpCenterLat,this.PickUpCenterLon)
+							console.log(a)
+							if(a <= this.PickUpRange){
+								this.pickUp_Address = res.name;  //选择的地名
+								this.pickUp_Latitude = res.latitude; //选择的纬度
+								this.pickUp_Longitude = res.longitude  //选择的经度
+							}else{
+								uni.showModal({
+									title:'您选择的接送点不在范围内',
+									content:'请选择' +'~' +this.PickUpCenter +'~' +'附近，' +this.PickUpRange +'米范围内的正常道路接送点',
+									confirmText:'重选',
+									confirmColor:'#007AFF',
+									success:(res)=>{
+										// console.log(res)
+										if(res.confirm == true){
+											this.pickUpAddress();
+										}else{
+											
+										}
+									},
+								})
+							}
+							
+							
+							
 						}
 						
 					}
@@ -526,8 +576,8 @@
 			},
 			
 			//-------------------------------查看须知-----------------------------
-			checkAttention() {
-				this.$refs.popup2.open()
+			checkAttention:function() {
+				this.notice_popup = true;
 			},
 			close(e) {
 				this.$refs.popup2.close()
@@ -778,7 +828,7 @@
 					getOnPoint: that.startStation, //起点
 					getOffPoint: that.endStation, //终点
 					pickUpStatus : that.pickUp_Status, //是否上门服务
-					pickUpPersonPrice : that.pickUpPersonPrice, //接送价格
+					PickUpPrice : that.pickUpPersonPrice, //接送价格
 					PickUpAddress : that.pickUp_Address, //接送上车点
 					pickUpLatitude : that.pickUp_Latitude, //接送点纬度
 					pickUpLongitude :that.pickUp_Longitude, //接送点经度
