@@ -511,6 +511,7 @@
 			},
 			//-------------------------跳转到详情页-------------------------
 			keYunDetail: function(res) {
+				console.log(res)
 				uni.navigateTo({
 					url: '../../pages_ZXGP/pages/ZXGP/TraditionSpecial/Order/orderDetail?orderInfo=' + JSON.stringify(res)
 				})
