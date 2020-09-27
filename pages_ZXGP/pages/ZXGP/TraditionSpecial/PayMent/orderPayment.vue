@@ -58,11 +58,11 @@
 						<text class="MP_total">¥{{orderInfo.insurePrice}}</text>
 					</view>
 					
-					<!-- 保险 -->
+					<!-- 接送费用 -->
 					<view class="MP_cost" v-if="ticketInfo.pickUpStatus == true ">
 						<text>上门接送服务</text>
 						<text class="MP_number">×{{ticketNum}}</text>
-						<text class="MP_total">¥{{ticketInfo.pickUpPersonPrice}}</text>
+						<text class="MP_total">¥{{ticketInfo.PickUpPrice}}</text>
 					</view>
 					
 					<!-- 优惠券 -->
