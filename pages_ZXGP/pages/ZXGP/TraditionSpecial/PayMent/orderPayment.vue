@@ -365,7 +365,7 @@
 				    title: '正在下单...'
 				});
 				console.log('----------------接下来是下单的请求参数-------------------')
-				console.log('班车类型： ',that.specialStartStation)
+				console.log('班车类型： ',that.tickettype)
 				console.log('公司代码： ',companyCode)
 				console.log('用户ID： ',that.userInfo.userId)
 				console.log('用户名： ',that.userInfo.nickname)
@@ -404,7 +404,7 @@
 					header:this.$ky_cpdg.KyInterface.Ky_PaymentUrl.header,
 					
 					data: {
-						carType: that.orderInfo.shuttleType, //班车类型
+						carType: that.tickettype, //班车类型
 						companyCode: companyCode, //公司代码
 						clientID: that.userInfo.userId, //用户ID
 						clientName: that.userInfo.nickname, //用户名

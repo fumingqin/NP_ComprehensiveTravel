@@ -77,8 +77,8 @@
 				QQ: '', 		//qq客服
 				nickname: '', 	//昵称
 				port: '', 		//头像
-				advert: 'http://36.250.234.10:60032/UpLoadImages/广告/advert.png', 	//广告
-				// advert:'../../pages_GRZX/static/GRZX/advert.png',
+				// advert: 'https://appdl.xmjdt.cn:18443/UpLoadImages/广告/advert.png', 	//广告
+				advert:'',
 				userFeedbackHidden: true,  //是否隐藏弹框
 				focusType: false, 		   //是否获取input焦点
 				
@@ -96,7 +96,7 @@
 		onLoad() {	
 			
 			//加载广告图片
-			// this.loadImg();
+			this.loadImg();
 			
 			//加载服务功能模块
 			this.loadServiceList();
@@ -109,7 +109,8 @@
 			// ---------------------------加载图片----------------------------
 			loadImg() {
 				var that = this;
-				that.$ChangeImage.GetImage("南平综合出行","新广告").then(function(data) {
+				that.$ChangeImage.GetImage("个人中心","广告").then(function(data) {
+					console.log(data,"111");
 					that.advert = data;
 				});
 			},

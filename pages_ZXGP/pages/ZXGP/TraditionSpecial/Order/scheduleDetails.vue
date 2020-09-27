@@ -395,6 +395,8 @@
 						that.startStaionIndex = res.data.startStationIndex;
 						that.endStation = res.data.endStation;
 						that.endStationIndex = res.data.endStationIndex;
+						console.log(that.startStation)
+						console.log(that.startStaionIndex)
 						if (that.startStation == '') {
 							that.startStation = "请选择上车点"
 						}
@@ -814,10 +816,6 @@
 				//计算价格
 				that.calculateTotalPrice();
 				//请求成功之后跳转到支付页面,传是否选择保险1:选择 0:未选择
-				console.log(that.startStation)
-				console.log(that.endStation)
-				console.log(that.pickUp_Latitude)
-				console.log(that.pickUp_Longitude)
 				if(that.pickUp_Status == false){
 					that.pickUp_Address = ''
 				}

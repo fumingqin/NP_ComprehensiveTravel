@@ -18,7 +18,7 @@
 			<mx-date-picker :show="showPicker" :type="type" :value="value" :show-tips="true" :begin-text="'入住'" :end-text="'离店'"
 			 :show-seconds="true" @confirm="onSelected" @cancel="onSelected" />
 		</view>
-		
+
 		<view v-if="departureData.length == 0 " style="margin-top: 400upx;">
 			<u-empty text="今天没有班次哦~" mode="list"></u-empty>
 		</view>
@@ -26,7 +26,7 @@
 		<!-- 车票内容部分 -->
 		<view class="ctky_View" v-for="(item,index) in allTicketsList" :key="index" @click="ticketDetail(allTicketsList[index])">
 			<view class="ctky_View_Left">
-				
+
 				<!-- 顶部车票类型+发车时间 -->
 				<view class="ctky_View_Left_content">
 					<view class="markType" style="border:#1EA2FF solid 1px;color:#1EA2FF;" v-if="item.shuttleType == '普通班车' && isFlowTickets(item) == '普通'">普通班车</view>
@@ -35,10 +35,10 @@
 					<view class="markType" style="border:#1EA2FF solid 1px;color:#1EA2FF;" v-if="item.shuttleType == '普通班车' && isFlowTickets(item) == '流水'">流水</view>
 					<view class="markTime">{{turnDate(item.setTime)}}</view>
 				</view>
-				
+
 				<!-- 路线 -->
 				<view class="ctky_View_Left_Route">线路:{{item.lineName}}</view>
-				
+
 				<!-- 上车点 -->
 				<view class="ctky_View_Left_GetOnTheBus">
 					<view class="getOnTheBus">
@@ -50,7 +50,7 @@
 					SourceHanSansSC-Regular; color: #FC4646;">儿童票￥{{item.halfTicket}}</view> -->
 					<view class="Price" v-if="item.shuttleType == '定制巴士'">价格￥{{item.PriceRange}}</view>
 				</view>
-				
+
 				<!-- 下车点 -->
 				<view class="ctky_View_Left_DropOffPoint">
 					<view class="dropOffPoint">
@@ -59,7 +59,7 @@
 					</view>
 					<view class="remainingTickets">余{{item.remainingVotes}}张</view>
 				</view>
-				
+
 				<!-- 班车详细信息 -->
 				<view class="ctky_View_Left_detailedInformation" v-if="item.shuttleType == '普通班车'">{{item.carType}}/约{{(item.duration.slice(0,-2))}}分钟/{{item.planScheduleCode}}</view>
 				<view class="ctky_View_Left_detailedInformation" v-if="item.shuttleType == '定制班车'">{{item.carType}}/约{{(item.duration.slice(0,-2))}}分钟/{{item.planScheduleCode}}</view>
@@ -73,6 +73,9 @@
 					</view>
 				</view>
 			</view>
+			
+			<!--引用组件-->
+			<!-- <u-skeleton bg-color="rgb(250, 250, 250)" :loading="loading" :animation="animation" :el-color="elColor" :border-radius="borderRadius"></u-skeleton> -->
 		</view>
 	</view>
 </template>
@@ -105,6 +108,10 @@
 				endorescompanyCode: '',
 				scheduleDetailNum: '', //班次
 				allTicketsList: [], //所有的班次信息（客运+定制巴士）
+				// loading: true, // 是否显示骨架屏组件
+				// animation: false,
+				// elColor: '#e5e5e5',
+				// borderRadius: 10,
 			}
 		},
 		onLoad(param) {
@@ -112,60 +119,44 @@
 				title: '查询班次中...',
 				icon: 'none'
 			})
+			// this.getData();
 			var that = this;
-			if (param.isEndores) { //当前是改签
-				that.isEndores = param.isEndores;
-				var array = JSON.parse(param.orderInfo);
-				that.startStation = array.startSiteName;
-				that.endStation = array.endSiteName;
-				that.endoresOrderNum = array.orderNumber;
-				that.endorescompanyCode = array.companyCode;
-				var dateArray = array.setOutTime.split(' ');
-				that.endoresDate = dateArray[0];
-				console.log(dateArray[0])
+			that.startStation = param.startStation;
+			that.endStation = param.endStation;
+			that.isNormal = param.isNormal;
+			console.log('起点', that.startStation)
+			console.log('终点', that.endStation)
+			console.log('状态', that.isNormal)
+			//如果传过来的参数没有时间就获取当前时间
+			if (param.date == 'date') { //二维码扫码进来
+				// #ifdef H5
+				//获取openid
+				this.getOpenID();
+				// #endif
 				//初始化时间轴
-				that.loadDate('date');
-				//加载班次列表数据
-				that.getTicketInfo(dateArray[0]);
-
+				that.loadDate(param.date);
+				that.getTicketInfo(param.date);
 			} else {
-
-				that.startStation = param.startStation;
-				that.endStation = param.endStation;
-				that.isNormal = param.isNormal;
-				console.log('起点', that.startStation)
-				console.log('终点', that.endStation)
-				console.log('状态', that.isNormal)
-				//如果传过来的参数没有时间就获取当前时间
-				if (param.date == 'date') { //二维码扫码进来
-					// #ifdef H5
-					//获取openid
-					this.getOpenID();
-					// #endif
-					//初始化时间轴
-					that.loadDate(param.date);
-					that.getTicketInfo(param.date);
-				} else {
-					//班次列表数据参数，从上一个页面传过来的时间，上下车点
-					that.date = param.date;
-					//初始化时间轴
-					that.loadDate(param.date);
-					//加载班次列表数据
-					that.getTicketInfo(this.date);
-				}
-				//点击顶部时间，请求该时间的班次列表
-				// this.getDeparture();
+				//班次列表数据参数，从上一个页面传过来的时间，上下车点
+				that.date = param.date;
+				//初始化时间轴
+				that.loadDate(param.date);
+				//加载班次列表数据
+				that.getTicketInfo(this.date);
 			}
+			//点击顶部时间，请求该时间的班次列表
+			// this.getDeparture();
 		},
-		
-		onPullDownRefresh:function(){
+
+		onPullDownRefresh: function() {
 			uni.showToast({
 				title: '查询班次中...',
 				icon: 'none'
-			})
+			});
+			// that.getData();
 			this.getTicketInfo(this.date);
 		},
-		
+
 		methods: {
 			getOpenID() {
 				var that = this;
@@ -196,7 +187,7 @@
 					date = new Date();
 				}
 				that.allTicketsList = [];
-				
+
 				var systemNameCode = '';
 				// #ifdef APP-PLUS
 				systemNameCode = this.$ky_cpdg.KyInterface.system.systemNameWeiXin
@@ -219,15 +210,15 @@
 					},
 					success: (res) => {
 						uni.stopPullDownRefresh();
-						console.log('111',res)
+						console.log('111', res)
 						uni.hideLoading();
-						var a=res.data;
-						var b=JSON.parse(a);
+						var a = res.data;
+						var b = JSON.parse(a);
 						//非空判断
 						if (b.status == true) {
-							if (b.data!==0) {
+							if (b.data !== 0) {
 								that.departureData = b.data;
-								console.log('111111111',that.departureData)
+								console.log('111111111', that.departureData)
 								let i = 0;
 								for (i; i < b.data.length; i++) {
 									that.allTicketsList.push(b.data[i])
@@ -265,7 +256,7 @@
 					}
 				});
 			},
-			
+
 			//-------------------------------班次排序--升序-------------------------------
 			ForwardRankingDate: function(param) {
 				for (let i = 0; i < param.length - 1; i++) {
@@ -657,14 +648,23 @@
 				}
 			},
 			//#endif  
-			
+
 			//-------------------------------转换-------------------------------
 			turnValue(value) {
-				if(value) {
-					var setValue = value.replace(/,/g,'、');
+				if (value) {
+					var setValue = value.replace(/,/g, '、');
 					return setValue;
 				}
 			},
+			
+			//-------------------------------调隐藏骨架屏-------------------------------
+			getData() {
+				this.loading = true;
+				// 通过延时模拟向后端请求数据，调隐藏骨架屏
+				setTimeout(() => {
+					this.loading = false;
+				}, 3000)
+			}
 		}
 	}
 </script>
@@ -741,21 +741,21 @@
 			color: #FFFFFF;
 		}
 	}
-	
+
 	//选择时间
-	.hc_SelectTime{
+	.hc_SelectTime {
 		width: 14%;
 		height: 100%;
 		align-items: center;
 		justify-content: center;
 		display: flex;
-		
+
 		.calendarImage {
 			width: 35upx;
 			height: 37upx;
 		}
 	}
-	
+
 	.ctky_View {
 		width: 94%;
 		background: #FFFFFF;
@@ -763,20 +763,20 @@
 		border-radius: 20upx;
 		display: flex;
 		justify-content: space-between;
-		
+
 		.ctky_View_Left {
 			text-align: left;
 			display: flex;
 			flex-direction: column;
 			width: 100%;
-			padding:12upx 0;
-			
+			padding: 12upx 0;
+
 			//车票模式
-			.ctky_View_Left_content{
+			.ctky_View_Left_content {
 				display: flex;
 				align-items: center;
-				margin:20upx 25upx;
-				
+				margin: 20upx 25upx;
+
 				.busMarkType {
 					// width: 65upx;
 					padding: 0 10rpx;
@@ -788,7 +788,7 @@
 					font-size: 24upx;
 					font-family: SourceHanSansSC-Light;
 				}
-				
+
 				.markType {
 					width: 128upx;
 					height: 37upx;
@@ -799,91 +799,91 @@
 					font-size: 24upx;
 					font-family: SourceHanSansSC-Light;
 				}
-				
-				.markTime{
-					margin-left:19upx;
+
+				.markTime {
+					margin-left: 19upx;
 					font-family: SourceHanSansSC-Bold;
 					font-weight: bold;
 				}
 			}
-			
+
 			//路线
-			.ctky_View_Left_Route{
+			.ctky_View_Left_Route {
 				margin-left: 24upx;
 				margin-bottom: 16upx;
 				font-size: 30upx;
-				font-style:SourceHanSansSC-Regular;
+				font-style: SourceHanSansSC-Regular;
 				color: #333333;
 			}
-			
+
 			//上车点
-			.ctky_View_Left_GetOnTheBus{
+			.ctky_View_Left_GetOnTheBus {
 				margin-left: 24upx;
 				display: flex;
 				align-items: center;
 				margin-bottom: 16upx;
 				justify-content: space-between;
-				
-				.getOnTheBus{
+
+				.getOnTheBus {
 					display: flex;
 					align-items: center;
-					
-					.startDot{
-						width:10upx;
-						height:10upx;
+
+					.startDot {
+						width: 10upx;
+						height: 10upx;
 					}
-					
-					.startStaion{
+
+					.startStaion {
 						margin-left: 16upx;
 						font-size: 30upx;
-						font-style:SourceHanSansSC-Regular;
+						font-style: SourceHanSansSC-Regular;
 						color: #333333;
 					}
 				}
-				
-				.Price{
+
+				.Price {
 					margin-right: 28upx;
 					font-size: 24upx;
-					font-style:SourceHanSansSC-Regular;
+					font-style: SourceHanSansSC-Regular;
 					color: #FC4646;
 				}
 			}
-			
+
 			//下车点
-			.ctky_View_Left_DropOffPoint{
+			.ctky_View_Left_DropOffPoint {
 				margin-left: 25upx;
 				display: flex;
 				align-items: center;
 				margin-bottom: 16upx;
 				justify-content: space-between;
-				
-				.dropOffPoint{
+
+				.dropOffPoint {
 					display: flex;
 					align-items: center;
-					
-					.endDot{
-						width:10upx;
-						height:10upx;
+
+					.endDot {
+						width: 10upx;
+						height: 10upx;
 					}
-					
-					.endStation{
-						margin-left:16upx;
-						font-size:30upx;
-						font-style:SourceHanSansSC-Regular;
-						color:#333333;
+
+					.endStation {
+						margin-left: 16upx;
+						font-size: 30upx;
+						font-style: SourceHanSansSC-Regular;
+						color: #333333;
 					}
 				}
-				
-				.remainingTickets{
+
+				.remainingTickets {
 					margin-right: 28upx;
 					font-size: 24upx;
-					font-style:SourceHanSansSC-Light;
+					font-style: SourceHanSansSC-Light;
 					color: #666666;
 				}
 			}
-			
+
 			//班次详细信息
-			.ctky_View_Left_detailedInformation{
+			.ctky_View_Left_detailedInformation {
 				margin-left: 25upx;
 				margin-bottom: 10upx;
 				font-style: SourceHanSansSC-Light;
@@ -894,9 +894,9 @@
 			}
 		}
 	}
-	
+
 	//途径点
-	.st_routeSite{
+	.st_routeSite {
 		margin-left: 25upx;
 		margin-bottom: 20upx;
 		font-style: SourceHanSansSC-Light;
@@ -906,15 +906,15 @@
 		display: flex;
 		width: 660upx;
 		margin-top: 6upx;
-		
-		.ro_text{
+
+		.ro_text {
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			overflow: hidden;
 		}
 	}
-	
-	.topView{
+
+	.topView {
 		margin-top: 400upx;
 	}
 </style>
