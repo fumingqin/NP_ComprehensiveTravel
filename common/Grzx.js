@@ -15,7 +15,7 @@ import $oSit from '@/common/overallSituation.js';
 	const Url=$oSit.Interface.address.Url;
 // #endif
 
-const Url1 = $oSit.Interface.address.Url2;
+const Url1 = $oSit.Interface.address.Url3;
 
 //APP下载地址
 const downloadAPP = "http://27.148.155.9:9248/LoadAppWebsite/泉运出行综合平台.apk"; 
