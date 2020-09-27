@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="nodeClass">
-			<rich-text :nodes="text" style="width: 100%;"></rich-text>
+			<rich-text :nodes="text" style="width: 100%;font-size: 38upx;"></rich-text>
 		</view>
 		<!-- <view class="textClass" v-if="title=='软件许可及服务协议'">
 			<view class="mt">
@@ -162,7 +162,7 @@
 						if(res.data.status){
 							for(let i = 0; i < res.data.data.length; i++){
 								if(res.data.data[i].Title == e){
-									this.text=res.data.data[i].Body;
+									this.text=res.data.data[i].Body.replace(/font-size:14px/g, 'font-size:17px');
 								}
 							}
 						}
