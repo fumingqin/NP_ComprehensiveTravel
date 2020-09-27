@@ -9,7 +9,7 @@
 
 			<!-- 全部 -->
 			<view v-if="current === 0" style="margin-top: 20rpx;">
-				<view v-for="(item,index) in info" :key="index">
+				<view v-for="(item,index) in info" :key="index"> 
 					<view v-if="item.carType=='普通班车' || item.carType=='定制班车'">
 						<view class="pd_view">下单时间：{{item.bookTime}}</view>
 						
