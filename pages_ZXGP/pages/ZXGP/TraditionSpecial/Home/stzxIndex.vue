@@ -293,7 +293,7 @@
 					font-size: 32upx;
 					font-weight: 300;
 					color: #2C2D2D;
-					width: 234upx;
+					// width: 234upx;
 					left: 0;
 					text-align: left;
 					// border-bottom: 1upx solid #dadada;
