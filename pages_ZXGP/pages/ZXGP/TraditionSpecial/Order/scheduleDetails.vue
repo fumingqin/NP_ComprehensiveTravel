@@ -419,8 +419,17 @@
 					},
 					success:(res)=>{
 						console.log('是否上门服务',res)
-						this.pickUp_Display  = res.data.data.IsPickUp;
-						this.pickUp_Price  = res.data.data.Price;
+						if(res.data.data.IsPickUp == false){
+							this.pickUp_Display  = res.data.data.IsPickUp;
+							this.pickUp_Price  = res.data.data.Price;
+							this.pickUp_Status = false;
+							this.pickUp_Address = '';
+						}else{
+							this.pickUp_Display  = res.data.data.IsPickUp;
+							this.pickUp_Price  = res.data.data.Price;
+						}
+						
+						
 					}
 				})
 			},
