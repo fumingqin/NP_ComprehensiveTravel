@@ -4,16 +4,13 @@ const Interface = {
 	address:{
 		// 公众号
 		// #ifdef H5
-			Url : 'http://zntc.145u.net', //综合出行
+			Url : 'https://appdl.xmjdt.cn:18443', //南平综合出行
 		// #endif
 		
 		// #ifndef H5
 		// 小程序/APP
-		Url : 'https://zntc.145u.net:9099', //综合出行
+			Url : 'https://appdl.xmjdt.cn:18443', //南平综合出行
 		// #endif
-		
-		Url2:"http://36.250.234.10:60032", //定制客运
-		Url3:"http://appdl.xmjdt.cn:60032", //定制客运
 		
 	},
 	

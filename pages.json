@@ -98,7 +98,9 @@
 		},
         {
             "path" : "pages/order/newOrderList",
-            "style" : {}
+            "style" : {
+				"navigationBarBackgroundColor": "#F5F5F5"
+			}
         },
 		{
 			"path": "pages/GRZX/notice", //推文通知

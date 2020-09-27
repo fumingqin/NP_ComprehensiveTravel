@@ -49,7 +49,7 @@
 			<!-- 上下车点选择,0是普通购票不显示上下车点选择 -->
 			<!-- v-if="ticketDetail.shuttleType == '定制班车'" -->
 			<view class="stationContentView" v-if="ticketDetail.shuttleType == '普通班车'">
-				<view class="boarding" @tap="endStationTap2">
+				<view class="boarding" @tap="stationTap">
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">下车点</view>
 					<view style="display: flex;align-items: center;">
 						<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;text-align: right;">{{endStation}}</view>
@@ -61,14 +61,14 @@
 			<!-- 上下车点选择,0是普通购票不显示上下车点选择 -->
 			<!-- v-if="ticketDetail.shuttleType == '定制班车'" -->
 			<view class="stationContentView" v-if="ticketDetail.shuttleType == '定制班车'">
-				<view class="boarding" style="border-bottom:#EAEAEA solid 1px;" @tap="startStationTap">
+				<view class="boarding" style="border-bottom:#EAEAEA solid 1px;" @tap="stationTap">
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">上车点</view>
 					<view style="display: flex;align-items: center;">
 						<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;text-align: right;">{{startStation}}</view>
 						<image src="../../../../static/ZXGP/right.png" style="width: 11upx;height: 21upx;margin-left: 10upx;"></image>
 					</view>
 				</view>
-				<view class="boarding" @tap="endStationTap">
+				<view class="boarding" @tap="stationTap">
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">下车点</view>
 					<view style="display: flex;align-items: center;">
 						<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;text-align: right;">{{endStation}}</view>
@@ -157,7 +157,7 @@
 			<view class="orderCommonClass">
 				<view style="display: flex; align-items: center;">
 					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 28upx;">购买乘车险</view>
-					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:28upx ;">{{InsurePrice}}元</view>
+					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:24upx ;">{{InsurePrice}}元</view>
 				</view>
 				<view style="display: flex;margin-right: 41upx;align-items: center;">
 					<view style="font-size: 28upx;color: #2C2D2D;">{{passengerNum}}份</view>
@@ -169,6 +169,7 @@
 			<view class="orderCommonClass" v-if="pickUp_Display == true">
 				<view style="display: flex; align-items: center;">
 					<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 28upx;">上门接客服务</view>
+					<view style="margin-left: 16upx;color:#FC4B4B ; font-size:24upx; margin-top: 6upx;">{{pickUp_Price}}元</view>
 					<view style="margin-left: 16upx;color:#01aaef ; font-size:24upx; margin-top: 6upx;" @click="pickUpPoint">查看服务</view>
 					<u-popup v-model="pickUp_popup" mode="bottom">
 						<view class="boxView">
@@ -188,9 +189,9 @@
 			</view>
 			
 			<!-- 选择接送上车点 -->
-			<view class="orderCommonClass" :hidden="pickUp_Status == false" @click="pickUpAddress">
+			<view class="orderCommonClass" v-if="pickUp_Display == true" :hidden="pickUp_Status == false" @click="pickUpAddress">
 				<view style="display: flex; align-items: center; margin-left: 41upx;">
-					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 26upx;" v-if="pickUp_Address !== '请选择接送上车点'">接送上车点：</view>
+					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 26upx;" >接送上车点：</view>
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #01aaef;font-size: 26upx;">{{pickUp_Address}}</view>
 				</view>
 			</view>
@@ -275,20 +276,20 @@
 				appName:'',
 				
 				pickUp_Display : true, //接送服务是否显示
-				pickUp_Price : 4 ,//上门默认价格
-				pickUp_Status : false , //默认不开启
-				pickUp_Address : '' , //接送点
+				pickUp_Price : 4 ,//上门默认价格，用于显示
+				pickUpPersonPrice : 0, //用于算法和传值的价格
+				pickUp_Status : true , //默认开启
+				pickUp_Address : '请选择接送上车点' , //接送点
 				pickUp_Latitude : 0 , //接送点纬度
 				pickUp_Longitude : 0 , //接送点经度
 				StartStaion_Latitude : 0,//始发站点纬度
 				StartStaion_Longitude : 0,//始发站经度
 				
 				pickUp_popup : false, //弹出服务内容
-				
 			}
 		},
 
-		onLoad(e) {
+		onLoad:function(e) {
 			var that = this;
 			//加载应用名称
 			that.applyName = that.$oSit.Interface.system.applyName;
@@ -324,6 +325,12 @@
 					console.log('success');
 				}
 			})
+			uni.showLoading({
+				title:'跳转中...'
+			})
+			this.stationTap();
+			
+			
 		},
 		onShow() {
 			//读取乘车人信息
@@ -407,11 +414,22 @@
 					url: this.$ky_cpdg.KyInterface.GetIsPickUp.Url,
 					method: this.$ky_cpdg.KyInterface.GetIsPickUp.method,
 					data:{
-						SetOutTime : pickUpDate
+						SetOutTime : pickUpDate,
+						LineName : this.ticketDetail.lineName,
 					},
 					success:(res)=>{
-						console.log('是否上门服务',res.data)
-						// this.pickUp_Display  = res.data;
+						console.log('是否上门服务',res)
+						if(res.data.data.IsPickUp == false){
+							this.pickUp_Display  = res.data.data.IsPickUp;
+							this.pickUp_Price  = res.data.data.Price;
+							this.pickUp_Status = false;
+							this.pickUp_Address = '';
+						}else{
+							this.pickUp_Display  = res.data.data.IsPickUp;
+							this.pickUp_Price  = res.data.data.Price;
+						}
+						
+						
 					}
 				})
 			},
@@ -426,52 +444,10 @@
 				}
 			},
 			//-------------------------------点击定制班车上车点-----------------------------
-			startStationTap() {
-				var that = this;
-				var stationArray = {
-					startStaionIndex: that.startStaionIndex,
-					endStationIndex: that.endStationIndex,
-					specialStartArray: that.sepecialStartArray,
-					specialEndArray: that.specialEndArray,
-					// specialStartArray: that.approachPoint2,
-					// specialEndArray: that.approachPoint1,
-					shuttleType: that.shuttleType,
-				}
+			stationTap:function() {
 				//跳转到选择上车点页面
 				uni.navigateTo({
-					url: '../stationPicker/selectStation?stationArray=' + JSON.stringify(stationArray)
-				})
-			},
-			//-------------------------------点击定制班车下车点-----------------------------
-			endStationTap() {
-				var that = this;
-				var stationArray = {
-					startStaionIndex: that.startStaionIndex,
-					endStationIndex: that.endStationIndex,
-					specialStartArray: that.sepecialStartArray,
-					specialEndArray: that.specialEndArray,
-					// specialStartArray: that.approachPoint2,
-					// specialEndArray: that.approachPoint1,
-					shuttleType: that.shuttleType,
-				}
-				//跳转到选择下车点页面
-				uni.navigateTo({
-					url: '../stationPicker/selectStation?stationArray=' + JSON.stringify(stationArray)
-				})
-			},
-			
-			//-------------------------------普通班车下车点-----------------------------
-			endStationTap2() {
-				var that = this;
-				var stationArray = {
-					endStationIndex: that.endStationIndex,
-					specialEndArray: that.selectRoutePoint,
-					specialStartArray: that.ordinaryBoarding,
-					shuttleType: that.shuttleType,
-				}
-				//跳转到选择下车点页面
-				uni.navigateTo({
-					url: '../stationPicker/selectStation?stationArray=' + JSON.stringify(stationArray)
+					url: '../stationPicker/selectStation'
 				})
 			},
 			
@@ -520,9 +496,11 @@
 				if (this.pickUp_Status == false) {
 					this.pickUp_Status = true;
 					this.pickUp_Address = '请选择接送上车点';
+					this.calculateTotalPrice();
 				} else {
 					this.pickUp_Status = false;
 					this.pickUp_Address = '';
+					this.calculateTotalPrice();
 				}
 			},
 			
@@ -530,7 +508,7 @@
 			pickUpAddress: function() {
 				uni.chooseLocation({
 					success: (res) => {
-						// console.log(res)
+						console.log('选择后的上车点数据',res)
 						if(res.name == ''){
 							uni.showToast({
 								title:'请确认相关上车点',
@@ -544,6 +522,7 @@
 						
 					}
 				})
+				
 			},
 			
 			//-------------------------------查看须知-----------------------------
@@ -685,6 +664,14 @@
 				let price = that.ticketDetail.fare;
 				//半价票单价
 				let halfPrice = that.ticketDetail.halfTicket;
+				//接送服务单价
+				if(that.pickUp_Status == true){
+					that.pickUpPersonPrice = that.pickUp_Price;
+				}else{
+					that.pickUpPersonPrice = 0;
+				}
+				
+				// console.log(pickUpPersonPrice)
 				let insurePrice = that.InsurePrice;
 				if (that.isInsurance == 0) { //不选择保险
 					insurePrice = 0;
@@ -706,10 +693,10 @@
 						}
 					}
 					//计算总价
-					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum
+					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum + Number(that.pickUpPersonPrice) * adultNum + Number(that.pickUpPersonPrice) * childNum
 				} else {
 					//计算总价
-					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum
+					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum + Number(that.pickUpPersonPrice) * adultNum + Number(that.pickUpPersonPrice) * childNum
 				}
 			},
 
@@ -724,7 +711,7 @@
 				if (that.ticketDetail.starSiteArr.length > 2 || that.ticketDetail.endSiteArr.length > 2) {
 					if (that.startStation == '请选择上车点' && that.endStation == '请选择下车点') {
 						uni.showToast({
-							title: '未选择上下车点，请选择上下车点',
+							title: '滴！请选择上下车点',
 							icon: 'none'
 						})
 					} else if (that.passengerInfo.length == 0) {
@@ -748,7 +735,7 @@
 				} else {
 					if (that.endStation == '请选择下车点') {
 						uni.showToast({
-							title: '未选择下车点，请选择下车点',
+							title: '滴！请选择下车点',
 							icon: 'none'
 						})
 					} else if (that.passengerInfo.length == 0) {
@@ -781,6 +768,9 @@
 				console.log(that.endStation)
 				console.log(that.pickUp_Latitude)
 				console.log(that.pickUp_Longitude)
+				if(that.pickUp_Status == false){
+					that.pickUp_Address = ''
+				}
 				var array = {
 					isInsurance: that.isInsurance, //是否选择了保险
 					totalPrice: that.totalPrice, //总价格
@@ -788,6 +778,7 @@
 					getOnPoint: that.startStation, //起点
 					getOffPoint: that.endStation, //终点
 					pickUpStatus : that.pickUp_Status, //是否上门服务
+					pickUpPersonPrice : that.pickUpPersonPrice, //接送价格
 					PickUpAddress : that.pickUp_Address, //接送上车点
 					pickUpLatitude : that.pickUp_Latitude, //接送点纬度
 					pickUpLongitude :that.pickUp_Longitude, //接送点经度
@@ -802,73 +793,6 @@
 			
 			//------------------------计算途径点----------------------------------
 			removal: function(e) {
-				// //****用于本页面的查看所有途径站点****//
-				// var arr1 = [];
-				// var arr2 = [];
-				// //去重
-				// var arr1 = e.starSiteArr;
-				// var arr2 = e.endSiteArr;
-				// arr1.push(...arr2)
-				// console.log('去重复', arr1)
-				// let arr3 = Array.from(new Set(arr1))
-				// for (var i = 0; i < arr3.length; i++) {
-				// 	var a = this.mainArray.filter(item => {
-				// 		return item == arr3[i].SiteName;
-				// 	})
-				// 	if (a == '') {
-				// 		var SiteName = arr3[i].SiteName
-				// 		this.mainArray.push(SiteName);
-				// 		// console.log('去重复',this.mainArray)
-				// 	}
-				// }
-				
-				// //****途径点去重(用于后期路线规划)****//
-				// var approachPoint = [];
-				// approachPoint = arr3;
-				// for (var i = 0; i < arr3.length; i++) {
-				// 	if (arr3[i].SiteName == approachPoint[i].SiteName && arr3[i].Latitude==0 && arr3[i].Longitude==0) {
-				// 		arr3.splice(i, 1);
-				// 		i = i - 1;
-				// 	}
-				// }
-				// console.log('途径点去重', approachPoint)
-				
-				// //****用于选择上下车点（approachPoint1是上车点，approachPoint2是下车点）****//
-				// var c =[];
-				// var obj={};
-				// let arr4 = Array.from(new Set(arr1))
-				// for(var i =0; i<arr4.length; i++){
-				// 	if(!obj[arr4[i].SiteName]){
-				// 		c.push(arr4[i])
-				// 		obj[arr4[i].SiteName] = true;
-				// 	}
-				// }
-				// console.log('途径点去重2', c)
-				// var a = [];
-				// a = c.slice();
-				// // a = c;
-				// this.approachPoint1 = a; //终点
-				// // this.approachPoint1.shift();
-				// for (var i = 0; i < a.length; i++) {
-				// 	if (a[i].SiteName == this.ticketDetail.startStaion) {
-				// 		a.splice(i, 1);
-				// 		i = i - 1;
-				// 	}
-				// }
-				// var b = [];
-				// b = c.slice();
-				// // b = c;
-				// this.approachPoint2 = b; //起点
-				// for (var i = 0; i < b.length; i++) {
-				// 	if (b[i].SiteName == this.ticketDetail.endStation) {
-				// 		b.splice(i, 1);
-				// 		i = i - 1;
-				// 	}
-				// }
-				// // this.approachPoint2.pop();
-				// console.log('终点', this.approachPoint1)
-				// console.log('起点', this.approachPoint2)
-				
 				//****途径站点(用于查询所有途径点)****//
 				var routeSite = e.lineViaSiteDesc.split(",");
 				this.routeSite=routeSite

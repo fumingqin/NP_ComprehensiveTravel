@@ -95,7 +95,7 @@
 			return {
 				rotationChart: ['',''], //轮播图
 				advertisingMap: ['','',''], //广告图
-				information : ['南平综合出行来啦！9月25日试运行！快来体验吧！'], //新闻列表
+				information : ['邵泰专线来啦！9月28日试运行！快来体验吧！'], //新闻列表
 				information2 : ['',''], //新闻列表
 				protocolStatus : false, //隐藏弹出层，f为不弹，t为弹
 				upgradeStatus : false, //升级弹出层，f为不弹，t为弹
@@ -151,10 +151,10 @@
 			//加载数据
 			loadData : function(){
 				uni.request({
-					url:'http://appdl.xmjdt.cn:60032/api/BasicImage/GetRotationChart',
-					method:'POST',
+					url: this.$home.KyInterface.GetRotationChart.Url,
+					method:this.$home.KyInterface.GetRotationChart.method,
 					success:(res)=>{
-						// console.log('轮播区',res)
+						console.log('轮播区',res)
 						this.rotationChart = res.data.data;
 						// console.log(this.rotationChart)
 					},
@@ -167,10 +167,10 @@
 				})
 				
 				uni.request({
-					url:'http://appdl.xmjdt.cn:60032/api/News/GetNews',
-					method:'POST',
+					url: this.$home.KyInterface.GetNews.Url,
+					method:this.$home.KyInterface.GetNews.method,
 					success:(res)=>{
-						console.log('新闻资讯',res)
+						// console.log('新闻资讯',res)
 						this.information2 = res.data.data;
 						// console.log(this.rotationChart)
 					},
@@ -183,8 +183,8 @@
 				})
 				
 				uni.request({
-					url:'http://appdl.xmjdt.cn:60032/api/BasicImage/GetHomeStyle',
-					method:'POST',
+					url: this.$home.KyInterface.GetHomeStyle.Url,
+					method:this.$home.KyInterface.GetHomeStyle.method,
 					success:(res)=>{
 						// console.log('广告区',res)
 						this.advertisingMap = [];

@@ -79,8 +79,8 @@
 		onLoad() {
 			var that = this;
 			if (that.departure == '' || that.destination == '' || that.Week == '') {
-				that.departure = '选择上车点';
-				that.destination = '选择下车点';
+				that.departure = '泰宁';
+				that.destination = '邵武';
 				that.Week = '今天';
 			}
 			uni.getStorage({

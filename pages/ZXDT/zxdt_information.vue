@@ -55,8 +55,8 @@
 			//加载接口数据
 			loadData:function(e){
 				uni.request({
-					url:'http://appdl.xmjdt.cn:60032/api/News/GetNews',
-					method:'POST',
+					url: this.$home.KyInterface.GetNews.Url,
+					method:this.$home.KyInterface.GetNews.method,
 					success:(res)=>{
 						console.log(e)
 						if(e == 0){
