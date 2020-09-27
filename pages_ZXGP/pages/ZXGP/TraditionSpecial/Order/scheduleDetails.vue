@@ -174,10 +174,10 @@
 					<u-popup v-model="pickUp_popup" mode="bottom">
 						<view class="boxView">
 							<view class="titleView">
-								<text class="Nb_text1">用户须知</text>
+								<text class="Nb_text1">接送服务须知</text>
 							</view>
 							<scroll-view class="noticeBox" scroll-y="ture">
-								<rich-text class="Nb_text4" :nodes="way"></rich-text>
+								<rich-text class="Nb_text4" :nodes="pickUpWay"></rich-text>
 							</scroll-view>
 						</view>
 					</u-popup>
@@ -213,7 +213,7 @@
 		<u-popup v-model="notice_popup" mode="bottom">
 			<view class="boxView">
 				<view class="titleView">
-					<text class="Nb_text1">用户须知</text>
+					<text class="Nb_text1">购票须知</text>
 				</view>
 				<scroll-view class="noticeBox" scroll-y="ture">
 					<rich-text class="Nb_text4" :nodes="way"></rich-text>
@@ -249,7 +249,8 @@
 		},
 		data() {
 			return {
-				way: '',
+				way: '',//购票须知
+				pickUpWay : '',//接送须知
 				title: '',
 				count: 1,
 				startStation: '', //定制班车上车点
@@ -341,6 +342,8 @@
 					console.log('success');
 				}
 			})
+			this.noticeLoadData();//加载须知
+			
 			uni.showLoading({
 				title:'跳转中...'
 			})
@@ -409,7 +412,9 @@
 						that.endStation = "请选择下车点"
 					}
 				})
-
+			},
+			
+			noticeLoadData:function(){
 				uni.request({
 					url: this.$ky_cpdg.KyInterface.Cs_getByTitle.Url,
 					method: this.$ky_cpdg.KyInterface.Cs_getByTitle.method,
@@ -420,6 +425,18 @@
 						})
 						this.way = data[0].Body;
 						console.log('购票须知2',this.way)
+					}
+				})
+				
+				uni.request({
+					url: this.$ky_cpdg.KyInterface.Cs_getByTitle.Url,
+					method: this.$ky_cpdg.KyInterface.Cs_getByTitle.method,
+					success: (res) => {
+						console.log('接送服务须知', res)
+						var data = res.data.data.filter(item =>{
+							return item.Type == '接送服务';
+						})
+						this.pickUpWay = data[0].Body;
 					}
 				})
 			},
