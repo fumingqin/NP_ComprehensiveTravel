@@ -154,7 +154,7 @@
 					url: this.$home.KyInterface.GetRotationChart.Url,
 					method:this.$home.KyInterface.GetRotationChart.method,
 					success:(res)=>{
-						// console.log('轮播区',res)
+						console.log('轮播区',res)
 						this.rotationChart = res.data.data;
 						// console.log(this.rotationChart)
 					},

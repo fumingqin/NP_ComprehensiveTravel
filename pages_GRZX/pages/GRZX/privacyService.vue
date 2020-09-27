@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<!-- <view class="content">
-			<rich-text :nodes="text" style="width: 100%;"></rich-text>
-		</view> -->
-		<view class="textClass" v-if="title=='软件许可及服务协议'">
+		<view class="nodeClass">
+			<rich-text :nodes="text" style="width: 100%;font-size: 38upx;"></rich-text>
+		</view>
+		<!-- <view class="textClass" v-if="title=='软件许可及服务协议'">
 			<view class="mt">
 				欢迎你使用{{systemName}}软件及服务！
 			</view>
@@ -122,7 +122,7 @@
 			<view class="mt" style=" margin-bottom: 30upx;">
 				搜索信息——您可以在应用中访问或清除您的搜索历史记录、查看和修改兴趣以及管理其他数据。
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -143,11 +143,30 @@
 			
 			//加载应用名称
 			this.systemName=this.$GrzxInter.systemConfig.appName;
+			this.loadText(options.title);
 		},
 		methods:{
 			loadTitle:function(e){
 				uni.setNavigationBarTitle({
 				　　title:e,
+				})
+			},
+			
+			//------------------加载乘车人须知----------------
+			loadText:function(e){
+				uni.request({
+					url:this.$GrzxInter.Interface.GetAggrement.value,
+					method:this.$GrzxInter.Interface.GetAggrement.method,
+					success: res =>{
+						console.log(res,'1');
+						if(res.data.status){
+							for(let i = 0; i < res.data.data.length; i++){
+								if(res.data.data[i].Title == e){
+									this.text=res.data.data[i].Body.replace(/font-size:14px/g, 'font-size:17px');
+								}
+							}
+						}
+					},
 				})
 			},
 		}
@@ -202,5 +221,14 @@
 	}
 	.mt{
 		margin-top: 15upx;
+	}
+	
+	.nodeClass{
+		width: 92%;
+		margin-top: 20upx;
+		margin-left: 4%;
+		font-size: 38upx;
+		font-weight: 500;
+		margin-bottom: 10upx;
 	}
 </style>

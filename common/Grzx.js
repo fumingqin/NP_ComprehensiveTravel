@@ -15,7 +15,6 @@ import $oSit from '@/common/overallSituation.js';
 	const Url=$oSit.Interface.address.Url;
 // #endif
 
-const Url1 = $oSit.Interface.address.Url2;
 
 //APP下载地址
 const downloadAPP = "http://27.148.155.9:9248/LoadAppWebsite/泉运出行综合平台.apk"; 
@@ -52,63 +51,63 @@ const Interface={
 		pages: [],
 	},
 	login:{
-		value:Url1+'/api/person/login',
+		value:Url+'/api/person/login',
 		name:'用户登录',
 		method:'POST',
 		pages: [],
 	},
 	changeInfo:{
-		value:Url1+'/api/person/changeInfo',
+		value:Url+'/api/person/changeInfo',
 		name:'修改个人信息（除头像外）',
 		method:'POST',
 		pages: [],
 	},
 	//乘车人信息开始
 	userInfoList:{
-		value:Url1+'/api/person/userInfoList',
+		value:Url+'/api/person/userInfoList',
 		name:'获取乘车人信息',
 		method:'POST',
 		pages: [],
 	},
 	changeUserInfo:{
-		value:Url1+'/api/person/changeUserInfo',
+		value:Url+'/api/person/changeUserInfo',
 		name:'修改乘车人信息',
 		method:'POST',
 		pages: [],
 	},
 	deletuserInfoList:{
-		value:Url1+'/api/person/deletuserInfoList',
+		value:Url+'/api/person/deletuserInfoList',
 		name:'删除乘车人信息',
 		method:'POST',
 		pages: [],
 	},
 	//乘车人信息结束
 	getLoginCode:{
-		value:Url1+'/api/person/getLoginCode',
+		value:Url+'/api/person/getLoginCode',
 		name:'获取手机验证码',
 		method:'POST',
 		pages: [],
 	},
 	changeInfoPortrait:{
-		value:Url1+'/api/person/changeInfoPortrait',
+		value:Url+'/api/person/changeInfoPortrait',
 		name:'只修改头像',
 		method:'POST',
 		pages: [],
 	},
 	GetUserInfoByOpenId:{
-		value:Url1+'/api/person/GetUserInfoByOpenId',
+		value:Url+'/api/person/GetUserInfoByOpenId',
 		name:'根据openid获取相应的用户信息',
 		method:'POST',
 		pages: [],
 	 },
 	GetVersion:{
-		value:Url1+'/api/ShowContent/GetVersion',
+		value:Url+'/api/ShowContent/GetVersion',
 		name:'获取版本号',
 		method:'POST',
 		pages: [],
 	}, 
 	GetOpenId_xcx:{
-		value:Url1+'/api/person/GetOpenId_xcx',
+		value:Url+'/api/person/GetOpenId_xcx',
 		name:'获取微信小程序的openid',
 		method:'POST',
 		pages: [],
@@ -126,7 +125,7 @@ const Interface={
 		pages: [],
 	},
 	AddEmergencyContact:{
-		value: Url1 + '/api/person/AddEmergencyContact',
+		value: Url + '/api/person/AddEmergencyContact',
 		name:'添加紧急联系人',
 		method:'POST',//GET-POST
 		pages:[]
@@ -138,7 +137,7 @@ const Interface={
 	// 	pages:[]
 	// },
 	GetAggrement:{
-		value: Url1 + '/api/ShowContent/GetAggrement',
+		value: Url + '/api/ShowContent/GetAggrement',
 		name:'获取乘车须知',
 		method:'POST',//GET-POST
 		pages:[]
@@ -146,13 +145,13 @@ const Interface={
 	
 	//------------------------------------意见反馈------------------------------------
 	Add_Suggestion:{
-		value: Url1 + '/api/Suggestion/Add_Suggestion',
+		value: Url + '/api/Suggestion/Add_Suggestion',
 		name:'添加意见反馈',
 		method:'POST',//GET-POST
 		pages:[]
 	},
 	GetMySuggestionList:{
-		value: Url1 + '/api/Suggestion/GetMySuggestionList',
+		value: Url + '/api/Suggestion/GetMySuggestionList',
 		name:'查询意见反馈列表',
 		method:'POST',//GET-POST
 		pages:[]
@@ -160,26 +159,26 @@ const Interface={
 	
 	//------------------------------------我的投诉------------------------------------
 	Add_Complaint:{
-		value: Url1 + '/api/Complaint/Add_Complaint',
+		value: Url + '/api/Complaint/Add_Complaint',
 		name:'添加投诉',
 		method:'POST',//GET-POST
 		pages:[]
 	},
 	
 	GetMyComplaintList:{
-		value: Url1 + '/api/Complaint/GetMyComplaintList',
+		value: Url + '/api/Complaint/GetMyComplaintList',
 		name:'通过userID获取投诉列表',
 		method:'POST',//GET-POST
 		pages:[]
 	},
 	GetThisComplaint:{
-		value: Url1 + '/api/Complaint/GetThisComplaint',
+		value: Url + '/api/Complaint/GetThisComplaint',
 		name:'通过AID获取投诉',
 		method:'POST',//GET-POST
 		pages:[]
 	},
 	GetComplaintbyOrderID:{
-		value: Url1 + '/api/Complaint/GetComplaintbyOrderID',
+		value: Url + '/api/Complaint/GetComplaintbyOrderID',
 		name:'通过订单号获取投诉列表',
 		method:'POST',//GET-POST
 		pages:[]
