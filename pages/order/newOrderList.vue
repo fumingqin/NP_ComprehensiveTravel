@@ -295,7 +295,7 @@
 			var that = this;
 			//获取客运弹框图片
 			that.getPicture();
-			//读取用户ID
+			// 读取用户ID
 			uni.getStorage({
 				key: 'userInfo',
 				success: function(data) {
@@ -431,13 +431,14 @@
 			//-------------------------请求客运订单数据-------------------------
 			getKeYunOrderInfo: function() {
 				var that = this;
+				console.log(that.userInfo.userId)
 				uni.request({
 					url: $KyInterface.KyInterface.searchOrder2.Url, 
 					method: $KyInterface.KyInterface.searchOrder2.method,
 					data: {
 						clientID: that.userInfo.userId,
-						AppSystemName:that.$oSit.Interface.address.appName,
-						AppSystemName:'交通在线小程序',
+						AppSystemName:that.$oSit.Interface.system.appName,
+						// AppSystemName:'交通在线小程序',
 					},
 					success: (res) => {
 						uni.stopPullDownRefresh();
