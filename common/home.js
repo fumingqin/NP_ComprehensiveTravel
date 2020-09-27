@@ -3,10 +3,10 @@ import $oSit from '@/common/overallSituation.js'; //引入公共js文件
 
 //接口域名
 // #ifdef H5
-	const Url=$oSit.Interface.address.Url3;
+	const Url=$oSit.Interface.address.Url;
 // #endif
 // #ifndef H5
-	const Url=$oSit.Interface.address.Url3;
+	const Url=$oSit.Interface.address.Url;
 // #endif
 
 //接口对象

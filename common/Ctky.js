@@ -3,7 +3,7 @@
 
 
 //传统客运接口配置
-
+import $oSit from '@/common/overallSituation.js'; //引入公共js文件
 
 //接口域名
 // #ifdef H5
@@ -24,7 +24,7 @@ const scheduleUrl = 'https://zhcx.npzhly.com:9098';//班次列表https请求
 //以下为南平综合出行的接口
 const npUrl = 'http://27.148.155.9:9055';
 
-const Url2 = 'http://36.250.234.10:60032';
+const Url2 = Url=$oSit.Interface.address.Url;
 
 const systemName = '南平综合出行';
 const systemName2 = '八闽出行';
