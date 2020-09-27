@@ -305,26 +305,29 @@ const GetImage={
 
 //返回主页
 function navToHome(){
-	if($oSit.Interface.system.appName=="专线购票小程序"){
-		uni.switchTab({
-			url:'/pages/Home/zxgpHomePage',//兴业银行小程序的主页（专线购票）
-		})
-	}else if($oSit.Interface.system.appName=="南平综合出行"){
-		uni.switchTab({
-			url:'/pages/home/h_np_home',//南平综合出行
-		})
-	}
+	// if($oSit.Interface.system.appName=="专线购票小程序"){
+	// 	uni.switchTab({
+	// 		url:'/pages/Home/zxgpHomePage',//兴业银行小程序的主页（专线购票）
+	// 	})
+	// }else if($oSit.Interface.system.appName=="南平综合出行"){
+	// 	uni.switchTab({
+	// 		url:'/pages/home/h_np_home',//南平综合出行
+	// 	})
+	// }
+	uni.switchTab({
+		url:'/pages/home/h_jtzx_home',
+	})
 }
 
 //跳转订单列表
 function navToOrderList(){
-	if($oSit.Interface.system.appName=="专线购票小程序"){
-		// uni.switchTab({
-		// 	url: '/pages/order/newOrderList',
-		// })
-	}else if($oSit.Interface.system.appName=="南平综合出行"){
+	// if($oSit.Interface.system.appName=="专线购票小程序"){
+	// 	// uni.switchTab({
+	// 	// 	url: '/pages/order/newOrderList',
+	// 	// })
+	// }else if($oSit.Interface.system.appName=="南平综合出行"){
 		
-	}
+	// }
 	uni.switchTab({
 		url: '/pages/order/newOrderList',
 	})

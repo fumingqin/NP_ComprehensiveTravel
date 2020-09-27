@@ -120,7 +120,7 @@
 								<!-- <view class="at_button at_btDelete" v-if="item.state=='4'" @click="busLocation(item)">车辆位置</view> -->
 								 <!-- #endif -->
 								<view class="at_button at_btDelete" v-if="item.state=='4'||item.state=='尚未取票'" @tap="open2(item.orderNumber,'2')">退票</view>
-								 <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view>
+								 <!-- <view class="at_button at_btDelete" @click="KyComplain(item)">投诉</view> -->
 								<view class="at_button at_btDetails" @click="keYunDetail(item)">详情</view>
 							</view>
 						</view>
