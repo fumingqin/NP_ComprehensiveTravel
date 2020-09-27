@@ -323,10 +323,11 @@ function navToOrderList(){
 		// 	url: '/pages/order/newOrderList',
 		// })
 	}else if($oSit.Interface.system.appName=="南平综合出行"){
-		uni.switchTab({
-			url: '/pages/order/newOrderList',
-		})
+		
 	}
+	uni.switchTab({
+		url: '/pages/order/newOrderList',
+	})
 }
 
 // 接口声明区
