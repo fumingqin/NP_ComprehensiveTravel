@@ -24,59 +24,59 @@
 		</view>
 		
 		<!-- 车票内容部分 -->
-		<view class="ctky_View" v-for="(item,index) in allTicketsList" :key="index" @click="ticketDetail(allTicketsList[index])">
-			<view class="ctky_View_Left">
-
-				<!-- 顶部车票类型+发车时间 -->
-				<view class="ctky_View_Left_content">
-					<view class="markType" style="border:#1EA2FF solid 1px;color:#1EA2FF;" v-if="item.shuttleType == '普通班车' && isFlowTickets(item) == '普通'">普通班车</view>
-					<view class="markType" style="border:#FF5A00 solid 1px;color:#FF5A00;" v-if="item.shuttleType == '定制班车'">定制班车</view>
-					<view class="busMarkType" style="border:#FF5A00 solid 1px;color:#FF5A00;" v-if="item.shuttleType == '定制巴士'">定制巴士</view>
-					<view class="markType" style="border:#1EA2FF solid 1px;color:#1EA2FF;" v-if="item.shuttleType == '普通班车' && isFlowTickets(item) == '流水'">流水</view>
-					<view class="markTime">{{turnDate(item.setTime)}}</view>
-				</view>
-
-				<!-- 路线 -->
-				<view class="ctky_View_Left_Route">线路:{{item.lineName}}</view>
-
-				<!-- 上车点 -->
-				<view class="ctky_View_Left_GetOnTheBus">
-					<view class="getOnTheBus">
-						<image class="startDot" src="../../../../static/ZXGP/startDot.png"></image>
-						<view class="startStaion">{{item.startStaion}}</view>
+		<block>
+			<view class="ctky_View" v-for="(item,index) in allTicketsList" :key="index" @click="ticketDetail(allTicketsList[index])">
+				<view class="ctky_View_Left">
+					<!-- 顶部车票类型+发车时间 -->
+					<view class="ctky_View_Left_content">
+						<view class="markType" style="border:#1EA2FF solid 1px;color:#1EA2FF;" v-if="item.shuttleType == '普通班车' && isFlowTickets(item) == '普通'">普通班车</view>
+						<view class="markType" style="border:#FF5A00 solid 1px;color:#FF5A00;" v-if="item.shuttleType == '定制班车'">定制班车</view>
+						<view class="busMarkType" style="border:#FF5A00 solid 1px;color:#FF5A00;" v-if="item.shuttleType == '定制巴士'">定制巴士</view>
+						<view class="markType" style="border:#1EA2FF solid 1px;color:#1EA2FF;" v-if="item.shuttleType == '普通班车' && isFlowTickets(item) == '流水'">流水</view>
+						<view class="markTime">{{turnDate(item.setTime)}}</view>
 					</view>
-					<view class="Price" v-if="item.shuttleType != '定制巴士'">全票￥{{item.fare}}</view>
-					<!-- <view v-if="item.shuttleType != '定制巴士'" style="margin-right: 28upx;font-size: 24upx;font-style:
-					SourceHanSansSC-Regular; color: #FC4646;">儿童票￥{{item.halfTicket}}</view> -->
-					<view class="Price" v-if="item.shuttleType == '定制巴士'">价格￥{{item.PriceRange}}</view>
-				</view>
-
-				<!-- 下车点 -->
-				<view class="ctky_View_Left_DropOffPoint">
-					<view class="dropOffPoint">
-						<image class="endDot" src="../../../../static/ZXGP/endDot.png"></image>
-						<view class="endStation">{{item.endStation}}</view>
+			
+					<!-- 路线 -->
+					<view class="ctky_View_Left_Route">线路:{{item.lineName}}</view>
+			
+					<!-- 上车点 -->
+					<view class="ctky_View_Left_GetOnTheBus">
+						<view class="getOnTheBus">
+							<image class="startDot" src="../../../../static/ZXGP/startDot.png"></image>
+							<view class="startStaion">{{item.startStaion}}</view>
+						</view>
+						<view class="Price" v-if="item.shuttleType != '定制巴士'">全票￥{{item.fare}}</view>
+						<!-- <view v-if="item.shuttleType != '定制巴士'" style="margin-right: 28upx;font-size: 24upx;font-style:
+						SourceHanSansSC-Regular; color: #FC4646;">儿童票￥{{item.halfTicket}}</view> -->
+						<view class="Price" v-if="item.shuttleType == '定制巴士'">价格￥{{item.PriceRange}}</view>
 					</view>
-					<view class="remainingTickets">余{{item.remainingVotes}}张</view>
-				</view>
-
-				<!-- 班车详细信息 -->
-				<view class="ctky_View_Left_detailedInformation" v-if="item.shuttleType == '普通班车'">{{item.carType}}/约{{(item.duration.slice(0,-2))}}分钟/{{item.planScheduleCode}}</view>
-				<view class="ctky_View_Left_detailedInformation" v-if="item.shuttleType == '定制班车'">{{item.carType}}/约{{(item.duration.slice(0,-2))}}分钟/{{item.planScheduleCode}}</view>
-				<view class="ctky_View_Left_detailedInformation" v-if="item.shuttleType == '定制巴士'">{{item.SetoutTimeDesc}}</view>
-
-				<!-- 途径站点 -->
-				<view class="st_routeSite">
-					<view class="ro_text">
-						<text>途径站点:</text>
-						<text>{{turnValue(item.lineViaSiteDesc)}}</text>
+			
+					<!-- 下车点 -->
+					<view class="ctky_View_Left_DropOffPoint">
+						<view class="dropOffPoint">
+							<image class="endDot" src="../../../../static/ZXGP/endDot.png"></image>
+							<view class="endStation">{{item.endStation}}</view>
+						</view>
+						<view class="remainingTickets">余{{item.remainingVotes}}张</view>
+					</view>
+			
+					<!-- 班车详细信息 -->
+					<view class="ctky_View_Left_detailedInformation" v-if="item.shuttleType == '普通班车'">{{item.carType}}/约{{(item.duration.slice(0,-2))}}分钟/{{item.planScheduleCode}}</view>
+					<view class="ctky_View_Left_detailedInformation" v-if="item.shuttleType == '定制班车'">{{item.carType}}/约{{(item.duration.slice(0,-2))}}分钟/{{item.planScheduleCode}}</view>
+					<view class="ctky_View_Left_detailedInformation" v-if="item.shuttleType == '定制巴士'">{{item.SetoutTimeDesc}}</view>
+			
+					<!-- 途径站点 -->
+					<view class="st_routeSite">
+						<view class="ro_text">
+							<text>途径站点:</text>
+							<text>{{turnValue(item.lineViaSiteDesc)}}</text>
+						</view>
 					</view>
 				</view>
 			</view>
-			
-			<!--引用组件-->
-			<!-- <u-skeleton bg-color="rgb(250, 250, 250)" :loading="loading" :animation="animation" :el-color="elColor" :border-radius="borderRadius"></u-skeleton> -->
-		</view>
+		</block>
+		<!--引用组件-->
+		<u-skeleton bg-color="rgb(250, 250, 250)" :loading="loading" :animation="animation" :el-color="elColor" :border-radius="borderRadius"></u-skeleton>
 	</view>
 </template>
 
@@ -108,10 +108,10 @@
 				endorescompanyCode: '',
 				scheduleDetailNum: '', //班次
 				allTicketsList: [], //所有的班次信息（客运+定制巴士）
-				// loading: true, // 是否显示骨架屏组件
-				// animation: false,
-				// elColor: '#e5e5e5',
-				// borderRadius: 10,
+				loading: true, // 是否显示骨架屏组件
+				animation: true,
+				elColor: '#e5e5e5',
+				borderRadius: 10,
 			}
 		},
 		onLoad(param) {
@@ -119,7 +119,7 @@
 				title: '查询班次中...',
 				icon: 'none'
 			})
-			// this.getData();
+			this.getData();
 			var that = this;
 			that.startStation = param.startStation;
 			that.endStation = param.endStation;
@@ -153,7 +153,7 @@
 				title: '查询班次中...',
 				icon: 'none'
 			});
-			// that.getData();
+			that.getData();
 			this.getTicketInfo(this.date);
 		},
 
