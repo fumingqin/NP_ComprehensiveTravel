@@ -189,8 +189,6 @@
 									<view class="at_contentFrame">扫码上车</view>
 									<view class="at_contentFrame">线上购票</view>
 									<view class="at_contentFrame">{{item.carType}}</view>
-									
-								
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
 						 
@@ -270,8 +268,6 @@
 		},
 		data() {
 			return {
-				TaxiCost: 0, //价格
-				countdown: 0,
 				items: ['全部', '已完成', '进行中', '未支付', '已取消'],
 				selector : '全部',
 				current: 0,
@@ -384,27 +380,6 @@
 				that.cancelArr = [];
 					that.getUserInfo();//加载普通班车订单方法
 			},
-		changeTime: function(value) { //时间格式转换
-				var date = new Date(value + "+08:00");
-				var year = date.getFullYear();
-				var mounth = date.getMonth() + 1;
-				if (mounth < 10) {
-					mounth = "0" + mounth;
-				}
-				var day = date.getDate();
-				if (day < 10) {
-					day = "0" + day;
-				}
-				var hours = date.getHours();
-				if (hours < 10) {
-					hours = "0" + hours;
-				}
-				var minutes = date.getMinutes();
-				if (minutes < 10) {
-					minutes = "0" + minutes;
-				}
-				return year + '-' + mounth + '-' + day + " " + hours + ':' + minutes;
-			},
 			//--------------------------读取公众号openid--------------------------
 			getOpenID() {
 				var that = this;
@@ -416,12 +391,6 @@
 					},
 					fail: function(fail) {
 						uni.hideLoading();
-						// #ifndef APP-NVUE
-						// uni.showModal({
-						// 	content: '用户未授权',
-						// })
-						// #endif
-						
 					}
 				})
 			},
@@ -459,9 +428,6 @@
 						console.log('用户信息', that.userInfo);
 						that.getKeYunOrderInfo();
 					},
-					fail(res) {
-						// console.log('错误', res);
-					}
 				})
 			},
 
@@ -494,8 +460,6 @@
 									that.cancelArr.push(res.data.data[i]);
 								}
 							}
-							// console.log(that.unfinishArr)
-							// console.log(that.cancelArr)
 							uni.hideLoading();
 						} else if (res.data.status == false) {
 							uni.hideLoading();
@@ -506,16 +470,8 @@
 						uni.hideLoading();
 						//请求数据失败，停止刷新
 						uni.stopPullDownRefresh();
-						// console.log('错误', res);
 					}
 				})
-			},
-			//-------------------------------时间转换-------------------------------
-			turnDate(date) {
-				if (date) {
-					var setTime = date.replace('T', ' ');
-					return setTime;
-				}
 			},
 			//-------------------------------获取班次信息-------------------------------
 			getScheduleNum:function(param){
@@ -525,7 +481,7 @@
 						return '无'; 
 					}
 			},
-			//-------------------------------获取班次信息-------------------------------
+			//-------------------------------获取时间信息-------------------------------
 			gettime:function(param){
 					let array=param.split(':');
 					var a=array[0]+":"+array[1];
