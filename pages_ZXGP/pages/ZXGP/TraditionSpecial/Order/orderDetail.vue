@@ -11,11 +11,11 @@
 				<view>{{orderInfo.carType}}:{{orderInfo.lineName}}</view>
 			</view>
 			<!-- 发车时间 -->
-			<view class="headText"> 订单号：<text style="color: #2C2D2D;">{{orderInfo.orderNumber}}</text></view>
-			<view class="headText"> 发车时间：<text style="color: #2C2D2D;">{{orderInfo.setOutTime}}</text></view>
-			<view class="headText"> 班次：<text style="color: #2C2D2D;">{{getScheduleNum(orderInfo.planScheduleCode)}}</text></view>
-			<view class="headText"> 上车点：<text style="color: #2C2D2D;">{{orderInfo.startSiteName}}</text></view>
-			<view class="headText"> 下车点：<text style="color: #2C2D2D;">{{orderInfo.endSiteName}}</text></view>
+			<view class="headText"> 订单号：<text class="detailInfo2">{{orderInfo.orderNumber}}</text></view>
+			<view class="headText"> 发车时间：<text class="detailInfo2">{{orderInfo.setOutTime}}</text></view>
+			<view class="headText"> 班次：<text class="detailInfo2">{{getScheduleNum(orderInfo.planScheduleCode)}}</text></view>
+			<view class="headText"> 上车点：<text class="detailInfo2">{{orderInfo.startSiteName}}</text></view>
+			<view class="headText"> 下车点：<text class="detailInfo2">{{orderInfo.endSiteName}}</text></view>
 		</view>
 		<!-- 乘客信息 -->
 		<scroll-view class="scrollBox" scroll-y="true">
@@ -86,23 +86,22 @@
 
 			}
 		},
-		onLoad(res) {
+		onLoad() {
 			var that = this;
-			var orderInfo = JSON.parse(res.orderInfo);
-			that.orderInfo = orderInfo;
+			that.orderInfo = uni.getStorageSync('keYunDetailinfo');
+			console.log(that.orderInfo);
 			if(that.orderInfo.IsPickUp == true){
 				that.ispickupData = that.orderInfo.SendCarOrders[0];
 			}
-			console.log(that.orderInfo)
-			that.orderState = orderInfo.state;
-			this.specialCodeArray = orderInfo.CheckInfoList;
-			that.stringTurnArray(orderInfo.iDNameType);
-			that.getTicketNum(orderInfo); //计算车票数量
+			that.orderState = that.orderInfo.state;
+			this.specialCodeArray = that.orderInfo.CheckInfoList;
+			that.getTicketNum(that.orderInfo); //计算车票数量
 			that.make(); //生成二维码
 		},
 		methods: {
 			//---------------------生成二维码----------------------
 			make: function() {
+				console.log(77777777)
 				uQRCode.make({
 					canvasId: 'qrcode',
 					componentInstance: this,
@@ -114,6 +113,7 @@
 					fileType: 'jpg',
 					correctLevel: uQRCode.defaults.correctLevel,
 				})
+				console.log(2222222)
 			},
 			//-------------------------------身份证-------------------------------
 			userCodeNumChange: function(userCodeNum) {
@@ -145,38 +145,38 @@
 					return '无';
 				}
 			},
-			//-------------------------------获取乘车人信息-------------------------------
-			stringTurnArray(param) {
-				var that = this;
+			// //-------------------------------获取乘车人信息-------------------------------
+			// stringTurnArray(param) {
+			// 	var that = this;
 
-				let a = param.indexOf('|')
-				var singleArray = [];
-				if (a == -1) { //不存在'|' 只有一张车票
-					var array = param.split(',');
-					var passenger = {
-						userName: array[1],
-						userCodeNum: array[0],
-					}
-					that.passageInfo.push(passenger);
-					console.log('只有一张票')
-					// this.ticketNumber = that.orderInfo.ticketNumber;
-					// that.make(this.orderInfo.ticketNumber,0);
-				} else { //多人订票
-					//存在'|'
-					var array = param.split('|');
-					for (let i = 0; i < array.length; i++) {
-						singleArray = array[i].split(',');
-						var passenger = {
-							userName: singleArray[1],
-							userCodeNum: singleArray[0],
-						}
-						that.passageInfo.push(passenger);
-						// this.ticketNumber = that.orderInfo.ticketNumber;
-						// that.make(that.getOneTicketNum(this.orderInfo.ticketNumber,i),i);
-					}
-					console.log(that.passageInfo)
-				}
-			},
+			// 	let a = param.indexOf('|')
+			// 	var singleArray = [];
+			// 	if (a == -1) { //不存在'|' 只有一张车票
+			// 		var array = param.split(',');
+			// 		var passenger = {
+			// 			userName: array[1],
+			// 			userCodeNum: array[0],
+			// 		}
+			// 		that.passageInfo.push(passenger);
+			// 		console.log('只有一张票')
+			// 		// this.ticketNumber = that.orderInfo.ticketNumber;
+			// 		// that.make(this.orderInfo.ticketNumber,0);
+			// 	} else { //多人订票
+			// 		//存在'|'
+			// 		var array = param.split('|');
+			// 		for (let i = 0; i < array.length; i++) {
+			// 			singleArray = array[i].split(',');
+			// 			var passenger = {
+			// 				userName: singleArray[1],
+			// 				userCodeNum: singleArray[0],
+			// 			}
+			// 			that.passageInfo.push(passenger);
+			// 			// this.ticketNumber = that.orderInfo.ticketNumber;
+			// 			// that.make(that.getOneTicketNum(this.orderInfo.ticketNumber,i),i);
+			// 		}
+			// 		console.log(that.passageInfo)
+			// 	}
+			// },
 			//-------------------------------获取取票号-------------------------------
 			getOneTicketNum(ticketNum) {
 				var that = this;
@@ -452,7 +452,7 @@
 	}
 	
 	.detailInfo2 {
-		margin-left: 24upx;
+		margin-left: 12upx;
 		color: #2C2D2D;
 		font-size: 28rpx;
 		font-weight: 500;
