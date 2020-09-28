@@ -675,6 +675,7 @@
 							this.$refs.popup2.close()
 							uni.startPullDownRefresh();
 						}
+						this.selectorChange();
 					},
 					fail: (respones) => {
 						uni.hideLoading()
