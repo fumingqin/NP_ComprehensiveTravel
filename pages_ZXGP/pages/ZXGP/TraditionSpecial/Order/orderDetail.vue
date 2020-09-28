@@ -17,6 +17,19 @@
 			<view class="headText"> 上车点：<text class="detailInfo2">{{orderInfo.startSiteName}}</text></view>
 			<view class="headText"> 下车点：<text class="detailInfo2">{{orderInfo.endSiteName}}</text></view>
 		</view>
+		<!-- 接送信息 -->
+		<view class="infoCotent" style="text-align: center;" v-if="orderInfo.IsPickUp == true">
+			<view class="passageInfo u-f-ac">
+				<!-- 标题 -->
+				<view class="title">
+					<view style="display: flex;">接送上车点：<text class="detailInfo2">{{ispickupData.PickUpAddress}}</text></view>
+					<view style="display: flex;">接送状态：<text class="detailInfo2">{{getState(ispickupData.State)}}</text></view>
+					<view style="display: flex;">车辆状态：<text class="detailInfo2">{{getIsSend(ispickupData.IsSend)}}</text></view>
+					<view style="display: flex;">司机姓名：<text class="detailInfo2">{{ispickupData.DriverName}}</text></view>
+					<view style="display: flex;">司机手机号：<text class="detailInfo2">{{ispickupData.DriverPhone}}</text></view>
+				</view>
+			</view>
+		</view>
 		<!-- 乘客信息 -->
 		<scroll-view class="scrollBox" scroll-y="true">
 			<view class="infoCotent" style="text-align: center;">
@@ -42,18 +55,7 @@
 
 			</view>
 
-			<view class="infoCotent" style="text-align: center;" v-if="orderInfo.IsPickUp == true">
-				<view class="passageInfo u-f-ac">
-					<!-- 标题 -->
-					<view class="title">
-						<view style="display: flex;">接送上车点：<text class="detailInfo2">{{ispickupData.PickUpAddress}}</text></view>
-						<view style="display: flex;">接送状态：<text class="detailInfo2">{{getState(ispickupData.State)}}</text></view>
-						<view style="display: flex;">车辆状态：<text class="detailInfo2">{{getIsSend(ispickupData.IsSend)}}</text></view>
-						<view style="display: flex;">司机姓名：<text class="detailInfo2">{{ispickupData.DriverName}}</text></view>
-						<view style="display: flex;">司机手机号：<text class="detailInfo2">{{ispickupData.DriverPhone}}</text></view>
-					</view>
-				</view>
-			</view>
+			
 		</scroll-view>
 	</view>
 </template>
@@ -96,6 +98,7 @@
 			that.orderState = that.orderInfo.state;
 			this.specialCodeArray = that.orderInfo.CheckInfoList;
 			that.getTicketNum(that.orderInfo); //计算车票数量
+			that.stringTurnArray(that.orderInfo.iDNameType);
 			if(that.orderInfo.ticketNumber!=''){
 				that.make(); //生成二维码
 			}
@@ -145,38 +148,38 @@
 					return '无';
 				}
 			},
-			// //-------------------------------获取乘车人信息-------------------------------
-			// stringTurnArray(param) {
-			// 	var that = this;
+			//-------------------------------获取乘车人信息-------------------------------
+			stringTurnArray(param) {
+				var that = this;
 
-			// 	let a = param.indexOf('|')
-			// 	var singleArray = [];
-			// 	if (a == -1) { //不存在'|' 只有一张车票
-			// 		var array = param.split(',');
-			// 		var passenger = {
-			// 			userName: array[1],
-			// 			userCodeNum: array[0],
-			// 		}
-			// 		that.passageInfo.push(passenger);
-			// 		console.log('只有一张票')
-			// 		// this.ticketNumber = that.orderInfo.ticketNumber;
-			// 		// that.make(this.orderInfo.ticketNumber,0);
-			// 	} else { //多人订票
-			// 		//存在'|'
-			// 		var array = param.split('|');
-			// 		for (let i = 0; i < array.length; i++) {
-			// 			singleArray = array[i].split(',');
-			// 			var passenger = {
-			// 				userName: singleArray[1],
-			// 				userCodeNum: singleArray[0],
-			// 			}
-			// 			that.passageInfo.push(passenger);
-			// 			// this.ticketNumber = that.orderInfo.ticketNumber;
-			// 			// that.make(that.getOneTicketNum(this.orderInfo.ticketNumber,i),i);
-			// 		}
-			// 		console.log(that.passageInfo)
-			// 	}
-			// },
+				let a = param.indexOf('|')
+				var singleArray = [];
+				if (a == -1) { //不存在'|' 只有一张车票
+					var array = param.split(',');
+					var passenger = {
+						userName: array[1],
+						userCodeNum: array[0],
+					}
+					that.passageInfo.push(passenger);
+					console.log('只有一张票')
+					// this.ticketNumber = that.orderInfo.ticketNumber;
+					// that.make(this.orderInfo.ticketNumber,0);
+				} else { //多人订票
+					//存在'|'
+					var array = param.split('|');
+					for (let i = 0; i < array.length; i++) {
+						singleArray = array[i].split(',');
+						var passenger = {
+							userName: singleArray[1],
+							userCodeNum: singleArray[0],
+						}
+						that.passageInfo.push(passenger);
+						// this.ticketNumber = that.orderInfo.ticketNumber;
+						// that.make(that.getOneTicketNum(this.orderInfo.ticketNumber,i),i);
+					}
+					console.log(that.passageInfo)
+				}
+			},
 			//-------------------------------获取取票号-------------------------------
 			getOneTicketNum(ticketNum) {
 				var that = this;
