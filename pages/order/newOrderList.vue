@@ -21,7 +21,7 @@
 							</view>
 							<view class="at_contentView" style="display: flex;">
 								<view class="at_contentFrame">扫码上车</view>
-								<view class="at_contentFrame" v-if="item.IsPickUp=='ture'">上门接送</view>
+								<view class="at_contentFrame" v-if="item.IsPickUp==true">上门接送</view>
 								<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
@@ -66,7 +66,7 @@
 							<view class="at_contentView" style="display: flex;">
 								
 								<view class="at_contentFrame">扫码上车</view>
-								<view class="at_contentFrame" v-if="item.IsPickUp=='ture'">上门接送</view>
+								<view class="at_contentFrame" v-if="item.IsPickUp==true">上门接送</view>
 								<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
@@ -104,7 +104,7 @@
 							</view>
 							<view class="at_contentView" style="display: flex;">
 									<view class="at_contentFrame">扫码上车</view>
-									<view class="at_contentFrame" v-if="item.IsPickUp=='ture'">上门接送</view>
+									<view class="at_contentFrame" v-if="item.IsPickUp==true">上门接送</view>
 									<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
@@ -146,7 +146,7 @@
 							<view class="at_contentView" style="display: flex;">
 								
 									<view class="at_contentFrame">扫码上车</view>
-									<view class="at_contentFrame" v-if="item.IsPickUp=='ture'">上门接送</view>
+									<view class="at_contentFrame" v-if="item.IsPickUp==true">上门接送</view>
 									<view class="at_contentFrame">{{item.carType}}</view>
 								
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
@@ -185,7 +185,7 @@
 							<view class="at_contentView" style="display: flex;">
 								
 									<view class="at_contentFrame">扫码上车</view>
-									<view class="at_contentFrame" v-if="item.IsPickUp=='ture'">上门接送</view>
+									<view class="at_contentFrame" v-if="item.IsPickUp==true">上门接送</view>
 									<view class="at_contentFrame">{{item.carType}}</view>
 								<text class="at_contentPrice">¥{{item.totalPrice}}</text>
 							</view>
