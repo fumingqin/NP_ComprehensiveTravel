@@ -31,7 +31,6 @@
 			</view>
 		</view>
 		<!-- 乘客信息 -->
-		<scroll-view class="scrollBox" scroll-y="true">
 			<view class="infoCotent" style="text-align: center;">
 				<view class="passageInfo u-f-ac" v-for="(item,index) in passageInfo" :key="index">
 					<!-- 标题 -->
@@ -56,7 +55,6 @@
 			</view>
 
 			
-		</scroll-view>
 	</view>
 </template>
 
@@ -415,21 +413,19 @@
 		font-weight: 300;
 	}
 
-	/* 滚动区域 */
-	.scrollBox {
-		height: 100%;
-	}
+	
 
 	.infoCotent {
 		border-radius: 20rpx;
 		background: #FFFFFF;
-		margin: 32upx 20rpx;
-		margin-bottom: 20rpx;
+		margin: 20rpx;
 		padding: 20rpx 0;
 	}
 
 	/* 乘客信息 */
-	.passageInfo {}
+	.passageInfo {
+		margin-top: 20upx;
+	}
 
 	/* 标题 */
 	.title {
