@@ -49,8 +49,8 @@
 						<view style="display: flex;">接送上车点：<text class="detailInfo2">{{ispickupData.PickUpAddress}}</text></view>
 						<view style="display: flex;">接送状态：<text class="detailInfo2">{{getState(ispickupData.State)}}</text></view>
 						<view style="display: flex;">车辆状态：<text class="detailInfo2">{{getIsSend(ispickupData.IsSend)}}</text></view>
-						<view style="display: flex;">司机姓名：<text class="detailInfo2">{{getName_Phone(ispickupData.DriverName)}}</text></view>
-						<view style="display: flex;">司机手机号：<text class="detailInfo2">{{getName_Phone(ispickupData.DriverPhone)}}</text></view>
+						<view style="display: flex;">司机姓名：<text class="detailInfo2">{{ispickupData.DriverName}}</text></view>
+						<view style="display: flex;">司机手机号：<text class="detailInfo2">{{ispickupData.DriverPhone}}</text></view>
 					</view>
 				</view>
 			</view>
@@ -96,12 +96,13 @@
 			that.orderState = that.orderInfo.state;
 			this.specialCodeArray = that.orderInfo.CheckInfoList;
 			that.getTicketNum(that.orderInfo); //计算车票数量
-			that.make(); //生成二维码
+			if(that.orderInfo.ticketNumber!=''){
+				that.make(); //生成二维码
+			}
 		},
 		methods: {
 			//---------------------生成二维码----------------------
 			make: function() {
-				console.log(77777777)
 				uQRCode.make({
 					canvasId: 'qrcode',
 					componentInstance: this,
@@ -113,7 +114,6 @@
 					fileType: 'jpg',
 					correctLevel: uQRCode.defaults.correctLevel,
 				})
-				console.log(2222222)
 			},
 			//-------------------------------身份证-------------------------------
 			userCodeNumChange: function(userCodeNum) {
@@ -338,14 +338,6 @@
 					return '已上车'
 				}
 			},
-			getName_Phone:function(e){
-				console.log(e)
-				if(e == null){
-					return '暂未指派司机'
-				}else{
-					return e
-				}
-			}
 		}
 	}
 </script>
