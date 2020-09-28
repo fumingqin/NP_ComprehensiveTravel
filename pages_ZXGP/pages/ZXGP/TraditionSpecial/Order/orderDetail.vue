@@ -7,8 +7,8 @@
 		<!-- 头部视图 -->
 		<view class="head">
 			<!-- 起始站/价格 -->
-			<view class="u-f-jsb">
-				<view>{{orderInfo.carType}}:{{orderInfo.lineName}}</view>
+			<view class="u-f-jsb" style="font-size: 34upx;">
+				<view>{{orderInfo.carType}} : {{orderInfo.lineName}}</view>
 			</view>
 			<!-- 发车时间 -->
 			<view class="headText"> 订单号：<text class="detailInfo2">{{orderInfo.orderNumber}}</text></view>

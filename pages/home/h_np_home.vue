@@ -194,7 +194,7 @@
 			// uni.clearStorage()
 			let pro = uni.getStorageSync('protocol')
 			if(pro !== true){
-				this.protocolStatus = true;
+				// this.protocolStatus = true;
 			}
 			this.loadData();
 			this.getTodayDate();
