@@ -43,7 +43,7 @@
 		</view>
 		
 		<!-- 联动列表 -->
-		<view class="list_box" v-if="type=='邵泰专线' || type== '武夷新区专线'">	
+		<view class="list_box" v-if="type=='邵泰专线' || type== '武夷新区专线'">
 			<view class="main">
 				<swiper class="swiper" :style="{ 'height':scrollHeight }" vertical="true" duration="300">
 					<swiper-item>
@@ -222,7 +222,7 @@
 						EndSite:end
 					};
 					keywordArr.push(tmpObj)
-					console.log(keywordArr)
+					// console.log(keywordArr)
 				}
 				return keywordArr;
 			},
@@ -231,7 +231,7 @@
 				var that = this;
 				//获取点击选项的文字
 				var key = this.keywordList[index];
-				console.log(key)
+				// console.log(key)
 				if(this.type=='邵泰专线' || this.type=='武夷新区专线'){
 					//当前是上车点
 					uni.$emit('startstaionChange', {
