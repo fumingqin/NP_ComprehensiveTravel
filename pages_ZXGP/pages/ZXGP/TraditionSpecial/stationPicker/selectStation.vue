@@ -129,14 +129,22 @@
 					that.startStationList = that.arrayDistinct(that.stationArray.starSiteArr);
 					//保存下车点数组
 					that.endStationList = that.arrayDistinct(that.stationArray.endSiteArr);
-					that.default = that.endStationList.length-1;
+					that.default = that.startStationList.length-1;
+					that.default2 = that.endStationList.length-1;
+					//定位已选择的上车点
+					that.startSelectIndex = that.default;
+					//定位已选择的下车点
+					that.endSelectIndex = that.default2;
+					
 					// console.log(that.default)
 				}else if(that.stationArray.shuttleType == '普通班车'){
 					//保存上车点数组
 					that.startStationList = that.stationArray.starSiteArr;
 					//保存下车点数组
 					that.endStationList2 = that.selectRoutePoint;
-					// console.log('22222222222',that.endStationList2)
+					that.default = that.selectRoutePoint.length-1;
+					console.log(that.default)
+					that.endSelectIndex = that.default;
 				}
 			},
 			
@@ -169,7 +177,7 @@
 				// console.log('下车点下标赋值',that.endSelectIndex)
 				//取出下车站点
 				that.endStation = that.endStationList2[e];
-				// console.log('下车点取出下车站点',that.endStation)	
+				console.log('下车点取出下车站点',that.endStation)	
 			},
 			//--------------------------数组去重---------------------------
 			arrayDistinct:function(array){

@@ -9,7 +9,7 @@
 		<!-- 搜索列表 -->
 		<view class="stationList" :style="{ 'height':scrollHeight }" v-if="isShowList">
 			<block v-for="(item,index) in keywordList" :key="index">
-				<view class="listItem" @tap="itemClick(index)">
+				<view class="listItem" @click="itemClick(index)">
 					<rich-text :nodes="item.htmlStr"></rich-text>
 				</view>
 			</block>
@@ -43,7 +43,7 @@
 		</view>
 		
 		<!-- 联动列表 -->
-		<view class="list_box" v-if="type=='邵泰专线' || type== '武夷新区专线'">	
+		<view class="list_box" v-if="type=='邵泰专线' || type== '武夷新区专线'">
 			<view class="main">
 				<swiper class="swiper" :style="{ 'height':scrollHeight }" vertical="true" duration="300">
 					<swiper-item>
@@ -210,14 +210,19 @@
 					keywordArr = [];
 				for (var i = 0; i < len; i++) {
 					var row = keywords[i].LineName;
+					var start = keywords[i].StartSite;
+					var end = keywords[i].EndSite;
 					//定义高亮#9f9f9f
 					var html = row.replace(keyword, "<span style='color: #9f9f9f;'>" + keyword + "</span>");
 					html = '<div>' + html + '</div>';
 					var tmpObj = {
 						keyword: row,
-						htmlStr: html
+						htmlStr: html,
+						StartSite:start,
+						EndSite:end
 					};
 					keywordArr.push(tmpObj)
+					// console.log(keywordArr)
 				}
 				return keywordArr;
 			},
@@ -225,7 +230,8 @@
 			itemClick(index){
 				var that = this;
 				//获取点击选项的文字
-				var key = this.keywordList[index].keyword;
+				var key = this.keywordList[index];
+				// console.log(key)
 				if(this.type=='邵泰专线' || this.type=='武夷新区专线'){
 					//当前是上车点
 					uni.$emit('startstaionChange', {
