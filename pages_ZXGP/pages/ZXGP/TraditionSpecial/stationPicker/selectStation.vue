@@ -97,13 +97,13 @@
 						console.log(that.selectRoutePoint)
 					}
 					that.data();
-					that.bc_xz();
+					that.stationList();
 					
 				}
 			})
 		},
 		methods: {
-			bc_xz:function(){
+			stationList:function(){
 				uni.getStorage({
 					key: 'CTKYStationList',
 					success:(res)=>{

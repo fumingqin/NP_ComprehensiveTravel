@@ -168,19 +168,40 @@ export default{
 				}
 			})
 		},
-		getPhoneNumber(e) {  
-			var WXBizDataCrypt = require('@/common/WXBizDataCrypt')
-			var appId =this.$GrzxInter.appConfig.wxConfig.wxAppId;
-			var encryptedData =e.detail.encryptedData;
-			var iv = e.detail.iv;
-			var pc = new WXBizDataCrypt(appId, this.sessionKey)
-			var data = pc.decryptData(encryptedData , iv)
+		
+		//获取appid
+		getPhoneNumber(e) {
+			uni.request({
+				url: this.$GrzxInter.Interface.Get_AppSetting.value +
+				'?systemname='+this.$GrzxInter.systemConfig.appName,//应用名称,
+				method: this.$GrzxInter.Interface.Get_AppSetting.method,
+				success: res => {
+					if(res.data.status){
+						var WXBizDataCrypt = require('@/common/WXBizDataCrypt')
+						var encryptedData =e.detail.encryptedData;
+						var iv = e.detail.iv;
+						var pc = new WXBizDataCrypt(res.data.data.Appid, this.sessionKey)
+						var data = pc.decryptData(encryptedData , iv)
+						console.log("获取微信手机号",data.purePhoneNumber);
+						this.bindPhoneNumber(data.purePhoneNumber);
+					}
+				},
+				fail: () => {
+					uni.showToast({
+						title: '获取appid失败',
+						icon:'none',
+					});
+				},
+			});
+		},
+		
+		//绑定手机号
+		bindPhoneNumber(PhoneNumber) {  
 			var that=this;
-			console.log("获取微信手机号",data.purePhoneNumber);
 			uni.request({
 				url:that.$GrzxInter.Interface.login.value,
 				data:{
-					phoneNumber:data.purePhoneNumber,
+					phoneNumber:PhoneNumber,
 					systemname:that.$GrzxInter.systemConfig.appName,//应用名称
 					openidtype:that.$GrzxInter.systemConfig.openidtype,//应用类型
 				},
@@ -201,7 +222,7 @@ export default{
 							url:that.$GrzxInter.Interface.changeInfo.value,
 							data:{
 								userId:res1.data.data.UserId,
-								phoneNumber:data.purePhoneNumber,
+								phoneNumber:PhoneNumber,
 								nickname:that.userInfo.nickName,
 								address:that.userInfo.province+that.userInfo.city,
 								openId_wx:res1.data.data.OpenId_wx,
@@ -230,22 +251,6 @@ export default{
 												icon:'success',
 											})
 											let data = res3.data.data;
-											// var user = new Object();
-											// user = {
-											// 	address : data.Address,
-											// 	autograph : data.Autograph,
-											// 	birthday : data.Birthday,
-											// 	gender : data.Gender,
-											// 	openId_app : data.OpenId_app,
-											// 	openId_ios : data.OpenId_ios,
-											// 	openId_qq : data.OpenId_qq,
-											// 	openId_wx : data.OpenId_wx,
-											// 	openId_xcx : data.OpenId_xcx,
-											// 	phoneNumber : data.PhoneNumber,
-											// 	portrait : data.Portrait,
-											// 	userId : data.UserId,
-											// 	nickname : data.Nickname,
-											// };
 											uni.setStorageSync('userInfo', data);
 											setTimeout(function(){
 												uni.navigateBack();
@@ -256,7 +261,6 @@ export default{
 							}
 						})
 					}
-					
 				},
 				fail() {
 					uni.showToast({
@@ -266,6 +270,8 @@ export default{
 				}
 			})
 		},
+		
+		
 		returnClick(){
 			this.$GrzxInter.navToHome();//返回首页
 		}
