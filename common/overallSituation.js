@@ -34,18 +34,6 @@ const Interface = {
 }
 
 const appConfig={  //AppId,AppSecret配置
-	wxConfig:{
-		name:'小程序的Appid',
-		// wxAppId:'wxb9df0ad8d98f94a1', //专线购票
-		//wxAppId:'wx37b8f978e30050e4', //南平综合出行
-		// wxAppId:'wxf64bf945b37a9939', //南平综合出行09-21
-		wxAppId:'wxdf94dc8c9eb42f63', //交通在线小程序09-24
-	},
-	H5Config:{
-		name:'公众号的Appid和App秘钥',
-		H5AppId:'wx0ddb1b8b3ed8ee80',
-		H5AppSecret:'9091290458d85ff3a014198275d1d6d5',
-	},
 	local:{
 		url:'http://zntc.145u.net/h55/#/',
 		name:'公众号请求地址',

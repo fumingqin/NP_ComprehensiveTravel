@@ -7,8 +7,8 @@
 		<!-- 头部视图 -->
 		<view class="head">
 			<!-- 起始站/价格 -->
-			<view class="u-f-jsb">
-				<view>{{orderInfo.carType}}:{{orderInfo.lineName}}</view>
+			<view class="u-f-jsb" style="font-size: 34upx;">
+				<view>{{orderInfo.carType}} : {{orderInfo.lineName}}</view>
 			</view>
 			<!-- 发车时间 -->
 			<view class="headText"> 订单号：<text class="detailInfo2">{{orderInfo.orderNumber}}</text></view>
@@ -17,8 +17,20 @@
 			<view class="headText"> 上车点：<text class="detailInfo2">{{orderInfo.startSiteName}}</text></view>
 			<view class="headText"> 下车点：<text class="detailInfo2">{{orderInfo.endSiteName}}</text></view>
 		</view>
+		<!-- 接送信息 -->
+		<view class="infoCotent" style="text-align: center;" v-if="orderInfo.IsPickUp == true">
+			<view class="passageInfo u-f-ac">
+				<!-- 标题 -->
+				<view class="title">
+					<view style="display: flex;">接送上车点：<text class="detailInfo2">{{ispickupData.PickUpAddress}}</text></view>
+					<view style="display: flex;">接送状态：<text class="detailInfo2">{{getState(ispickupData.State)}}</text></view>
+					<view style="display: flex;">车辆状态：<text class="detailInfo2">{{getIsSend(ispickupData.IsSend)}}</text></view>
+					<view style="display: flex;">司机姓名：<text class="detailInfo2">{{getNamePhone(ispickupData.DriverName)}}</text></view>
+					<view style="display: flex;">司机手机号：<text class="detailInfo2">{{getNamePhone(ispickupData.DriverPhone)}}</text></view>
+				</view>
+			</view>
+		</view>
 		<!-- 乘客信息 -->
-		<scroll-view class="scrollBox" scroll-y="true">
 			<view class="infoCotent" style="text-align: center;">
 				<view class="passageInfo u-f-ac" v-for="(item,index) in passageInfo" :key="index">
 					<!-- 标题 -->
@@ -42,19 +54,7 @@
 
 			</view>
 
-			<view class="infoCotent" style="text-align: center;" v-if="orderInfo.IsPickUp == true">
-				<view class="passageInfo u-f-ac">
-					<!-- 标题 -->
-					<view class="title">
-						<view style="display: flex;">接送上车点：<text class="detailInfo2">{{ispickupData.PickUpAddress}}</text></view>
-						<view style="display: flex;">接送状态：<text class="detailInfo2">{{getState(ispickupData.State)}}</text></view>
-						<view style="display: flex;">车辆状态：<text class="detailInfo2">{{getIsSend(ispickupData.IsSend)}}</text></view>
-						<view style="display: flex;">司机姓名：<text class="detailInfo2">{{getName_Phone(ispickupData.DriverName)}}</text></view>
-						<view style="display: flex;">司机手机号：<text class="detailInfo2">{{getName_Phone(ispickupData.DriverPhone)}}</text></view>
-					</view>
-				</view>
-			</view>
-		</scroll-view>
+			
 	</view>
 </template>
 
@@ -96,12 +96,14 @@
 			that.orderState = that.orderInfo.state;
 			this.specialCodeArray = that.orderInfo.CheckInfoList;
 			that.getTicketNum(that.orderInfo); //计算车票数量
-			that.make(); //生成二维码
+			that.stringTurnArray(that.orderInfo.iDNameType);
+			if(that.orderInfo.ticketNumber!=''){
+				that.make(); //生成二维码
+			}
 		},
 		methods: {
 			//---------------------生成二维码----------------------
 			make: function() {
-				console.log(77777777)
 				uQRCode.make({
 					canvasId: 'qrcode',
 					componentInstance: this,
@@ -113,7 +115,6 @@
 					fileType: 'jpg',
 					correctLevel: uQRCode.defaults.correctLevel,
 				})
-				console.log(2222222)
 			},
 			//-------------------------------身份证-------------------------------
 			userCodeNumChange: function(userCodeNum) {
@@ -145,38 +146,38 @@
 					return '无';
 				}
 			},
-			// //-------------------------------获取乘车人信息-------------------------------
-			// stringTurnArray(param) {
-			// 	var that = this;
+			//-------------------------------获取乘车人信息-------------------------------
+			stringTurnArray(param) {
+				var that = this;
 
-			// 	let a = param.indexOf('|')
-			// 	var singleArray = [];
-			// 	if (a == -1) { //不存在'|' 只有一张车票
-			// 		var array = param.split(',');
-			// 		var passenger = {
-			// 			userName: array[1],
-			// 			userCodeNum: array[0],
-			// 		}
-			// 		that.passageInfo.push(passenger);
-			// 		console.log('只有一张票')
-			// 		// this.ticketNumber = that.orderInfo.ticketNumber;
-			// 		// that.make(this.orderInfo.ticketNumber,0);
-			// 	} else { //多人订票
-			// 		//存在'|'
-			// 		var array = param.split('|');
-			// 		for (let i = 0; i < array.length; i++) {
-			// 			singleArray = array[i].split(',');
-			// 			var passenger = {
-			// 				userName: singleArray[1],
-			// 				userCodeNum: singleArray[0],
-			// 			}
-			// 			that.passageInfo.push(passenger);
-			// 			// this.ticketNumber = that.orderInfo.ticketNumber;
-			// 			// that.make(that.getOneTicketNum(this.orderInfo.ticketNumber,i),i);
-			// 		}
-			// 		console.log(that.passageInfo)
-			// 	}
-			// },
+				let a = param.indexOf('|')
+				var singleArray = [];
+				if (a == -1) { //不存在'|' 只有一张车票
+					var array = param.split(',');
+					var passenger = {
+						userName: array[1],
+						userCodeNum: array[0],
+					}
+					that.passageInfo.push(passenger);
+					console.log('只有一张票')
+					// this.ticketNumber = that.orderInfo.ticketNumber;
+					// that.make(this.orderInfo.ticketNumber,0);
+				} else { //多人订票
+					//存在'|'
+					var array = param.split('|');
+					for (let i = 0; i < array.length; i++) {
+						singleArray = array[i].split(',');
+						var passenger = {
+							userName: singleArray[1],
+							userCodeNum: singleArray[0],
+						}
+						that.passageInfo.push(passenger);
+						// this.ticketNumber = that.orderInfo.ticketNumber;
+						// that.make(that.getOneTicketNum(this.orderInfo.ticketNumber,i),i);
+					}
+					console.log(that.passageInfo)
+				}
+			},
 			//-------------------------------获取取票号-------------------------------
 			getOneTicketNum(ticketNum) {
 				var that = this;
@@ -338,10 +339,10 @@
 					return '已上车'
 				}
 			},
-			getName_Phone:function(e){
-				console.log(e)
+			
+			getNamePhone : function(e){
 				if(e == null){
-					return '暂未指派司机'
+					return '暂未指派接送司机'
 				}else{
 					return e
 				}
@@ -412,21 +413,19 @@
 		font-weight: 300;
 	}
 
-	/* 滚动区域 */
-	.scrollBox {
-		height: 100%;
-	}
+	
 
 	.infoCotent {
 		border-radius: 20rpx;
 		background: #FFFFFF;
-		margin: 32upx 20rpx;
-		margin-bottom: 20rpx;
+		margin: 20rpx;
 		padding: 20rpx 0;
 	}
 
 	/* 乘客信息 */
-	.passageInfo {}
+	.passageInfo {
+		margin-top: 20upx;
+	}
 
 	/* 标题 */
 	.title {

@@ -28,15 +28,6 @@ const systemConfig={
 const newApplyName = '定制客运';
 
 const appConfig={
-	wxConfig:{
-		name:'小程序的Appid',
-		wxAppId:$oSit.appConfig.wxConfig.wxAppId,
-	},
-	H5Config:{
-		name:'公众号的Appid和App秘钥',
-		H5AppId:$oSit.appConfig.H5Config.H5AppId,
-		H5AppSecret:$oSit.appConfig.H5Config.H5AppSecret,
-	},
 	local:{
 		url:$oSit.appConfig.local.url,
 		name:'公众号请求地址',
@@ -48,6 +39,12 @@ const Interface={
 		value:'http://27.148.155.9:9056/CTKY/getWxUserinfo',
 		name:'公众号获取OpenID',
 		method:'POST',
+		pages: [],
+	},
+	Get_AppSetting:{
+		value:Url+'/api/AppSetting/Get_AppSetting',
+		name:'获取appid和秘钥',
+		method:'GET',
 		pages: [],
 	},
 	login:{
