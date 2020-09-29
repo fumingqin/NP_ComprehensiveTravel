@@ -65,7 +65,7 @@
 				<view class="ctky_View_Left_detailedInformation" v-if="item.shuttleType == '定制巴士'">{{item.SetoutTimeDesc}}</view>
 
 				<!-- 途径站点 -->
-				<view class="st_routeSite">
+				<view class="st_routeSite" v-if="item.shuttleType == '定制班车'">
 					<view class="ro_text">
 						<text>途径站点:</text>
 						<text>{{turnValue(item.lineViaSiteDesc)}}</text>
