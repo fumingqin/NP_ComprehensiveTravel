@@ -3,7 +3,7 @@ export default{
         return {
              //设置默认的分享参数
             share:{
-                title:'邵泰人民的专属小程序，快来体验吧~',
+                title:'一款邵泰人民的专属快线~',
                 path:'pages/home/h_jtzx_home',
             }
         }
