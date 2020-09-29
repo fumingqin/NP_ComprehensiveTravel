@@ -177,7 +177,7 @@
 						// console.log(that.$GrzxInter.systemConfig.openidtype,"应用类型")
 						var phone = user.data.phoneNumber;
 						if (phone != "" && phone != null && user.data != "") {
-							console.log("应用名称",that.$GrzxInter.systemConfig.applyName);
+							console.log("应用名称",that.$GrzxInter.systemConfig.appName);
 							console.log("应用类型",that.$GrzxInter.systemConfig.openidtype);
 							console.log("手机号",phone);
 							uni.request({
