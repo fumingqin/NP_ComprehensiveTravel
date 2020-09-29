@@ -8,8 +8,10 @@ import Ctky from 'common/Ctky.js' //传统客运
 import ky_cpdg from 'common/ky_cpdg.js' //传统客运
 import home from 'common/home.js' //传统客运
 import Bus from 'common/Bus.js'   //公交
+import share from 'common/share.js'//引入分享
 
 Vue.use(uView)
+Vue.mixin(share)
 Vue.config.productionTip = false
 Vue.prototype.$oSit=oSit;  //全局加载js文件
 Vue.prototype.$GrzxInter=GrzxInter;  //个人中心

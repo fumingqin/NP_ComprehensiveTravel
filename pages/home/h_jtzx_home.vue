@@ -147,18 +147,7 @@
 			//#endif
 			
 		},
-		
-		onShareAppMessage:function(res){
-			console.log(res)
-			return{
-				title : '邵泰人民的专属小程序，快来体验吧~',
-				path : 'pages/home/h_jtzx_home',
-				// success(e){
-				// 	console.log(e)
-				// }
-			}
-		},
-		
+			
 		methods: {
 			//加载数据
 			loadData : function(){
