@@ -843,6 +843,7 @@
 							title: '你还没有选择接送服务的上车点哦~',
 							icon: 'none'
 						})
+						
 					} else {
 						that.jumpTo();
 					}
