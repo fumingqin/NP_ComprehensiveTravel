@@ -82,8 +82,8 @@
 		onLoad() {
 			var that = this;
 			if (that.departure == '' || that.destination == '' || that.Week == '') {
-				that.departure = '泰宁';
-				that.destination = '邵武';
+				that.departure = '邵武';
+				that.destination = '泰宁';
 				that.Week = '今天';
 			}
 			uni.getStorage({
