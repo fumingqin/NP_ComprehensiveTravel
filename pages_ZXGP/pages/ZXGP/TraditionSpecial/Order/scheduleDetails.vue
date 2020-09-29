@@ -48,7 +48,7 @@
 			
 			<!-- 上下车点选择,0是普通购票不显示上下车点选择 -->
 			<!-- v-if="ticketDetail.shuttleType == '定制班车'" -->
-			<view class="stationContentView" v-if="ticketDetail.shuttleType == '普通班车'">
+			<view class="stationContentView" v-if="ticketDetail.shuttleType == '普通班车' && highSpeed!=='(高速)'">
 				<view class="boarding" @tap="stationTap">
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">下车点</view>
 					<view style="display: flex;align-items: center;">
@@ -286,7 +286,7 @@
 				selectRoutePoint:[],//普通班车下车点
 				ordinaryBoarding:'',//普通班车上车点
 				appName:'',
-				
+				highSpeed:'',//高速
 				pickUp_Display : true, //接送服务是否显示
 				pickUp_Price : 4 ,//上门默认价格，用于显示
 				pickUpPersonPrice : 0, //用于算法和传值的价格
@@ -329,10 +329,22 @@
 					that.ordinaryBoarding = data.data.startStaion; //普通班车的起点数据
 					that.shuttleType = data.data.shuttleType; //班车类型
 					that.InsurePrice = data.data.insurePrice; //保险价格
-					console.log('选择车票的班次数据', that.ticketDetail);
+					
+					// console.log('选择车票的班次数据', that.ticketDetail);
+					that.intercept();
 					that.calculateTotalPrice(); //执行计算价格
 					that.removal(that.ticketDetail);
 					that.getpickUpDate();
+					that.getStationData();
+					//刚进首页跳转选择上下车点页面（如果是普通班车以及高速就默认下车点）
+					if(that.highSpeed!=='(高速)'){
+						uni.showLoading({
+							title:'跳转中...'
+						})
+						that.stationTap();
+					}else{
+						
+					}
 				}
 			})
 			
@@ -342,13 +354,7 @@
 					console.log('success');
 				}
 			})
-			this.noticeLoadData();//加载须知
-			
-			uni.showLoading({
-				title:'跳转中...'
-			})
-			this.stationTap();
-			
+			that.noticeLoadData();//加载须知
 			
 		},
 		onShow() {
@@ -387,6 +393,17 @@
 					}
 				});
 			},
+			
+			//------------------------截取高速------------------------------------------
+			intercept:function(){
+				//截取(高速)
+				var string=this.ticketDetail.lineName;
+				var stringlength = string.length;
+				var newstring= string.substring(stringlength-4, stringlength);
+				this.highSpeed=newstring;
+				console.log('截取',this.highSpeed);
+			},
+			
 			getStationData() {
 				var that = this;
 				//-------------------------------读取上下车点缓存-------------------------------
@@ -394,6 +411,7 @@
 					key: 'CTKYStationList',
 					success: (res) => {
 						console.log(res)
+						console.log(that.ticketDetail.endStation)
 						that.startStation = res.data.startStation;
 						that.startStaionIndex = res.data.startStationIndex;
 						that.endStation = res.data.endStation;
@@ -405,6 +423,9 @@
 						}
 						if (that.endStation == '') {
 							that.endStation = "请选择下车点"
+						}
+						if(that.ticketDetail.shuttleType == '普通班车' && that.highSpeed!=='(高速)'){
+							that.endStation = that.ticketDetail.endStation;
 						}
 					},
 					fail: () => {
@@ -802,7 +823,7 @@
 						that.jumpTo();
 					}
 				} else {
-					if (that.endStation == '请选择下车点') {
+					if (that.endStation == '请选择下车点' && that.highSpeed!=='(高速)') {
 						uni.showToast({
 							title: '滴！请选择下车点',
 							icon: 'none'
