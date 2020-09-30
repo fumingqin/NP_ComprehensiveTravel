@@ -133,6 +133,7 @@
 				], //功能数组
 			}
 		},
+		
 		onLoad:function(){
 			// uni.clearStorage()
 			let pro = uni.getStorageSync('protocol')
@@ -145,7 +146,6 @@
 			// 校验小程序登录
 			this.getLoginState();       
 			//#endif
-			
 		},
 			
 		methods: {
