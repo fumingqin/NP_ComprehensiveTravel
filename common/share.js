@@ -8,7 +8,7 @@ export default{
             }
         }
     },
-    onShareAppMessage(res) {
+    onShareAppMessage:function(res) {
         return {
             title:this.share.title,
             path:this.share.path,
