@@ -341,7 +341,6 @@
 								date: nowdate,
 								longDate: longdate,
 							});
-							x
 						}
 					}
 				}
