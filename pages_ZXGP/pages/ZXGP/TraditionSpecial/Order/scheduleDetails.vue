@@ -75,7 +75,6 @@
 						<view class="endStationClass">{{endStation}}</view>
 						<image class="imageClass" src="../../../../static/ZXGP/right.png"></image>
 					</view>
-					
 				</view>
 			</view>
 			
