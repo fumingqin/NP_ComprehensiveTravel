@@ -161,7 +161,7 @@
 			</view>
 			
 			<!-- 点击预订同意购票须知 -->
-			<view style="display: flex;font-size: 24upx;margin:0 46upx;color: #808080;margin-left: 16%;margin-bottom: 50upx;">点击立即预定表示已阅读并同意<view
+			<view style="display: flex;font-size: 24upx;margin:0 46upx;color: #808080;margin-left: 16%;margin-bottom: 140upx;">点击立即预定表示已阅读并同意<view
 				 style="font-size: 24upx;color: #01aaef;" @tap="checkAttention"> 《购票须知》</view>
 			</view>
 			
