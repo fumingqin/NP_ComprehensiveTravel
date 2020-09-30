@@ -169,7 +169,8 @@
 					{title:'女'}
 				],
 				proveType:['请选择','军人','教师','学生'],
-				selectType:['请选择','成人','半票儿童','免票儿童'],
+				selectTypeState:false,		//控制是否有免票儿童
+				selectType:['请选择','成人','半票儿童'],
 				selectCode:['请选择','身份证','护照','港澳通行证','台胞证'],
 				// codeType:'请选择证件类型 >',
 				codeType:'身份证 >',
@@ -198,7 +199,10 @@
 				whetherCheck:true,//是否开启身份验证
 			}
 		},
-		onLoad (options){	
+		onLoad (options){
+			if(this.selectTypeState){
+				this.selectType.push('免票儿童');
+			}
 			this.loadUnid();
 			var type=options.type;
 			this.type=options.type;
