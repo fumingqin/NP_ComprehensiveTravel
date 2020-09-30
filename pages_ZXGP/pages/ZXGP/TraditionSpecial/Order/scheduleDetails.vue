@@ -1,157 +1,122 @@
 <template>
 	<view class="myView">
-		<scroll-view scroll-y="true" style="margin-bottom: 112upx;">
-			<view class="headerClass">
-			</view>
-			<!-- 内容 -->
-			<view class="orderCommonClass" style="margin-top: -110upx;">
-				<!-- 顶部订单信息 -->
-				<view class="ticketInfoClass">
+		<view class="headerClass">
+		</view>
+
+		<!-- 内容 -->
+		<view class="np_content">
+			<!-- 顶部订单信息 -->
+			<view class="np_ct_orderCommonClass">
+				<view class="np_ct_occ_ticketInfoClass">
+
 					<!-- 时间-价格 -->
-					<view class="ticketContent">
-						<view class="textCLass" style="font-size: 28upx;color: #333333;">{{turnDate(ticketDetail.setTime)}}出发</view>
-						<view class="textCLass" style="font-size: 28upx;color: #FC4646;">全票￥{{ticketDetail.fare}}</view>
+					<view class="np_ct_occ_ti_timePrice">
+						<view class="textCLass1">{{turnDate(ticketDetail.setTime)}}出发</view>
+						<view class="textCLass2">全票￥{{ticketDetail.fare}}</view>
 					</view>
+
 					<!-- 站点-余票 -->
-					<view class="ticketContent">
-						<view class="textCLass" style="font-size: 32upx;color: #333333;">{{ticketDetail.lineName}}</view>
-						<!-- <view class="textCLass" style="font-size: 32upx;color: #333333;">{{ticketDetail.startStaion}}→
-							{{ticketDetail.endStation}}</view> -->
-						<view class="textCLass" style="font-size: 28upx;color: #FC4646;">半票￥{{ticketDetail.halfTicket}}</view>
-						
+					<view class="np_ct_occ_ti_siteRemainingTickets">
+						<view class="textCLass1">{{ticketDetail.lineName}}</view>
+						<view class="textCLass2">半票￥{{ticketDetail.halfTicket}}</view>
 					</view>
+
 					<!-- 车型-儿童半价 -->
-					<view class="ticketContent">
-						<view class="textCLass" style="font-size: 24upx;color: #999999;">{{ticketDetail.carType}}&nbsp;&nbsp;{{ticketDetail.planScheduleCode}}</view>
-						<view class="textCLass" style="font-size: 24upx;font-style: SourceHanSansSC-Light; color: #666666;">余{{ticketDetail.remainingVotes}}张</view>
+					<view class="np_ct_occ_ti_model">
+						<view class="textCLass1">{{ticketDetail.carType}}&nbsp;&nbsp;{{ticketDetail.planScheduleCode}}</view>
+						<view class="textCLass2">余{{ticketDetail.remainingVotes}}张</view>
 					</view>
 				</view>
 			</view>
 
 			<!-- 地图标点 -->
-			<!-- <view class="orderCommonClass"  v-if="ticketDetail.shuttleType == '定制班车'" @click="checkLocation" >
-				<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">地图标点</view>
-				<view style="display: flex;margin-right: 41upx;align-items: center;">
-					<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;">查看班次信息</view>
-					<image src="../../../../static/ZXGP/right.png" style="width: 11upx;height: 21upx;margin-left: 10upx;"></image>
+			<!-- <view class="np_ct_mapPunctuation" v-if="ticketDetail.shuttleType == '定制班车'" @click="checkLocation">
+				<view class="np_ct_mp_title">地图标点</view>
+				<view class="np_ct_mp_text">
+					<view class="textClass">查看班次信息</view>
+					<image class="imageClass" src="../../../../static/ZXGP/right.png"></image>
 				</view>
 			</view> -->
-
+			
 			<!-- 查看所有途经点 -->
-			<view class="orderCommonClass" @tap="approachPoint">
-				<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">查看所有途经站</view>
-				<view style="display: flex;margin-right: 41upx;align-items: center;">
-					<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;">{{routeSite.length}}个站点</view>
-					<image src="../../../../static/ZXGP/right.png" style="width: 11upx;height: 21upx;margin-left: 10upx;"></image>
+			<view class="np_ct_routeSite" @tap="approachPoint">
+				<view class="np_ct_rs_title">查看所有途经站</view>
+				<view class="np_ct_rs_text">
+					<view class="textClass">{{routeSite.length}}个站点</view>
+					<image class="imageClass" src="../../../../static/ZXGP/right.png"></image>
 				</view>
 			</view>
 			
 			<!-- 上下车点选择,0是普通购票不显示上下车点选择 -->
 			<!-- v-if="ticketDetail.shuttleType == '定制班车'" -->
-			<view class="stationContentView" v-if="ticketDetail.shuttleType == '普通班车' && highSpeed!=='(高速)'">
-				<view class="boarding" @tap="stationTap">
-					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">下车点</view>
-					<view style="display: flex;align-items: center;">
-						<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;text-align: right;">{{endStation}}</view>
-						<image src="../../../../static/ZXGP/right.png" style="width: 11upx;height: 21upx;margin-left: 10upx;"></image>
+			<view class="np_ct_stationContentView" v-if="ticketDetail.shuttleType == '普通班车' && highSpeed!=='(高速)'">
+				<view class="np_ct_sc_boarding" @tap="stationTap">
+					<view class="np_ct_sc_bd_title">下车点</view>
+					<view class="np_ct_sc_bd_text">
+						<view class="endStationClass">{{endStation}}</view>
+						<image class="imageClass" src="../../../../static/ZXGP/right.png"></image>
 					</view>
 				</view>
 			</view>
-
+			
 			<!-- 上下车点选择,0是普通购票不显示上下车点选择 -->
 			<!-- v-if="ticketDetail.shuttleType == '定制班车'" -->
-			<view class="stationContentView" v-if="ticketDetail.shuttleType == '定制班车'">
-				<view class="boarding" style="border-bottom:#EAEAEA solid 1px;" @tap="stationTap">
-					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">上车点</view>
-					<view style="display: flex;align-items: center;">
-						<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;text-align: right;">{{startStation}}</view>
-						<image src="../../../../static/ZXGP/right.png" style="width: 11upx;height: 21upx;margin-left: 10upx;"></image>
+			<view class="np_ct_stationContentView" v-if="ticketDetail.shuttleType == '定制班车'">
+				<view class="np_ct_sc_boarding" style="border-bottom:#EAEAEA solid 1px;" @tap="stationTap">
+					<view class="np_ct_sc_bd_title">上车点</view>
+					<view class="np_ct_sc_bd_text">
+						<view class="endStationClass">{{startStation}}</view>
+						<image class="imageClass" src="../../../../static/ZXGP/right.png"></image>
 					</view>
 				</view>
-				<view class="boarding" @tap="stationTap">
-					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">下车点</view>
-					<view style="display: flex;align-items: center;">
-						<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;text-align: right;">{{endStation}}</view>
-						<image src="../../../../static/ZXGP/right.png" style="width: 11upx;height: 21upx;margin-left: 10upx;"></image>
+				<view class="np_ct_sc_boarding" @tap="stationTap">
+					<view class="np_ct_sc_bd_title">下车点</view>
+					<view class="np_ct_sc_bd_text">
+						<view class="endStationClass">{{endStation}}</view>
+						<image class="imageClass" src="../../../../static/ZXGP/right.png"></image>
 					</view>
 				</view>
 			</view>
-
+			
 			<!-- 乘车人信息 -->
-			<view class="orderCommonClass" style="flex-direction: column;padding-bottom: 25upx;">
-				<view style="margin-top: 35upx;margin-bottom: 35upx;margin-left: 41upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">乘车人信息</view>
-				<view style="display: flex;margin-bottom: 35upx;">
+			<view class="np_ct_Passengers">
+				<view class="np_ct_pe_title">乘车人信息</view>
+				<view class="np_ct_pe_text">
 					<!-- <button @tap="addPassenger('成人')" class="button_1"  style="border: #AAAAAA 1px solid;padding: 0 40rpx;height: 66upx;align-items: center;font-size: 25upx; color:#2C2D2D ;text-align: center;background: #FFFFFF;">添加成人/儿童</button> -->
 					<button @tap="pickPassenger" class="button_1" style="border: #AAAAAA 1px solid;font-size: 25upx; color:#2C2D2D ;text-align: center;background: #FFFFFF; padding: 8upx 120upx;">选择乘客</button>
-<!-- 					<button @tap="addPassenger('免童')" class="button_1" style="border: #AAAAAA 1px solid;font-size: 25upx; color:#2C2D2D ;text-align: center;background: #FFFFFF;margin-left: 22upx;">携带免童</button> -->
+					<!-- <button @tap="addPassenger('免童')" class="button_1" style="border: #AAAAAA 1px solid;font-size: 25upx; color:#2C2D2D ;text-align: center;background: #FFFFFF;margin-left: 22upx;">携带免童</button> -->
 				</view>
-				<view style="flex-direction: column;background: #FFFFFF; " v-for="(items,index) in passengerInfo" :key=index
-				 v-model="passengerInfo">
-					<view class="passengerInfoDetail">
-						<view style="display: flex;text-align: center;align-items: center;">
-							<view style="width: 73upx;">
-								<image src="../../../../static/ZXGP/delete.png" style="width: 34upx;height: 34upx;" @click="deleteInfo(index)"></image>
+				<view class="np_ct_pe_passengerInformation" v-for="(items,index) in passengerInfo" :key=index v-model="passengerInfo">
+					<view class="np_ct_pe_pi_passengerInfoDetail">
+						<view class="np_ct_pe_pi_pi_content">
+							<view class="delete">
+								<image class="imageClass" src="../../../../static/ZXGP/delete.png" @click="deleteInfo(index)"></image>
 							</view>
-							<view style="height: 100%;">
-								<view style="display: flex;margin-top: 18upx;margin-bottom: 18upx;">
-									<text style="font-size:32upx ;color: #333333;padding:0;padding-right: 24upx;">{{items.userName}}</text>
-									<view style="background:#EBEBEB ; font-size:18upx ;border-radius: 24upx;width: 100upx;height: 37upx;line-height:37upx ;text-align: center;">{{items.userType}}</view>
+							<view class="content">
+								<view class="contentView">
+									<text class="textClass">{{items.userName}}</text>
+									<view class="viewClass">{{items.userType}}</view>
 								</view>
-								<view style="display: flex;font-size: 28upx;color:#999999 ;margin-top: 18upx;margin-bottom: 18upx;">
-									<text style="margin-right: 20upx;">身份证</text><text>{{items.userCodeNum}}</text>
+								<view class="IDinformation">
+									<text class="textClass">身份证</text><text>{{items.userCodeNum}}</text>
 								</view>
 							</view>
 						</view>
 						<view>
-							<image src="../../../../static/ZXGP/right.png" style="width:12upx ;height: 21upx;"></image>
+							<image class="imageRight" src="../../../../static/ZXGP/right.png"></image>
 						</view>
 					</view>
 				</view>
 			</view>
-			<!-- 优惠券 -->
-			<view class="orderCommonClass" @click="toggleMask" v-if="false">
-				<view style="margin-left: 41upx;margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #2C2D2D;font-size: 30upx;">优惠券</view>
-				<view style="display: flex;margin-right: 41upx;align-items: center;">
-					<view style="font-size: 28upx;font-family: SourceHanSansSC-Light;color: #999999;">{{couponIndex}}</view>
-					<image src="../../../../static/ZXGP/right.png" style="width: 11upx;height: 21upx;margin-left: 10upx;"></image>
-				</view>
-			</view>
-
-			<!-- 呼出优惠券面板 -->
-			<popup type="bottom" ref="popup">
-				<view class="discountView">
-					<!-- 头部 -->
-					<view class="couponTitle">
-						<text class="Co_text1">优惠券</text>
-						<text class="Co_text2" @click="couponReset">不使用优惠券</text>
-					</view>
-
-					<!-- 优惠券列表 -->
-					<scroll-view scroll-y="true" class="discountScroll">
-
-						<view class="coupon-item" v-for="(item,index) in couponList" :key="index" @tap="couponEvent">
-							<view class="con">
-								<view class="left">
-									<text class="title">{{item.title}}</text>
-									<text class="time">有效期至2019-06-30</text>
-								</view>
-
-								<view class="right">
-									<text class="price">{{item.price}}</text>
-									<text>满{{couponList[index].condition}}可用</text>
-								</view>
-
-								<view class="circle l"></view>
-								<view class="circle r"></view>
-							</view>
-							<text class="tips">限新用户使用</text>
-						</view>
-
-					</scroll-view>
-
-				</view>
-			</popup>
 			
+			<!-- 优惠券 -->
+			<view class="np_ct_coupon" @click="toggleMask" v-if="false">
+				<view class="np_ct_cp_title">优惠券</view>
+				<view class="np_ct_cp_text">
+					<view class="viewClass">{{couponIndex}}</view>
+					<image class="imageClass" src="../../../../static/ZXGP/right.png"></image>
+				</view>
+			</view>
 			
 			<!-- 乘车险 -->
 			<view class="orderCommonClass">
@@ -190,7 +155,7 @@
 			<!-- 选择接送上车点 -->
 			<view class="orderCommonClass" v-if="pickUp_Display == true" :hidden="pickUp_Status == false" @click="pickUpAddress">
 				<view style="display: flex; align-items: center; margin-left: 41upx;">
-					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 26upx;" >接送上车点：</view>
+					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #888888;font-size: 26upx;">接送上车点：</view>
 					<view style="margin-top: 35upx;margin-bottom: 35upx;font-size:SourceHanSansSC-Regular ;color: #01aaef;font-size: 26upx;">{{pickUp_Address}}</view>
 				</view>
 			</view>
@@ -200,15 +165,51 @@
 				 style="font-size: 24upx;color: #01aaef;" @tap="checkAttention"> 《购票须知》</view>
 			</view>
 			
-		</scroll-view>
-		<view class="toPayClass">
-			<view style="display: flex;align-items: center;margin-left: 32upx;">
-				<text style="font-size: 38upx;color: #FC4646;padding: 0;">￥{{totalPrice}}</text>
-				<text style="font-size: 28upx;margin-left: 9upx;font-family:SourceHanSansSC-Light; font-weight: lighter;color: #666666;padding: 0;">共{{passengerNum}}人</text>
+			<view class="toPayClass">
+				<view style="display: flex;align-items: center;margin-left: 32upx;">
+					<text style="font-size: 38upx;color: #FC4646;padding: 0;">￥{{totalPrice}}</text>
+					<text style="font-size: 28upx;margin-left: 9upx;font-family:SourceHanSansSC-Light; font-weight: lighter;color: #666666;padding: 0;">共{{passengerNum}}人</text>
+				</view>
+				<view @tap="reserveTap" class="orderReserve" :class="{tapColor:totalPrice !== 0}">立即预定</view>
 			</view>
-			<view @tap="reserveTap" class="orderReserve" :class="{tapColor:totalPrice !== 0}">立即预定</view>
 		</view>
-		
+
+		<!-- 呼出优惠券面板 -->
+		<popup type="bottom" ref="popup">
+			<view class="discountView">
+				<!-- 头部 -->
+				<view class="couponTitle">
+					<text class="Co_text1">优惠券</text>
+					<text class="Co_text2" @click="couponReset">不使用优惠券</text>
+				</view>
+
+				<!-- 优惠券列表 -->
+				<scroll-view scroll-y="true" class="discountScroll">
+
+					<view class="coupon-item" v-for="(item,index) in couponList" :key="index" @tap="couponEvent">
+						<view class="con">
+							<view class="left">
+								<text class="title">{{item.title}}</text>
+								<text class="time">有效期至2019-06-30</text>
+							</view>
+
+							<view class="right">
+								<text class="price">{{item.price}}</text>
+								<text>满{{couponList[index].condition}}可用</text>
+							</view>
+
+							<view class="circle l"></view>
+							<view class="circle r"></view>
+						</view>
+						<text class="tips">限新用户使用</text>
+					</view>
+
+				</scroll-view>
+
+			</view>
+		</popup>
+
+
 		<!-- 旅客须知 -->
 		<u-popup v-model="notice_popup" mode="bottom">
 			<view class="boxView">
@@ -249,8 +250,8 @@
 		},
 		data() {
 			return {
-				way: '',//购票须知
-				pickUpWay : '',//接送须知
+				way: '', //购票须知
+				pickUpWay: '', //接送须知
 				title: '',
 				count: 1,
 				startStation: '', //定制班车上车点
@@ -282,38 +283,38 @@
 				mainArray: [],
 				approachPoint1: '', //终点
 				approachPoint2: '', //起点
-				routeSite:[],//途径点
-				selectRoutePoint:[],//普通班车下车点
-				ordinaryBoarding:'',//普通班车上车点
-				appName:'',
-				highSpeed:'',//高速
-				pickUp_Display : true, //接送服务是否显示
-				pickUp_Price : 4 ,//上门默认价格，用于显示
-				pickUpPersonPrice : 0, //用于算法和传值的价格
-				pickUp_Status : true , //默认开启
-				pickUp_Address : '请选择接送上车点' , //接送点
-				pickUp_Latitude : 0 , //接送点纬度
-				pickUp_Longitude : 0 , //接送点经度
-				StartStaion_Latitude : 0,//始发站点纬度
-				StartStaion_Longitude : 0,//始发站经度
-				PickUpCenter : '',//中心经纬度地名
-				PickUpCenterLat : 0,//中心经度
-				PickUpCenterLon : 0,//中心纬度
-				PickUpRange : 0,//半径范围
-				
-				pickUp_popup : false, //弹出服务内容
-				notice_popup : false, //弹出服务内容
+				routeSite: [], //途径点
+				selectRoutePoint: [], //普通班车下车点
+				ordinaryBoarding: '', //普通班车上车点
+				appName: '',
+				highSpeed: '', //高速
+				pickUp_Display: true, //接送服务是否显示
+				pickUp_Price: 4, //上门默认价格，用于显示
+				pickUpPersonPrice: 0, //用于算法和传值的价格
+				pickUp_Status: true, //默认开启
+				pickUp_Address: '请选择接送上车点', //接送点
+				pickUp_Latitude: 0, //接送点纬度
+				pickUp_Longitude: 0, //接送点经度
+				StartStaion_Latitude: 0, //始发站点纬度
+				StartStaion_Longitude: 0, //始发站经度
+				PickUpCenter: '', //中心经纬度地名
+				PickUpCenterLat: 0, //中心经度
+				PickUpCenterLon: 0, //中心纬度
+				PickUpRange: 0, //半径范围
+
+				pickUp_popup: false, //弹出服务内容
+				notice_popup: false, //弹出服务内容
 			}
 		},
 
-		onLoad:function(e) {
+		onLoad: function(e) {
 			var that = this;
 			//加载应用名称
 			that.applyName = that.$oSit.Interface.system.applyName;
 			that.appName = that.$oSit.Interface.system.appName;
 			that.startStation = '', //定制班车上车点
-			that.endStation = '', //定制班车下车点
-			console.log(that.endStation)
+				that.endStation = '', //定制班车下车点
+				console.log(that.endStation)
 			uni.setNavigationBarTitle({
 				title: '填写订单'
 			});
@@ -324,44 +325,43 @@
 					that.ticketDetail = data.data; //车票信息数组
 					that.totalPrice = data.data.fare; //价格
 					that.shuttleType = data.data.shuttleType; //班车类型
-					that.sepecialStartArray = data.data.starSiteArr;//班车起点数组
-					that.specialEndArray = data.data.endSiteArr;//班车终点数组
+					that.sepecialStartArray = data.data.starSiteArr; //班车起点数组
+					that.specialEndArray = data.data.endSiteArr; //班车终点数组
 					that.ordinaryBoarding = data.data.startStaion; //普通班车的起点数据
 					that.shuttleType = data.data.shuttleType; //班车类型
 					that.InsurePrice = data.data.insurePrice; //保险价格
-					
+
 					// console.log('选择车票的班次数据', that.ticketDetail);
 					that.intercept();
 					that.calculateTotalPrice(); //执行计算价格
 					that.removal(that.ticketDetail);
 					that.getpickUpDate();
-					that.getStationData();
 					//刚进首页跳转选择上下车点页面（如果是普通班车以及高速就默认下车点）
-					if(that.highSpeed!=='(高速)'){
+					if (that.highSpeed !== '(高速)') {
 						uni.showLoading({
-							title:'跳转中...'
+							title: '跳转中...'
 						})
 						that.stationTap();
-					}else{
-						
+					} else {
+
 					}
 				}
 			})
-			
+			// that.getStationData();
 			uni.removeStorage({
 				key: 'CTKYStationList',
 				success: function(res) {
 					console.log('success');
 				}
 			})
-			that.noticeLoadData();//加载须知
-			
+			that.noticeLoadData(); //加载须知
+
 		},
 		onShow() {
 			//读取乘车人信息
 			this.userData();
 			this.getStationData();
-			
+
 		},
 		onReady() {
 
@@ -393,17 +393,17 @@
 					}
 				});
 			},
-			
+
 			//------------------------截取高速------------------------------------------
-			intercept:function(){
+			intercept: function() {
 				//截取(高速)
-				var string=this.ticketDetail.lineName;
+				var string = this.ticketDetail.lineName;
 				var stringlength = string.length;
-				var newstring= string.substring(stringlength-4, stringlength);
-				this.highSpeed=newstring;
-				console.log('截取',this.highSpeed);
+				var newstring = string.substring(stringlength - 4, stringlength);
+				this.highSpeed = newstring;
+				console.log('截取', this.highSpeed);
 			},
-			
+
 			getStationData() {
 				var that = this;
 				//-------------------------------读取上下车点缓存-------------------------------
@@ -411,7 +411,6 @@
 					key: 'CTKYStationList',
 					success: (res) => {
 						console.log(res)
-						console.log(that.ticketDetail.endStation)
 						that.startStation = res.data.startStation;
 						that.startStaionIndex = res.data.startStationIndex;
 						that.endStation = res.data.endStation;
@@ -424,8 +423,8 @@
 						if (that.endStation == '') {
 							that.endStation = "请选择下车点"
 						}
-						if(that.ticketDetail.shuttleType == '普通班车' && that.highSpeed!=='(高速)'){
-							that.endStation = that.ticketDetail.endStation;
+						if (that.ticketDetail.shuttleType == '普通班车' && that.highSpeed !== '(高速)') {
+							that.endStation = that.endStation;
 						}
 					},
 					fail: () => {
@@ -434,71 +433,71 @@
 					}
 				})
 			},
-			
-			noticeLoadData:function(){
+
+			noticeLoadData: function() {
 				uni.request({
 					url: this.$ky_cpdg.KyInterface.Cs_getByTitle.Url,
 					method: this.$ky_cpdg.KyInterface.Cs_getByTitle.method,
 					success: (res) => {
 						console.log('购票须知', res)
-						var data = res.data.data.filter(item =>{
+						var data = res.data.data.filter(item => {
 							return item.Type == '购票须知';
 						})
 						this.way = data[0].Body;
-						console.log('购票须知2',this.way)
+						console.log('购票须知2', this.way)
 					}
 				})
-				
+
 				uni.request({
 					url: this.$ky_cpdg.KyInterface.Cs_getByTitle.Url,
 					method: this.$ky_cpdg.KyInterface.Cs_getByTitle.method,
 					success: (res) => {
 						console.log('接送服务须知', res)
-						var data = res.data.data.filter(item =>{
+						var data = res.data.data.filter(item => {
 							return item.Type == '接送服务';
 						})
 						this.pickUpWay = data[0].Body;
 					}
 				})
 			},
-			
-			getpickUpDate:function(){
+
+			getpickUpDate: function() {
 				var pickUpDate = this.ticketDetail.setTime.replace('T', ' ');
 				console.log(pickUpDate)
 				// 请求是否有上门服务	
 				uni.request({
 					url: this.$ky_cpdg.KyInterface.GetIsPickUp.Url,
 					method: this.$ky_cpdg.KyInterface.GetIsPickUp.method,
-					data:{
-						SetOutTime : pickUpDate,
-						LineName : this.ticketDetail.lineName,
+					data: {
+						SetOutTime: pickUpDate,
+						LineName: this.ticketDetail.lineName,
 					},
-					success:(res)=>{
-						console.log('是否上门服务',res)
-						if(res.data.data.IsPickUp == false){
-							this.pickUp_Display  = res.data.data.IsPickUp;
-							this.pickUp_Price  = res.data.data.Price;
+					success: (res) => {
+						console.log('是否上门服务', res)
+						if (res.data.data.IsPickUp == false) {
+							this.pickUp_Display = res.data.data.IsPickUp;
+							this.pickUp_Price = res.data.data.Price;
 							this.pickUp_Status = false;
 							this.pickUp_Address = '';
 							this.PickUpCenter = res.data.data.PickUpCenter;
 							this.PickUpCenterLat = res.data.data.PickUpCenterLat;
-							this.PickUpCenterLon =  res.data.data.PickUpCenterLon;
-							this.PickUpRange =  res.data.data.PickUpRange;
-						}else{
-							this.pickUp_Display  = res.data.data.IsPickUp;
-							this.pickUp_Price  = res.data.data.Price;
+							this.PickUpCenterLon = res.data.data.PickUpCenterLon;
+							this.PickUpRange = res.data.data.PickUpRange;
+						} else {
+							this.pickUp_Display = res.data.data.IsPickUp;
+							this.pickUp_Price = res.data.data.Price;
 							this.PickUpCenter = res.data.data.PickUpCenter;
 							this.PickUpCenterLat = res.data.data.PickUpCenterLat;
-							this.PickUpCenterLon =  res.data.data.PickUpCenterLon;
-							this.PickUpRange =  res.data.data.PickUpRange;
+							this.PickUpCenterLon = res.data.data.PickUpCenterLon;
+							this.PickUpRange = res.data.data.PickUpRange;
 						}
-						
-						
+
+
 					}
 				})
 			},
 
-			
+
 			//-------------------------------时间转换-------------------------------
 			turnDate(date) {
 				if (date) {
@@ -508,13 +507,13 @@
 				}
 			},
 			//-------------------------------点击定制班车上车点-----------------------------
-			stationTap:function() {
+			stationTap: function() {
 				//跳转到选择上车点页面
 				uni.navigateTo({
 					url: '../stationPicker/selectStation'
 				})
 			},
-			
+
 			//-------------------------------删除乘车人-----------------------------
 			deleteInfo(e) {
 				console.log(e)
@@ -567,56 +566,56 @@
 					this.calculateTotalPrice();
 				}
 			},
-			
+
 			//-------------------------------选择接送上车点-----------------------------
 			pickUpAddress: function() {
 				uni.chooseLocation({
 					success: (res) => {
-						console.log('选择后的上车点数据',res)
-						if(res.name == ''){
+						console.log('选择后的上车点数据', res)
+						if (res.name == '') {
 							uni.showToast({
-								title:'请选择并确认相关上车点',
-								icon:'none'
+								title: '请选择并确认相关上车点',
+								icon: 'none'
 							})
-						}else{
+						} else {
 							console.log(res.latitude)
 							console.log(res.longitude)
 							console.log(this.PickUpCenterLat)
 							console.log(this.PickUpCenterLon)
-							var a = this.$ky_cpdg.mathLonLatToDistance(res.latitude,res.longitude,this.PickUpCenterLat,this.PickUpCenterLon)
+							var a = this.$ky_cpdg.mathLonLatToDistance(res.latitude, res.longitude, this.PickUpCenterLat, this.PickUpCenterLon)
 							console.log(a)
-							if(a <= this.PickUpRange){
-								this.pickUp_Address = res.name;  //选择的地名
+							if (a <= this.PickUpRange) {
+								this.pickUp_Address = res.name; //选择的地名
 								this.pickUp_Latitude = res.latitude; //选择的纬度
-								this.pickUp_Longitude = res.longitude  //选择的经度
-							}else{
+								this.pickUp_Longitude = res.longitude //选择的经度
+							} else {
 								uni.showModal({
-									title:'您选择的接送点不在范围内',
-									content:'请选择' +'~' +this.PickUpCenter +'~' +'附近，' +this.PickUpRange +'米范围内的正常道路接送点',
-									confirmText:'重选',
-									confirmColor:'#007AFF',
-									success:(res)=>{
+									title: '您选择的接送点不在范围内',
+									content: '请选择' + '~' + this.PickUpCenter + '~' + '附近，' + this.PickUpRange + '米范围内的正常道路接送点',
+									confirmText: '重选',
+									confirmColor: '#007AFF',
+									success: (res) => {
 										// console.log(res)
-										if(res.confirm == true){
+										if (res.confirm == true) {
 											this.pickUpAddress();
-										}else{
-											
+										} else {
+
 										}
 									},
 								})
 							}
-							
-							
-							
+
+
+
 						}
-						
+
 					}
 				})
-				
+
 			},
-			
+
 			//-------------------------------查看须知-----------------------------
-			checkAttention:function() {
+			checkAttention: function() {
 				this.notice_popup = true;
 			},
 			close(e) {
@@ -630,8 +629,8 @@
 			close2(e) {
 				this.$refs.popup3.close()
 			},
-			
-			pickUpPoint:function(){
+
+			pickUpPoint: function() {
 				this.pickUp_popup = true;
 			},
 			//-------------------------------跳转到地图标点-----------------------------
@@ -755,12 +754,12 @@
 				//半价票单价
 				let halfPrice = that.ticketDetail.halfTicket;
 				//接送服务单价
-				if(that.pickUp_Status == true){
+				if (that.pickUp_Status == true) {
 					that.pickUpPersonPrice = that.pickUp_Price;
-				}else{
+				} else {
 					that.pickUpPersonPrice = 0;
 				}
-				
+
 				// console.log(pickUpPersonPrice)
 				let insurePrice = that.InsurePrice;
 				if (that.isInsurance == 0) { //不选择保险
@@ -783,10 +782,12 @@
 						}
 					}
 					//计算总价
-					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum + Number(that.pickUpPersonPrice) * adultNum + Number(that.pickUpPersonPrice) * childNum
+					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum +
+						Number(that.pickUpPersonPrice) * adultNum + Number(that.pickUpPersonPrice) * childNum
 				} else {
 					//计算总价
-					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum + Number(that.pickUpPersonPrice) * adultNum + Number(that.pickUpPersonPrice) * childNum
+					that.totalPrice = Number(price) * adultNum + Number(halfPrice) * childNum + Number(insurePrice) * that.passengerNum +
+						Number(that.pickUpPersonPrice) * adultNum + Number(that.pickUpPersonPrice) * childNum
 				}
 			},
 
@@ -823,7 +824,7 @@
 						that.jumpTo();
 					}
 				} else {
-					if (that.endStation == '请选择下车点' && that.highSpeed!=='(高速)') {
+					if (that.endStation == '请选择下车点' && that.highSpeed !== '(高速)') {
 						uni.showToast({
 							title: '滴！请选择下车点',
 							icon: 'none'
@@ -843,7 +844,7 @@
 							title: '你还没有选择接送服务的上车点哦~',
 							icon: 'none'
 						})
-						
+
 					} else {
 						that.jumpTo();
 					}
@@ -855,7 +856,7 @@
 				//计算价格
 				that.calculateTotalPrice();
 				//请求成功之后跳转到支付页面,传是否选择保险1:选择 0:未选择
-				if(that.pickUp_Status == false){
+				if (that.pickUp_Status == false) {
 					that.pickUp_Address = ''
 				}
 				var array = {
@@ -864,27 +865,27 @@
 					shuttleType: that.shuttleType, //班车类型
 					getOnPoint: that.startStation, //起点
 					getOffPoint: that.endStation, //终点
-					pickUpStatus : that.pickUp_Status, //是否上门服务
-					PickUpPrice : that.pickUpPersonPrice, //接送价格
-					PickUpAddress : that.pickUp_Address, //接送上车点
-					pickUpLatitude : that.pickUp_Latitude, //接送点纬度
-					pickUpLongitude :that.pickUp_Longitude, //接送点经度
-					StartStaionLatitude :that.ticketDetail.starSiteArr[0].Latitude, //始发站点纬度
-					StartStaionLongitude :that.ticketDetail.starSiteArr[0].Longitude, //始发站经度
+					pickUpStatus: that.pickUp_Status, //是否上门服务
+					PickUpPrice: that.pickUpPersonPrice, //接送价格
+					PickUpAddress: that.pickUp_Address, //接送上车点
+					pickUpLatitude: that.pickUp_Latitude, //接送点纬度
+					pickUpLongitude: that.pickUp_Longitude, //接送点经度
+					StartStaionLatitude: that.ticketDetail.starSiteArr[0].Latitude, //始发站点纬度
+					StartStaionLongitude: that.ticketDetail.starSiteArr[0].Longitude, //始发站经度
 				}
 				console.log(array)
 				uni.navigateTo({
 					url: '../PayMent/orderPayment?array=' + JSON.stringify(array)
 				})
 			},
-			
+
 			//------------------------计算途径点----------------------------------
 			removal: function(e) {
 				//****途径站点(用于查询所有途径点)****//
 				var routeSite = e.lineViaSiteDesc.split(",");
-				this.routeSite=routeSite
+				this.routeSite = routeSite
 				console.log('分割', this.routeSite)
-				
+
 				//筛选普通班车下车点途径站点
 				var d = [];
 				d = routeSite.slice();
@@ -892,13 +893,13 @@
 				this.selectRoutePoint = d; //终点
 				// this.approachPoint1.shift();
 				for (var i = 0; i < this.selectRoutePoint.length; i++) {
-					if (this.selectRoutePoint[i]== this.ticketDetail.startStaion) {
+					if (this.selectRoutePoint[i] == this.ticketDetail.startStaion) {
 						this.selectRoutePoint.splice(i, 1);
 						i = i - 1;
 					}
 				}
-				
-				console.log('分割下车点',this.selectRoutePoint)
+
+				console.log('分割下车点', this.selectRoutePoint)
 			},
 		}
 	}
@@ -914,45 +915,366 @@
 	}
 
 	.headerClass {
+		z-index: 1;
 		width: 100%;
 		height: 140upx;
 		background: #FC4646;
 	}
+	
+	.np_content {
+		position: absolute;
+		z-index: 999;
+		top: 34upx;
 
-	//订单提交通用块
-	.orderCommonClass {
-		background: #FFFFFF;
-		border-radius: 14upx;
-		margin: 0 26upx;
-		margin-bottom: 20upx;
-		display: flex;
-		justify-content: space-between;
-	}
+		.np_ct_orderCommonClass {
+			background: #FFFFFF;
+			border-radius: 14upx;
+			margin: 0 26upx;
+			margin-bottom: 20upx;
+			display: flex;
+			justify-content: space-between;
 
-	// 上下车点选择
-	.stationContentView {
-		flex-direction: column;
-		background: #FFFFFF;
-		margin: 0 26upx;
-		margin-bottom: 20upx;
-		border-radius: 14upx;
-	}
+			.np_ct_occ_ticketInfoClass {
+				width: 700upx;
+				text-align: left;
+				padding: 28upx 29upx;
 
-	/* 优惠券面板 */
-	.discountView {
-		min-height: 30vh;
-		max-height: 70vh;
-		width: 100%;
-		background: #f3f3f3;
-		margin-bottom: 100rpx;
-	}
+				.np_ct_occ_ti_timePrice {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
 
-	//优惠券
-	.discountScroll {
-		min-height: 30vh;
-		max-height: 60vh;
-		width: 100%;
+					.textCLass1 {
+						font-family: MicrosoftYaHei;
+						font-weight: 400;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						margin-bottom: 10upx;
+						font-size: 28upx;
+						color: #333333;
+					}
+
+					.textCLass2 {
+						font-family: MicrosoftYaHei;
+						font-weight: 400;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						margin-bottom: 10upx;
+						font-size: 28upx;
+						color: #FC4646;
+					}
+				}
+
+				.np_ct_occ_ti_siteRemainingTickets {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+
+					.textCLass1 {
+						font-family: MicrosoftYaHei;
+						font-weight: 400;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						margin-bottom: 10upx;
+						font-size: 32upx;
+						color: #333333;
+					}
+
+					.textCLass2 {
+						font-family: MicrosoftYaHei;
+						font-weight: 400;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						margin-bottom: 10upx;
+						font-size: 28upx;
+						color: #FC4646;
+					}
+				}
+
+				.np_ct_occ_ti_model {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+
+					.textCLass1 {
+						font-family: MicrosoftYaHei;
+						font-weight: 400;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						margin-bottom: 10upx;
+						font-size: 24upx;
+						color: #999999;
+					}
+
+					.textCLass2 {
+						font-family: MicrosoftYaHei;
+						font-weight: 400;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						margin-bottom: 10upx;
+						font-size: 24upx;
+						font-style: SourceHanSansSC-Light;
+						color: #666666;
+					}
+				}
+			}
+		}
+
+		.np_ct_mapPunctuation {
+			background: #FFFFFF;
+			border-radius: 14upx;
+			margin: 0 26upx;
+			margin-bottom: 20upx;
+			display: flex;
+			justify-content: space-between;
+
+			.np_ct_mp_title {
+				margin-left: 41upx;
+				margin-top: 35upx;
+				margin-bottom: 35upx;
+				font-size: SourceHanSansSC-Regular;
+				color: #2C2D2D;
+				font-size: 30upx;
+			}
+
+			.np_ct_mp_text {
+				display: flex;
+				margin-right: 41upx;
+				align-items: center;
+
+				.textClass {
+					font-size: 28upx;
+					font-family: SourceHanSansSC-Light;
+					color: #999999;
+				}
+
+				.imageClass {
+					width: 11upx;
+					height: 21upx;
+					margin-left: 10upx;
+				}
+			}
+		}
+		
+		.np_ct_routeSite{
+			background: #FFFFFF;
+			border-radius: 14upx;
+			margin: 0 26upx;
+			margin-bottom: 20upx;
+			display: flex;
+			justify-content: space-between;
+			
+			.np_ct_rs_title{
+				margin-left: 41upx;
+				margin-top: 35upx;
+				margin-bottom: 35upx;
+				font-size:SourceHanSansSC-Regular ;
+				color: #2C2D2D;
+				font-size: 30upx;
+			}
+			
+			.np_ct_rs_text{
+				display: flex;
+				margin-right: 41upx;
+				align-items: center;
+				
+				.textClass{
+					font-size: 28upx;
+					font-family: SourceHanSansSC-Light;
+					color: #999999;
+				}
+				
+				.imageClass{
+					width: 11upx;
+					height: 21upx;
+					margin-left: 10upx;
+				}
+			}
+		}
+		
+		.np_ct_stationContentView{
+			flex-direction: column;
+			background: #FFFFFF;
+			margin: 0 26upx;
+			margin-bottom: 20upx;
+			border-radius: 14upx;
+			
+			.np_ct_sc_boarding{
+				background: #FFFFFF;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-left: 41upx;
+				margin-right: 41upx;
+				
+				.np_ct_sc_bd_title{
+					margin-top: 35upx;
+					margin-bottom: 35upx;
+					font-size:SourceHanSansSC-Regular ;
+					color: #2C2D2D;
+					font-size: 30upx;
+				}
+				
+				.np_ct_sc_bd_text{
+					display: flex;
+					align-items: center;
+					
+					.endStationClass{
+						font-size: 28upx;
+						font-family: SourceHanSansSC-Light;
+						color: #999999;
+						text-align: right;
+					}
+					
+					.imageClass{
+						width: 11upx;
+						height: 21upx;
+						margin-left: 10upx;
+					}
+				}
+			}
+		}
+		
+		.np_ct_Passengers{
+			background: #FFFFFF;
+			border-radius: 14upx;
+			margin: 0 26upx;
+			margin-bottom: 20upx;
+			display: flex;
+			justify-content: space-between;
+			flex-direction: column;
+			padding-bottom: 25upx;
+			
+			.np_ct_pe_title{
+				margin-top: 35upx;
+				margin-bottom: 35upx;
+				margin-left: 41upx;
+				font-size:SourceHanSansSC-Regular ;
+				color: #2C2D2D;
+				font-size: 30upx;
+			}
+			
+			.np_ct_pe_text{
+				display: flex;
+				margin-bottom: 35upx;
+				
+			}
+			
+			.np_ct_pe_passengerInformation{
+				flex-direction: column;
+				background: #FFFFFF;
+				
+				.np_ct_pe_pi_passengerInfoDetail{
+					border-bottom: 1upx solid #DADADA;
+					margin-left: 33upx;
+					margin-right: 33upx;
+					//position: absolute;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					
+					.np_ct_pe_pi_pi_content{
+						display: flex;
+						text-align: center;
+						align-items: center;
+						
+						.delete{
+							width: 73upx;
+							
+							.imageClass{
+								width: 34upx;
+								height: 34upx;
+							}
+						}
+						
+						.content{
+							height: 100%;
+							
+							.contentView{
+								display: flex;
+								margin-top: 18upx;
+								margin-bottom: 18upx;
+								
+								.textClass{
+									font-size:32upx;
+									color: #333333;
+									padding:0;
+									padding-right: 24upx;
+								}
+								
+								.viewClass{
+									background:#EBEBEB;
+									font-size:18upx;
+									border-radius:24upx;
+									width: 100upx;
+									height: 37upx;
+									line-height:37upx;
+									text-align:center;
+								}
+							}
+						}
+						
+						.IDinformation{
+							display: flex;
+							font-size: 28upx;
+							color:#999999;
+							margin-top: 18upx;
+							margin-bottom: 18upx;
+							
+							.textClass{
+								margin-right: 20upx;
+							}
+						}
+					}
+					
+					.imageRight{
+						width:12upx;
+						height: 21upx;
+					}
+				}
+			}
+		}
+		
+		//优惠券
+		.np_ct_coupon{
+			background: #FFFFFF;
+			border-radius: 14upx;
+			margin: 0 26upx;
+			margin-bottom: 20upx;
+			display: flex;
+			justify-content: space-between;
+			flex-direction: column;
+			padding-bottom: 25upx;
+			
+			.np_ct_cp_title{
+				margin-left: 41upx;
+				margin-top: 35upx;
+				margin-bottom: 35upx;
+				font-size:SourceHanSansSC-Regular;
+				color: #2C2D2D;
+				font-size: 30upx;
+			}
+			
+			.np_ct_cp_text{
+				display: flex;
+				margin-right: 41upx;
+				align-items: center;
+				
+				.viewClass{
+					font-size: 28upx;
+					font-family: SourceHanSansSC-Light;
+					color: #999999;
+				}
+				
+				.imageClass{
+					width: 11upx;
+					height: 21upx;
+					margin-left: 10upx;
+				}
+			}
+		}
 	}
+	
 
 	//下弹框标题
 	.couponTitle {
@@ -1117,20 +1439,6 @@
 		padding: 28upx 29upx;
 	}
 
-	.ticketContent {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.textCLass {
-		font-family: MicrosoftYaHei;
-		font-weight: 400;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		margin-bottom: 10upx;
-	}
-
 	.passengerInfoDetail {
 		border-bottom: 1upx solid #DADADA;
 		margin-left: 33upx;
@@ -1200,10 +1508,6 @@
 		}
 	}
 
-	.button_1::after {
-		border: none;
-	}
-
 	//途径点弹框
 	.boxView2 {
 		width: 100%;
@@ -1251,5 +1555,60 @@
 				}
 			}
 		}
+	}
+	
+	.button_1::after {
+		border: none;
+	}
+	
+	//订单提交通用块
+	.orderCommonClass {
+		background: #FFFFFF;
+		border-radius: 14upx;
+		margin: 0 26upx;
+		margin-bottom: 20upx;
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	//订单提交通用块
+	.ticketContent {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	//订单提交通用块
+	.textCLass {
+		font-family: MicrosoftYaHei;
+		font-weight: 400;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		margin-bottom: 10upx;
+	}
+	
+	// 上下车点选择
+	.stationContentView {
+		flex-direction: column;
+		background: #FFFFFF;
+		margin: 0 26upx;
+		margin-bottom: 20upx;
+		border-radius: 14upx;
+	}
+	
+	/* 优惠券面板 */
+	.discountView {
+		min-height: 30vh;
+		max-height: 70vh;
+		width: 100%;
+		background: #f3f3f3;
+		margin-bottom: 100rpx;
+	}
+	
+	//优惠券
+	.discountScroll {
+		min-height: 30vh;
+		max-height: 60vh;
+		width: 100%;
 	}
 </style>
