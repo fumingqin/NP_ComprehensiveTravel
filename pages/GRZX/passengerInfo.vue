@@ -41,6 +41,8 @@
 				limt:'', //限制的人数
 				passengerList:[], //乘客列表
 				show:false,		//是否显示
+				
+				selectState:false,	//是否允许选择免票儿童
 			}
 		},
 		onLoad(options){
@@ -81,6 +83,10 @@
 		methods:{
 			//--------------------------------加载数据------------------------------
 			loadData(){
+				uni.showLoading({
+					title: '加载中...',
+					mask: false
+				});
 				var that=this;
 				var array=[];
 				var list=[];
@@ -140,7 +146,9 @@
 									}else{
 										that.show = false;
 									}
-									
+								},
+								complete:() => {
+									uni.hideLoading();
 								}
 							})
 						}
@@ -185,24 +193,31 @@
 			},
 			
 			//--------------------------------选择乘车人------------------------------
-			choosePassenger(e){  
-				var list=this.passengerList;
-				var count=0;
-				for(var i=0;i<list.length;i++){
-					if(list[i].hiddenIndex==1){
-						count++;
-					}
-				}
-				if(e.hiddenIndex==1){
-					e.hiddenIndex=0;
-				}else if(count>(this.limit-1) && this.submitType==2){
+			choosePassenger(e){
+				if(!this.selectState && e.userType == "免票儿童"){
 					uni.showToast({
-						title: '乘客最多只能添加'+this.limit+'名',
-						icon:"none"
+						title: '当前不支持选择免票儿童',
+						icon:'none',
 					});
 				}else{
-					e.hiddenIndex=1;
-				}		
+					var list=this.passengerList;
+					var count=0;
+					for(var i=0;i<list.length;i++){
+						if(list[i].hiddenIndex==1){
+							count++;
+						}
+					}
+					if(e.hiddenIndex==1){
+						e.hiddenIndex=0;
+					}else if(count>(this.limit-1) && this.submitType==2){
+						uni.showToast({
+							title: '乘客最多只能添加'+this.limit+'名',
+							icon:"none"
+						});
+					}else{
+						e.hiddenIndex=1;
+					}		
+				}
 			},
 			
 			//--------------------------------提交选中的乘客------------------------------
