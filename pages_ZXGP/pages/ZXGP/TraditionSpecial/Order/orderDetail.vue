@@ -31,30 +31,27 @@
 			</view>
 		</view>
 		<!-- 乘客信息 -->
-			<view class="infoCotent" style="text-align: center;">
-				<view class="passageInfo u-f-ac" v-for="(item,index) in passageInfo" :key="index">
-					<!-- 标题 -->
-					<view class="title">
-						<view style="display: flex;">出行人：<text class="detailInfo2">{{item.userName}}</text></view>
-						<view style="display: flex;">身份证：<text class="detailInfo2">{{userCodeNumChange(item.userCodeNum)}}</text></view>
-						<view style="display: flex;">座位号：<text class="detailInfo2">{{seat}}</text></view>
-					</view>
+		<view class="infoCotent" style="text-align: center;">
+			<view class="passageInfo u-f-ac" v-for="(item,index) in passageInfo" :key="index">
+				<!-- 标题 -->
+				<view class="title">
+					<view style="display: flex;">出行人：<text class="detailInfo2">{{item.userName}}</text></view>
+					<view style="display: flex;">身份证：<text class="detailInfo2">{{userCodeNumChange(item.userCodeNum)}}</text></view>
+					<view style="display: flex;">座位号：<text class="detailInfo2">{{seat}}</text></view>
 				</view>
-				<view class="passageInfo u-f-ac">
-					<view class="title">
-						<view style="display: flex;">退改规则：<text class="detailInfo2">{{role}}</text></view>
-						<view style="display: flex;">附加保险：<text class="detailInfo2">{{isInsured(orderInfo.insured)}}</text></view>
-					</view>
-				</view>
-				<!-- 二维码 -->
-				<view style=" padding-left: 200upx;"><canvas canvas-id="qrcode" style="width: 160px; height: 160px;" /></view>
-				<view v-if="orderInfo.carType != '定制巴士'" style="color: #2C2D2D;font-size: 32rpx;font-weight: 300; padding-bottom: 10rpx;">取票号
-					{{orderInfo.ticketNumber}}</view>
-				<view style="color: #999999;font-size: 28rpx;font-weight: 300; padding-bottom: 32rpx; ">出示二维码，检票上车</view>
-
 			</view>
-
-			
+			<view class="passageInfo u-f-ac">
+				<view class="title">
+					<view style="display: flex;">退改规则：<text class="detailInfo2">{{role}}</text></view>
+					<view style="display: flex;">附加保险：<text class="detailInfo2">{{isInsured(orderInfo.insured)}}</text></view>
+				</view>
+			</view>
+			<!-- 二维码 -->
+			<view style=" padding-left: 200upx;"><canvas canvas-id="qrcode" style="width: 160px; height: 160px;" /></view>
+			<view v-if="orderInfo.carType != '定制巴士'" style="color: #2C2D2D;font-size: 32rpx;font-weight: 300; padding-bottom: 10rpx;">取票号
+				{{orderInfo.ticketNumber}}</view>
+			<view style="color: #999999;font-size: 28rpx;font-weight: 300; padding-bottom: 32rpx; ">出示二维码，检票上车</view>
+		</view>
 	</view>
 </template>
 
@@ -82,7 +79,7 @@
 				isShowQrcode: true,
 				background: '#b4e9e2', // 背景色
 				qrcode: '', //二维码
-				ispickupData : '',//接客数据
+				ispickupData: '', //接客数据
 
 			}
 		},
@@ -90,14 +87,14 @@
 			var that = this;
 			that.orderInfo = uni.getStorageSync('keYunDetailinfo');
 			console.log(that.orderInfo);
-			if(that.orderInfo.IsPickUp == true){
+			if (that.orderInfo.IsPickUp == true) {
 				that.ispickupData = that.orderInfo.SendCarOrders[0];
 			}
 			that.orderState = that.orderInfo.state;
 			this.specialCodeArray = that.orderInfo.CheckInfoList;
 			that.getTicketNum(that.orderInfo); //计算车票数量
 			that.stringTurnArray(that.orderInfo.iDNameType);
-			if(that.orderInfo.ticketNumber!=''){
+			if (that.orderInfo.ticketNumber != '') {
 				that.make(); //生成二维码
 			}
 		},
@@ -339,11 +336,11 @@
 					return '已上车'
 				}
 			},
-			
-			getNamePhone : function(e){
-				if(e == null){
+
+			getNamePhone: function(e) {
+				if (e == null) {
 					return '暂未指派接送司机'
-				}else{
+				} else {
 					return e
 				}
 			}
@@ -413,7 +410,7 @@
 		font-weight: 300;
 	}
 
-	
+
 
 	.infoCotent {
 		border-radius: 20rpx;
@@ -449,7 +446,7 @@
 		font-size: 28rpx;
 		font-weight: 500;
 	}
-	
+
 	.detailInfo2 {
 		margin-left: 12upx;
 		color: #2C2D2D;
