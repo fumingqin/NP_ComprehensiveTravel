@@ -923,7 +923,7 @@
 	
 	.np_content {
 		position: absolute;
-		z-index: 999;
+		z-index: 4;
 		top: 34upx;
 
 		.np_ct_orderCommonClass {
