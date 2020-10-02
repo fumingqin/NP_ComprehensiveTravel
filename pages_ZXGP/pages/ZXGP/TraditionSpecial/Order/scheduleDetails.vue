@@ -49,7 +49,7 @@
 			
 			<!-- 上下车点选择,0是普通购票不显示上下车点选择 -->
 			<!-- v-if="ticketDetail.shuttleType == '定制班车'" -->
-			<view class="np_ct_stationContentView" v-if="ticketDetail.shuttleType == '普通班车' && highSpeed!=='(高速)'">
+			<!-- <view class="np_ct_stationContentView" v-if="ticketDetail.shuttleType == '普通班车' && highSpeed!=='(高速)'">
 				<view class="np_ct_sc_boarding" @tap="stationTap">
 					<view class="np_ct_sc_bd_title">下车点</view>
 					<view class="np_ct_sc_bd_text">
@@ -57,7 +57,7 @@
 						<image class="imageClass" src="../../../../static/ZXGP/right.png"></image>
 					</view>
 				</view>
-			</view>
+			</view> -->
 			
 			<!-- 上下车点选择,0是普通购票不显示上下车点选择 -->
 			<!-- v-if="ticketDetail.shuttleType == '定制班车'" -->
@@ -313,8 +313,8 @@
 			that.applyName = that.$oSit.Interface.system.applyName;
 			that.appName = that.$oSit.Interface.system.appName;
 			that.startStation = '', //定制班车上车点
-				that.endStation = '', //定制班车下车点
-				console.log(that.endStation)
+			that.endStation = '', //定制班车下车点
+			console.log(that.endStation)
 			uni.setNavigationBarTitle({
 				title: '填写订单'
 			});
@@ -336,15 +336,16 @@
 					that.calculateTotalPrice(); //执行计算价格
 					that.removal(that.ticketDetail);
 					that.getpickUpDate();
+					// that.getStationData();
 					//刚进首页跳转选择上下车点页面（如果是普通班车以及高速就默认下车点）
-					if (that.highSpeed !== '(高速)') {
-						uni.showLoading({
-							title: '跳转中...'
-						})
-						that.stationTap();
-					} else {
+					// if (that.highSpeed !== '(高速)') {
+					// 	uni.showLoading({
+					// 		title: '跳转中...'
+					// 	})
+					// 	that.stationTap();
+					// } else {
 
-					}
+					// }
 				}
 			})
 			// that.getStationData();
@@ -423,9 +424,9 @@
 						if (that.endStation == '') {
 							that.endStation = "请选择下车点"
 						}
-						if (that.ticketDetail.shuttleType == '普通班车' && that.highSpeed !== '(高速)') {
-							that.endStation = that.endStation;
-						}
+						// if (that.ticketDetail.shuttleType == '普通班车' && that.highSpeed !== '(高速)') {
+						// 	that.endStation = that.endStation;
+						// }
 					},
 					fail: () => {
 						that.startStation = "请选择上车点"
@@ -824,12 +825,13 @@
 						that.jumpTo();
 					}
 				} else {
-					if (that.endStation == '请选择下车点' && that.highSpeed !== '(高速)') {
-						uni.showToast({
-							title: '滴！请选择下车点',
-							icon: 'none'
-						})
-					} else if (that.passengerInfo.length == 0) {
+					// if (that.endStation == '请选择下车点' && that.highSpeed !== '(高速)') {
+					// 	uni.showToast({
+					// 		title: '滴！请选择下车点',
+					// 		icon: 'none'
+					// 	})
+					// } else 
+					if (that.passengerInfo.length == 0) {
 						uni.showToast({
 							title: '滴！请选择乘车人',
 							icon: 'none'
@@ -859,19 +861,36 @@
 				if (that.pickUp_Status == false) {
 					that.pickUp_Address = ''
 				}
-				var array = {
-					isInsurance: that.isInsurance, //是否选择了保险
-					totalPrice: that.totalPrice, //总价格
-					shuttleType: that.shuttleType, //班车类型
-					getOnPoint: that.startStation, //起点
-					getOffPoint: that.endStation, //终点
-					pickUpStatus: that.pickUp_Status, //是否上门服务
-					PickUpPrice: that.pickUpPersonPrice, //接送价格
-					PickUpAddress: that.pickUp_Address, //接送上车点
-					pickUpLatitude: that.pickUp_Latitude, //接送点纬度
-					pickUpLongitude: that.pickUp_Longitude, //接送点经度
-					StartStaionLatitude: that.ticketDetail.starSiteArr[0].Latitude, //始发站点纬度
-					StartStaionLongitude: that.ticketDetail.starSiteArr[0].Longitude, //始发站经度
+				if(that.ticketDetail.shuttleType == '普通班车'){
+					var array = {
+						isInsurance: that.isInsurance, //是否选择了保险
+						totalPrice: that.totalPrice, //总价格
+						shuttleType: that.shuttleType, //班车类型
+						getOnPoint: that.startStation, //起点
+						getOffPoint: that.ticketDetail.endStation, //终点
+						pickUpStatus: that.pickUp_Status, //是否上门服务
+						PickUpPrice: that.pickUpPersonPrice, //接送价格
+						PickUpAddress: that.pickUp_Address, //接送上车点
+						pickUpLatitude: that.pickUp_Latitude, //接送点纬度
+						pickUpLongitude: that.pickUp_Longitude, //接送点经度
+						StartStaionLatitude: that.ticketDetail.starSiteArr[0].Latitude, //始发站点纬度
+						StartStaionLongitude: that.ticketDetail.starSiteArr[0].Longitude, //始发站经度
+					}
+				}else{
+					var array = {
+						isInsurance: that.isInsurance, //是否选择了保险
+						totalPrice: that.totalPrice, //总价格
+						shuttleType: that.shuttleType, //班车类型
+						getOnPoint: that.startStation, //起点
+						getOffPoint: that.endStation, //终点
+						pickUpStatus: that.pickUp_Status, //是否上门服务
+						PickUpPrice: that.pickUpPersonPrice, //接送价格
+						PickUpAddress: that.pickUp_Address, //接送上车点
+						pickUpLatitude: that.pickUp_Latitude, //接送点纬度
+						pickUpLongitude: that.pickUp_Longitude, //接送点经度
+						StartStaionLatitude: that.ticketDetail.starSiteArr[0].Latitude, //始发站点纬度
+						StartStaionLongitude: that.ticketDetail.starSiteArr[0].Longitude, //始发站经度
+					}
 				}
 				console.log(array)
 				uni.navigateTo({
