@@ -28,9 +28,11 @@
 						 
 							<view class="at_contentView">
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
+								<text class="at_contentText" v-if="item.IsPickUp==true" >接送时间：&nbsp;{{getTsetDate(item.setOutTime)}}</text>
 								<text class="at_contentText" v-if="item.carType == '定制班车'">上车点：&nbsp;{{item.getOnPoint}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
+								
 							</view>		
 							<view class="at_buttonView">
 								<!-- #ifndef MP-WEIXIN -->
@@ -73,6 +75,7 @@
 						 
 							<view class="at_contentView">							
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
+								<text class="at_contentText" v-if="item.IsPickUp==true" >接送时间：&nbsp;{{getTsetDate(item.setOutTime)}}</text>
 								<text class="at_contentText" v-if="item.carType == '定制班车'">上车点：&nbsp;{{item.getOnPoint}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
@@ -111,6 +114,7 @@
 						 
 							<view class="at_contentView">							
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
+								<text class="at_contentText" v-if="item.IsPickUp==true" >接送时间：&nbsp;{{getTsetDate(item.setOutTime)}}</text>
 								<text class="at_contentText" v-if="item.carType == '定制班车'">上车点：&nbsp;{{item.getOnPoint}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
@@ -154,6 +158,7 @@
 						 
 							<view class="at_contentView">							
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
+								<text class="at_contentText" v-if="item.IsPickUp==true" >接送时间：&nbsp;{{getTsetDate(item.setOutTime)}}</text>
 								<text class="at_contentText" v-if="item.carType == '定制班车'">上车点：&nbsp;{{item.getOnPoint}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
@@ -192,6 +197,7 @@
 						 
 							<view class="at_contentView">							
 								<text class="at_contentText">发车时间：&nbsp;{{gettime(item.setOutTime)}}</text>
+								<text class="at_contentText" v-if="item.IsPickUp==true" >接送时间：&nbsp;{{getTsetDate(item.setOutTime)}}</text>
 								<text class="at_contentText" v-if="item.carType == '定制班车'">上车点：&nbsp;{{item.getOnPoint}}</text>
 								<text class="at_contentText">下车点：&nbsp;{{item.getOffPoint}}</text>
 								<text class="at_contentText">班次：&nbsp;{{getScheduleNum(item)}}</text>
@@ -1114,6 +1120,19 @@
 				if (this.current !== e.currentIndex) {
 					this.current = e.currentIndex
 				}
+			},
+			//接送时间方法
+			getTsetDate: function(e) {
+				var tsetDate2 = e.replace('T', ' ')
+				var date = new Date(new Date(tsetDate2).getTime() - 2700 * 1000),
+					yers  = date.getFullYear(),
+					month = date.getMonth() + 1,
+					day = date.getDate(),
+					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+					minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+				month >= 1 && month <= 9 ? (month = "0" + month) : "";
+				day >= 0 && day <= 9 ? (day = "0" + day) : "";
+				return yers + '-' + month + '-' + day + ' ' + hour + ':' + minutes; //当前年月日时分
 			},
 
 		}
