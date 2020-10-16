@@ -153,6 +153,12 @@ const Interface={
 		method:'POST',//GET-POST
 		pages:[]
 	},
+	GetSuggestionType:{
+		value: Url + '/api/Suggestion/GetSuggestionType',
+		name:'获取反馈类型',
+		method:'POST',//GET-POST
+		pages:[]
+	},
 	
 	//------------------------------------我的投诉------------------------------------
 	Add_Complaint:{
