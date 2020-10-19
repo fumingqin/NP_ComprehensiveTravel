@@ -211,8 +211,10 @@
 					url: this.$home.KyInterface.GetRotationChart.Url,
 					method:this.$home.KyInterface.GetRotationChart.method,
 					success:(res)=>{
-						// console.log('轮播区',res)
-						this.rotationChart = res.data.data;
+						console.log('轮播区',res)
+						this.rotationChart = res.data.data.filter(item => {
+							return item.Type == '首页轮播图';
+						})
 						// console.log(this.rotationChart)
 					},
 					fail:function(){
@@ -228,7 +230,7 @@
 					method:this.$home.KyInterface.GetNews.method,
 					method:'POST',
 					success:(res)=>{
-						console.log('新闻资讯',res)
+						// console.log('新闻资讯',res)
 						this.information2 = res.data.data;
 						// console.log(this.rotationChart)
 					},
