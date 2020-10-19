@@ -30,21 +30,21 @@
 		<!-- 小功能引导区 -->
 		<view class="h_guidanceArea">
 			<u-row gutter="12">
-				<u-col span="4">
+				<u-col span="4" @click="guiClick">
 					<view class="gui_view">
 						<text class="gui_view_title">健康码</text>
 						<text class="gui_view_text">快捷八闽健康码</text>
 						<image class="gui_view_iamge" src="../../static/home/guidance/tuceng1.png" ></image>
 					</view>
 				</u-col>
-				<u-col span="4">
+				<u-col span="4" @click="guiClick">
 					<view class="gui_view">
 						<text class="gui_view_title">出行助手</text>
 						<text class="gui_view_text">车站导航/找车车</text>
 						<image class="gui_view_iamge" src="../../static/home/guidance/tuceng2.png" ></image>
 					</view>
 				</u-col>
-				<u-col span="4">
+				<u-col span="4" @click="guiClick">
 					<view class="gui_view">
 						<text class="gui_view_title">每日南平</text>
 						<text class="gui_view_text">南平那些新鲜事</text>
@@ -289,6 +289,14 @@
 						url:entrance,
 					})
 				}
+			},
+			
+			//小功能跳转
+			guiClick:function(){
+				uni.showToast({
+					title:'敬请期待',
+					icon:'none'
+				})
 			},
 			
 			//快捷车票跳转
