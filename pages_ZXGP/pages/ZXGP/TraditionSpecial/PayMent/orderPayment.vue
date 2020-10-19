@@ -351,15 +351,7 @@
 				openId = that.ctkyOpenID;
 				// #endif
 				var companyCode = '';
-				// #ifdef H5
-				companyCode = this.$ky_cpdg.KyInterface.system.systemNameH5;
-				// #endif
-				// #ifdef APP-PLUS
-				companyCode = this.$ky_cpdg.KyInterface.system.systemNameApp;
-				// #endif
-				// #ifdef MP-WEIXIN
-				companyCode = this.$ky_cpdg.KyInterface.system.systemNameWeiXin;
-				// #endif
+				companyCode = this.$ky_cpdg.KyInterface.system.KY_systemName;
 				//--------------------------发起下单请求-----------------------
 				uni.showLoading({
 				    title: '正在下单...'
