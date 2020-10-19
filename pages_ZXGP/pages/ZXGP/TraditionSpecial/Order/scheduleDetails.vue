@@ -1044,8 +1044,8 @@
 						margin-bottom: 10upx;
 						font-size: 32upx;
 						color: #333333;
-						width: 510upx;
-						margin-right: 19upx;
+						width: 488upx;
+						margin-right: 18upx;
 					}
 
 					.textCLass2 {
@@ -1053,6 +1053,7 @@
 						font-weight: 400;
 						margin-bottom: 10upx;
 						font-size: 28upx;
+						width: 140upx;
 						color: #FC4646;
 					}
 				}
