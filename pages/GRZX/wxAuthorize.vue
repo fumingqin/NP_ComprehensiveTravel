@@ -215,7 +215,7 @@ export default{
 						})
 					}else{
 						console.log("访问地址",that.$GrzxInter.Interface.changeInfo.value)
-						console.log("电话",res1.data.data.userId)
+						// console.log("电话",res1.data.data.userId)
 						console.log("应用名称",that.$GrzxInter.systemConfig.appName)
 						console.log("应用类型",that.$GrzxInter.systemConfig.openidtype)
 						uni.request({
