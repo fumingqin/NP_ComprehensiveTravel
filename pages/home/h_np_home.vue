@@ -63,7 +63,7 @@
 			<view class="qui_imageview">
 				<view class="qui_imageview_view" v-for="(item,index) in quickEntryData" :key="index" @click="quickEntryClick(item)">
 					<image class="qui_imageview_view_image" :src="item.image" mode="aspectFill"></image>
-					<text class="qui_imageview_view_text">{{item.start}} → {{item.end}}</text>
+					<text class="qui_imageview_view_text">{{item.line}}</text>
 				</view>
 			</view>
 		</view>
@@ -107,27 +107,23 @@
 								4. 修复键盘组件在微信小程序上遮罩无效的问题
 								`,
 				quickEntryData : [{
+					line : '延平 → 新区',
 					start : '延平',
-					end : '建瓯',
+					end : '武夷新区',
 					image : '../../static/home/temporary/xianlu.png' 
 				},{
-					start : '延平',
-					end : '建阳',
-					image : '../../static/home/temporary/xianlu.png'
-				},{
+					line : '建阳 → 新区',
 					start : '建阳',
-					end : '新区',
+					end : '武夷新区',
 					image : '../../static/home/temporary/xianlu.png'
 				},{
-					start : '建瓯',
+					line : '新区 → 延平',
+					start : '武夷新区',
 					end : '延平',
 					image : '../../static/home/temporary/xianlu.png'
 				},{
-					start : '建阳',
-					end : '延平',
-					image : '../../static/home/temporary/xianlu.png'
-				},{
-					start : '新区',
+					line : '新区 → 建阳',
+					start : '武夷新区',
 					end : '建阳',
 					image : '../../static/home/temporary/xianlu.png'
 				}], //快捷入口数据
