@@ -182,17 +182,8 @@
 					date = new Date();
 				}
 				that.allTicketsList = [];
-
 				var systemNameCode = '';
-				// #ifdef APP-PLUS
-				systemNameCode = this.$ky_cpdg.KyInterface.system.systemNameWeiXin
-				// #endif
-				// #ifdef MP-WEIXIN
-				systemNameCode = this.$ky_cpdg.KyInterface.system.systemNameWeiXin
-				// #endif
-				// #ifdef H5
 				systemNameCode = this.$ky_cpdg.KyInterface.system.systemNameH5
-				// #endif
 				console.log(systemNameCode)
 				uni.request({
 					url: this.$ky_cpdg.KyInterface.getListSchedulesInfo.Url,
