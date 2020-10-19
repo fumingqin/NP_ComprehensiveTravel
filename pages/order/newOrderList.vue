@@ -48,7 +48,10 @@
 						</view>
 					</view>
 				</view>
-				<empty-data :isShow="info.length==0" text="暂无数据" :image="noDataImage" textColor="#999999"></empty-data>
+				<view v-if="info.length == 0">
+					<empty-data :isShow="info.length==0" text="暂无数据" :image="noDataImage" textColor="#999999"></empty-data>
+				</view>
+				
 			</view>
 
 
@@ -443,7 +446,7 @@
 					method: $KyInterface.KyInterface.searchOrder2.method,
 					data: {
 						clientID: that.userInfo.userId,
-						AppSystemName:that.$oSit.Interface.system.appName,
+						AppSystemName:that.$ky_cpdg.KyInterface.system.KY_systemName,
 						// AppSystemName:'交通在线小程序',
 					},
 					success: (res) => {
