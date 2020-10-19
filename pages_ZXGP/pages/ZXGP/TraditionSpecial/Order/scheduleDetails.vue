@@ -1055,6 +1055,7 @@
 						font-size: 28upx;
 						width: 140upx;
 						color: #FC4646;
+						text-align: right;
 					}
 				}
 
