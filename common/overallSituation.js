@@ -4,12 +4,14 @@ const Interface = {
 	address:{
 		// 公众号
 		// #ifdef H5
-			Url : 'https://appdl.xmjdt.cn:18443', //南平综合出行
+			// Url : 'https://appdl.xmjdt.cn:18443', //邵泰快线
+			Url : 'https://appdl.xmjdt.cn:18448', //南平综合出行
 		// #endif
 		
 		// #ifndef H5
 		// 小程序/APP
-			Url : 'https://appdl.xmjdt.cn:18443', //南平综合出行
+			// Url : 'https://appdl.xmjdt.cn:18443', //邵泰快线
+			Url : 'https://appdl.xmjdt.cn:18448', //南平综合出行
 		// #endif
 		
 	},
