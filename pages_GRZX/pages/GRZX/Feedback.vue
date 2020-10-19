@@ -3,13 +3,13 @@
 		<!-- 上边view -->
 		<view class="top-view">
 			<!-- 上边类型 -->
-			<!-- <view style="display: flex;flex-direction: row;flex-wrap: wrap;">
-				<view v-for="(item,index) in typeList" :key="index" @click="change(index)">
+			<view style="display: flex;flex-direction: row;flex-wrap: wrap;">
+				<view v-for="(item,index) in typeList" :key="index" @click="change(item.aid,index)">
 					<view class="top-view-Type">
 						<view :class="item.checked?'changefontStyle btn_background':'fontStyle'">{{item.text}}</view>
 					</view>
 				</view>
-			</view> -->
+			</view>
 			<!-- 文本域 -->
 			<view class="top-view-textarea">
 				<textarea v-model="ideaContent" placeholder="请描述问题，更快帮您解决问题" maxlength="500" @input="Inputtext" />
@@ -48,32 +48,7 @@ export default {
 			btncheck:false,//提交按钮是否变换
 			checkedType:[], //选中的类型
 			//类型文字
-			typeList:[
-				{
-					text:'用户体验',
-					checked:false,
-				},
-				{
-					text:'车票定价',
-					checked:false,
-				},
-				{
-					text:'功能建议',
-					checked:false,
-				},
-				{
-					text:'平台',
-					checked:false,
-				},
-				{
-					text:'优惠活动',
-					checked:false,
-				},
-				{
-					text:'导航定位',
-					checked:false,
-				}
-			],
+			typeList:[],
 			
 			// 上传图片
 			enableDel: true, //是否启动del
@@ -89,6 +64,7 @@ export default {
 			
 			userInfo:'',	//用户信息
 			systemType:'',	//系统类型
+			suggestionType:'', //反馈类型
 		}
 	},
 	components: {
@@ -117,7 +93,27 @@ export default {
 		    // error
 		}
 	},
+	onShow() {
+		this.loadTypeList();
+	},
 	methods: {
+		loadTypeList:function(){
+			uni.request({
+				url: this.$GrzxInter.Interface.GetSuggestionType.value,
+				method: this.$GrzxInter.Interface.GetSuggestionType.method,
+				success: res => {
+					console.log(res);
+					for(var item of res.data.data){
+						var obj={
+							text:item.TypeName,
+							checked:false,
+							aid:item.AID,
+						}
+						this.typeList.push(obj);
+					}
+				}
+			})
+		},
 		deleteImage: function(e){
 			console.log(e)
 			var index = this.pictureArray.findIndex(item => {
@@ -142,42 +138,55 @@ export default {
 			var that = this;
 			that.textmarn=e.detail.cursor; 
 		},
-		change:function(e) {
-			var that =this;
-			for (var i = 0; i < that.typeList.length; i++) {
-				if (e == i) {
-					if(!that.typeList[i].checked)
-					{
-						if(that.checkedType.length<3){
-							that.typeList[i].checked = true;
-							that.btncheck=true;
-							that.checkedType.push(that.typeList[i].text);
-						}else{
-							uni.showToast({
-								icon:'none',
-								title:'意见类型最多选中3个'
-							})
-						}
-					}else{
-						that.typeList[i].checked = false;	
-						var index = that.checkedType.findIndex(item => {
-							if (item ==that.typeList[e].text) {
-								return true;
-							}
-						})
-						that.checkedType.splice(index,1);
-					}
+		change:function(e,index) {
+			// var that =this;
+			// for (var i = 0; i < that.typeList.length; i++) {
+			// 	if (e == i) {
+			// 		if(!that.typeList[i].checked)
+			// 		{
+			// 			if(that.checkedType.length<3){
+			// 				that.typeList[i].checked = true;
+			// 				that.btncheck=true;
+			// 				that.checkedType.push(that.typeList[i].text);
+			// 			}else{
+			// 				uni.showToast({
+			// 					icon:'none',
+			// 					title:'意见类型最多选中3个'
+			// 				})
+			// 			}
+			// 		}else{
+			// 			that.typeList[i].checked = false;	
+			// 			var index = that.checkedType.findIndex(item => {
+			// 				if (item ==that.typeList[e].text) {
+			// 					return true;
+			// 				}
+			// 			})
+			// 			that.checkedType.splice(index,1);
+			// 		}
+			// 	}
+			// }
+			// var list=that.typeList.filter(item => {
+			// 	return item.checked == true;
+			// })
+			// if(list.length==0){
+			// 	that.btncheck=false;
+			// }
+			for(var i = 0; i< this.typeList.length;i++){
+				if(i==index){
+					this.typeList[i].checked = true;
+				}else{
+					this.typeList[i].checked = false;
 				}
 			}
-			var list=that.typeList.filter(item => {
-				return item.checked == true;
-			})
-			if(list.length==0){
-				that.btncheck=false;
-			}
+			this.suggestionType = e;
 		},
 		successClick:function(e){
-			if(this.ideaContent==""){
+			if(this.suggestionType==""){
+				uni.showToast({
+					icon:'none',
+					title:'请选择反馈类型，谢谢'
+				})
+			}else if(this.ideaContent==""){
 				uni.showToast({
 					icon:'none',
 					title:'请填写意见，谢谢'
@@ -192,7 +201,7 @@ export default {
 						Suggestion : this.ideaContent,		//反馈内容
 						Phone : this.userInfo.phoneNumber,	//用户手机号
 						SystemType : this.systemType,		//系统类型
-						SuggestionType:'',					//反馈类型
+						SuggestionType:this.suggestionType ,	//反馈类型
 						AppType : this.$GrzxInter.systemConfig.openidtype,	//应用类型
 						ProjectCode : this.$GrzxInter.systemConfig.applyName,		//项目名称
 					},
