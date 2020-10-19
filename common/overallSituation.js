@@ -4,12 +4,14 @@ const Interface = {
 	address:{
 		// 公众号
 		// #ifdef H5
-			Url : 'https://appdl.xmjdt.cn:18443', //南平综合出行
+			// Url : 'https://appdl.xmjdt.cn:18443', //邵泰快线
+			Url : 'https://appdl.xmjdt.cn:18448', //南平综合出行
 		// #endif
 		
 		// #ifndef H5
 		// 小程序/APP
-			Url : 'https://appdl.xmjdt.cn:18443', //南平综合出行
+			// Url : 'https://appdl.xmjdt.cn:18443', //邵泰快线
+			Url : 'https://appdl.xmjdt.cn:18448', //南平综合出行
 		// #endif
 		
 	},
@@ -18,7 +20,7 @@ const Interface = {
 		applyName:'南平综合出行',
 		
 		// appName:'专线购票小程序', //仅用于微信授权登录
-		appName:'交通在线小程序', //仅用于微信授权登录
+		appName:'南平综合出行', //仅用于微信授权登录
 		// appName:'南平综合出行', //仅用于微信授权登录
 		imageApplicationType:'XCX',//全局图片接口应用类型，用于请求全局图片使用
 		// #ifdef H5
