@@ -114,9 +114,8 @@
 			}
 		},
 		onLoad(param) {
-			uni.showToast({
+			uni.showLoading({
 				title: '查询班次中...',
-				icon: 'none'
 			})
 			// this.getData();
 			var that = this;
@@ -148,10 +147,9 @@
 		},
 
 		onPullDownRefresh: function() {
-			uni.showToast({
+			uni.showLoading({
 				title: '查询班次中...',
-				icon: 'none'
-			});
+			})
 			this.getTicketInfo(this.date);
 		},
 
@@ -177,9 +175,8 @@
 			//-------------------------------加载客运班次列表数据-------------------------------
 			getTicketInfo: function(date) {
 				var that = this;
-				uni.showToast({
+				uni.showLoading({
 					title: '查询班次中...',
-					icon: 'loading'
 				})
 				if (date == 'date') {
 					date = new Date();
@@ -207,9 +204,7 @@
 						date: date,
 					},
 					success: (res) => {
-						uni.stopPullDownRefresh();
 						console.log('111', res)
-						uni.hideLoading();
 						var a = res.data;
 						var b = JSON.parse(a);
 						//非空判断
@@ -217,40 +212,44 @@
 							if (b.data !== 0) {
 								that.departureData = b.data;
 								console.log('111111111', that.departureData)
-								let i = 0;
-								for (i; i < b.data.length; i++) {
+								for (var i=0; i < b.data.length; i++) {
 									that.allTicketsList.push(b.data[i])
 								}
 								console.log('客运班次信息', that.allTicketsList)
 								//加载定制巴士班次列表数据
 								// that.getSpecialBusTicketInfo(date);
-								uni.hideLoading();
+									uni.stopPullDownRefresh();
+									uni.hideLoading();
+								
 							} else if (b.data.length == 0) {
 								//加载定制巴士班次列表数据
 								// that.getSpecialBusTicketInfo(date);
+								uni.stopPullDownRefresh();
+								uni.hideLoading();
 								uni.showToast({
 									title: '暂无班次信息',
 									icon: 'none'
 								})
-								uni.hideLoading();
 							}
 						} else if (b.status == false) {
 							//加载定制巴士班次列表数据
 							// that.getSpecialBusTicketInfo(date);
+							uni.stopPullDownRefresh();
+							uni.hideLoading();
 							uni.showToast({
 								title: '暂无班次信息',
 								icon: 'none'
 							})
-							uni.hideLoading();
 						}
 					},
 					fail(res) {
 						// console.log(res);
+						uni.hideLoading();
 						uni.showToast({
 							title: '服务器异常，班次列表数据出错',
 							icon: 'none'
 						})
-						uni.hideLoading();
+						
 					}
 				});
 			},
@@ -380,7 +379,7 @@
 					},
 					fail(res) {
 						console.log(res);
-						// uni.hideLoading();
+						uni.hideLoading();
 					}
 				})
 			},

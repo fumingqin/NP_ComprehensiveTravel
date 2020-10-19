@@ -177,9 +177,6 @@
 						companyid: this.applyName, //公司名称
 						// type:'背景图', //图片类型
 					},
-					header: {
-						'content-type': 'application/json'
-					},
 					success: (res) => {
 						console.log(res)
 						this.background = res.data.data.filter(item => {
@@ -190,19 +187,17 @@
 				})
 
 				uni.request({
-					url: $KyInterface.KyInterface.Cs_getByTitle.Url,
-					method: $KyInterface.KyInterface.Cs_getByTitle.method,
-					data: {
-						title: '购票须知',
-						systemName: this.applyName,
-					},
+					url: this.$ky_cpdg.KyInterface.Cs_getByTitle.Url,
+					method: this.$ky_cpdg.KyInterface.Cs_getByTitle.method,
 					success: (res) => {
 						console.log('购票须知', res)
-						this.way = res.data.data.msg;
-						// console.log('购票须知2',this.way)
+						var data = res.data.data.filter(item => {
+							return item.Type == '购票须知';
+						})
+						this.way = data[0].Body;
+						console.log('购票须知2', this.way)
 					}
 				})
-
 				uni.stopPullDownRefresh();
 			},
 
@@ -697,9 +692,14 @@
 			.zl_textView {
 				color: #333333;
 				font-size: 30upx;
-				padding: 20upx 86upx;
+				padding: 20upx 50upx;
 				background: #FFFFFF;
 				border-radius: 44rpx;
+				width: 300rpx;
+				text-align: center;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
 			}
 		}
 
