@@ -72,14 +72,14 @@
 						ItemTitle: "客运查询",
 						style:"sv_print",
 					},
-					{
-						IsUse: false,
-						clickURL: "",
-						ImageURL1: "../../static/home/serve/wlyueche.png",//亮
-						ImageURL2: "../../static/home/serve/hwlyueche.png",//暗
-						ItemTitle: "网络约车",
-						style:"sv_print",
-					},
+					// {
+					// 	IsUse: false,
+					// 	clickURL: "",
+					// 	ImageURL1: "../../static/home/serve/wlyueche.png",//亮
+					// 	ImageURL2: "../../static/home/serve/hwlyueche.png",//暗
+					// 	ItemTitle: "网络约车",
+					// 	style:"sv_print",
+					// },
 					{
 						IsUse: false,
 						clickURL: "",

@@ -188,6 +188,7 @@
 		},
 		onLoad:function(){
 			// uni.clearStorage()
+			uni.removeStorageSync('paymentStorage')
 			let pro = uni.getStorageSync('protocol')
 			if(pro !== true){
 				// this.protocolStatus = true;

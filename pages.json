@@ -329,7 +329,11 @@
 						"navigationBarTitleText": "邵泰快线"
 					}
 				}
-			]
+			    ,{
+                    "path" : "pages/ZXGP/TraditionSpecial/PayMent/WFTpayment",
+                    "style" : {}
+                }
+            ]
 		},
 		//---------------------------------------------第三个包：公交车------------------------------------------
 		{

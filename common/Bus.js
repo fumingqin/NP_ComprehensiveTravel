@@ -1,5 +1,5 @@
 //接口域名
-const Url = 'http://36.250.234.10:60032';
+const Url = 'https://appdl.xmjdt.cn:18448';
 
 const method = 'GET';
 

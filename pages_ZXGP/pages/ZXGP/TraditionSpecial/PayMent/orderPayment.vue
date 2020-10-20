@@ -157,9 +157,6 @@
 			that.tickettype = that.ticketInfo.shuttleType;//班车类型
 			that.totalPrice = that.ticketInfo.totalPrice;//总价格
 			that.isInsurance = that.ticketInfo.isInsurance;//是否选择保险
-			uni.showLoading({
-			    title: '正在下单...'
-			});
 			if (that.isInsurance == 1) {
 				that.insurance = '保险';
 				that.isInsurance = true;
@@ -167,6 +164,10 @@
 				that.insurance = '';
 				that.isInsurance = false;
 			}
+			
+			uni.showLoading({
+			    title: '正在下单...'
+			});
 			//读取车票信息
 			that.getTickerInfo();
 			//读取用户信息
@@ -174,6 +175,14 @@
 			
 		},
 		onShow() {
+			let a = uni.getStorageSync('paymentStorage')
+			// console.log('支付缓存',a)
+			if (a !== ''){
+				uni.showLoading({
+				    title: '检测支付中...'
+				});
+				this.getTicketPaymentInfo(a);
+			}
 			
 		},
 		onUnload() {
@@ -437,6 +446,10 @@
 						console.log('下单返回结果',res)
 						if (res.data) {
 							if (res.data.status == true) {
+								uni.setStorage({
+									key:'paymentStorage',
+									data: res.data.data
+								})
 								that.orderNum = res.data.data;
 								that.getTicketPaymentInfo(res.data.data);
 							}else if(res.data.msg == '车票预定失败,您有未完成的订单,请支付后再预定'){
@@ -724,87 +737,94 @@
 				
 				// #ifdef MP-WEIXIN
 				uni.hideLoading()
-				uni.requestPayment({
-					provider: 'wxpay',
-					timeStamp:that.paymentData.jsapi.TimeStamp,
-					nonceStr:that.paymentData.jsapi.NonceStr,
-					package:that.paymentData.jsapi.Package,
-					signType:that.paymentData.jsapi.SignType,
-					paySign:that.paymentData.jsapi.PaySign,
-					success(res) {
-						console.log(res)
-						if (res.errMsg == "requestPayment:ok") {
-							uni.showToast({
-								title: '支付成功',
-								icon: 'none',
-							})
-							uni.showLoading({
-							    title: '加载中...'
-							});
-							setTimeout(function(){
-								that.getTicketPaymentInfo_ticketIssue(that.orderNum);
-							},4000)
-						}else if (res.errMsg == "requestPayment:fail cancel") {
-							uni.request({
-								url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-								method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
-								data: {
-									orderNumber: that.orderNum,
-								},
-								success: (respones) => {
-									uni.hideLoading()
-									console.log('取消结果', respones)
-									if (respones.data.status == true) {
-										that.showToast("您取消了支付，已自动取消订单")
-									} else {
+				if(that.paymentData.jsapi.TokenID != null){
+					uni.navigateTo({
+						url:'WFTpayment?pay=' +that.paymentData.jsapi.TokenID
+					})
+				}else{
+					uni.requestPayment({
+						provider: 'wxpay',
+						timeStamp:that.paymentData.jsapi.TimeStamp,
+						nonceStr:that.paymentData.jsapi.NonceStr,
+						package:that.paymentData.jsapi.Package,
+						signType:that.paymentData.jsapi.SignType,
+						paySign:that.paymentData.jsapi.PaySign,
+						success(res) {
+							console.log(res)
+							if (res.errMsg == "requestPayment:ok") {
+								uni.showToast({
+									title: '支付成功',
+									icon: 'none',
+								})
+								uni.showLoading({
+								    title: '加载中...'
+								});
+								setTimeout(function(){
+									that.getTicketPaymentInfo_ticketIssue(that.orderNum);
+								},4000)
+							}else if (res.errMsg == "requestPayment:fail cancel") {
+								uni.request({
+									url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+									method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+									data: {
+										orderNumber: that.orderNum,
+									},
+									success: (respones) => {
+										uni.hideLoading()
+										console.log('取消结果', respones)
+										if (respones.data.status == true) {
+											that.showToast("您取消了支付，已自动取消订单")
+										} else {
+											that.showToast("您取消了支付，自动取消订单失败")
+										}
+									},
+									fail: (respones) => {
+										// alert(respones.data.msg)
+										uni.hideLoading()
 										that.showToast("您取消了支付，自动取消订单失败")
 									}
-								},
-								fail: (respones) => {
-									// alert(respones.data.msg)
-									uni.hideLoading()
-									that.showToast("您取消了支付，自动取消订单失败")
-								}
-							})
-						}else if (res.errMsg == "requestPayment:fail errors") {
-							setTimeout(function() {
-								that.showToast("支付失败，请重新支付")
-							}, 1000)
-						}
-					},
-					fail(res) {
-						console.log(res)
-						if (res.errMsg == "requestPayment:fail cancel") {
-							uni.request({
-								url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
-								method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
-								data: {
-									orderNumber: that.orderNum,
-								},
-								success: (respones) => {
-									uni.hideLoading()
-									// console.log('取消结果', respones)
-									if (respones.data.status == true) {
-										that.showToast("您取消了支付，已自动取消订单")
-									} else {
+								})
+							}else if (res.errMsg == "requestPayment:fail errors") {
+								setTimeout(function() {
+									that.showToast("支付失败，请重新支付")
+								}, 1000)
+							}
+						},
+						fail(res) {
+							console.log(res)
+							if (res.errMsg == "requestPayment:fail cancel") {
+								uni.request({
+									url: that.$ky_cpdg.KyInterface.Ky_CancelTicket.Url,
+									method: that.$ky_cpdg.KyInterface.Ky_CancelTicket.method,
+									data: {
+										orderNumber: that.orderNum,
+									},
+									success: (respones) => {
+										uni.hideLoading()
+										// console.log('取消结果', respones)
+										if (respones.data.status == true) {
+											that.showToast("您取消了支付，已自动取消订单")
+										} else {
+											that.showToast("您取消了支付，自动取消订单失败")
+										}
+									},
+									fail: (respones) => {
+										// alert(respones.data.msg)
+										uni.hideLoading()
 										that.showToast("您取消了支付，自动取消订单失败")
 									}
-								},
-								fail: (respones) => {
-									// alert(respones.data.msg)
-									uni.hideLoading()
-									that.showToast("您取消了支付，自动取消订单失败")
-								}
-							})
-						}else if (res.errMsg == "requestPayment:fail errors") {
-							setTimeout(function() {
-								that.showToast("支付失败，请重新支付")
-							}, 1000)
-						}else {
-							that.showToast("支付失败")
+								})
+							}else if (res.errMsg == "requestPayment:fail errors") {
+								setTimeout(function() {
+									that.showToast("支付失败，请重新支付")
+								}, 1000)
+							}else {
+								that.showToast("支付失败")
+							}
 						}
-					}
-				});
+					});
+				}
+				
 				// #endif
 			},
 			
