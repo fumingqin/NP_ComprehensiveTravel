@@ -110,17 +110,16 @@
 				// console.log($Zxgp.KyInterface.Cs_GetInsuranceCheckState.Url)
 				// console.log($KyInterface.KyInterface.getStations.Url)
 				if(this.type=='车票订购'){
-					var systemNameCode = '八闽出行';
 					uni.request({
 						url: $KyInterface.KyInterface.getStations.Url,
 						method: $KyInterface.KyInterface.getStations.method,
 						data:{
-							systemName: systemNameCode
+							systemName : this.$ky_cpdg.KyInterface.system.KY_systemName
 						},
 						success: (res) => {
 							
 							uni.hideLoading();
-							var a=res.data;
+							var a=res.data; 
 							var b=JSON.parse(a);
 							console.log('请求接口的数据：', b)
 							// console.log(this.stationArray)

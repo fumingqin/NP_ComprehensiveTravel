@@ -30,9 +30,6 @@
 				}
 			}
 		},
-		
-		
-		
 		//----------------------------个人中心模块开始----------------------------
 		//--------------------微信授权登录--------------------
 		//#ifdef MP-WEIXIN
@@ -331,7 +328,9 @@
 				}
 			    ,{
                     "path" : "pages/ZXGP/TraditionSpecial/PayMent/WFTpayment",
-                    "style" : {}
+                    "style" : {
+						"navigationBarTitleText": "微信支付"
+					}
                 }
             ]
 		},
