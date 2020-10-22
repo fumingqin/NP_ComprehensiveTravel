@@ -189,7 +189,7 @@
 			},
 			//---------------------------------互换起止地址---------------------------------
 			changeClick: function() {
-				if(that.departure !== '选择上车点' || that.destination !== '选择下车点'){
+				if(this.departure !== '选择上车点' || this.destination !== '选择下车点'){
 					this.changeText = this.departure;
 					this.departure = this.destination;
 					this.destination = this.changeText;

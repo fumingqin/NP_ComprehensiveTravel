@@ -83,6 +83,12 @@ const KyInterface = {
 			'content-type': 'application/x-www-form-urlencoded'
 		},
 	},
+	ky_getSatartSite:{
+		Url: Url + '/api/KY/getSatartSite',
+		name:'客运-模糊查询',
+		method:'GET',
+		header:{'content-type':'application/x-www-form-urlencoded'},
+	},
 
 }
 

@@ -92,12 +92,7 @@ const KyInterface = {
 		method:'POST',
 		header:{'content-type':'application/x-www-form-urlencoded'},
 	},
-	Ky_GetSatartSite:{
-		Url: npUrl + '/CTKY/getSatartSite',
-		name:'客运-模糊查询',
-		method:'POST',
-		header:{'content-type':'application/x-www-form-urlencoded'},
-	},
+	
 	Ky_getListSchedulesInfo:{
 		Url: scheduleUrl + '/CTKY/getListSchedulesInfo',
 		name:'客运-班次列表',
