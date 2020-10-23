@@ -97,7 +97,8 @@
         {
             "path" : "pages/order/newOrderList",
             "style" : {
-				"navigationBarBackgroundColor": "#F5F5F5"
+				"navigationBarBackgroundColor": "#F5F5F5",
+				"enablePullDownRefresh": true
 			}
         },
 		{
