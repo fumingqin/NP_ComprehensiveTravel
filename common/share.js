@@ -3,8 +3,8 @@ export default{
         return {
              //设置默认的分享参数
             share:{
-                title:'一款邵泰人民的专属快线~',
-                path:'pages/home/h_jtzx_home',
+                title:'一款属于闽北人民的出行系统~',
+                path:'pages/home/h_np_home',
             }
         }
     },
